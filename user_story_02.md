@@ -1,42 +1,37 @@
-Create more md files like this one as needed. Place them into the same folder 
-as this [user_stories folder](./)
+# User story title: Order Previous Orders
 
-# User story title: e.g. Show current deals
+v1: Display any previous orders that has been made by the user. This will allow them to quickly select and order the same orders they have made in the past. 
 
-Keep any other version here as well, e.g. Display current deals, Let user to click on "show-current-deals".
+## Priority: (replace with final priority)
+v1: Priority = 3, it is not nessesary but a nice QoL to have for the user.
 
-## Priority: 10 (e.g. latest for iteration-1)
-Any notes on priority go here. 
-Note you may have different priorities at different stages of you project.
-Again, keep all changes here for marking.
+## Estimation:
+v1:
+* Jack: 3 day 
+* Ben: 
+* Terry:
+* Lachlan: 
 
-## Estimation: e.g. 2 days
-Any notes on estimation go here. Keep your planning poker game numbers. For example
-* Bob: 1 day (e.g. estimated before iteration-1)
-* Lisa: 2 days
-* Jack: 3 days
+## Assumptions:
+v1:
+This feature should be fairly simple to implement as it just needs to add any new orders to a database and then dispaly it to a page where the user can select previous orders.
 
-## Assumptions (if any):
-
-## Description: e.g. The web page will show current deals to Orion's orbits users
-You need to keep all versions here so that your instructor/marker can see your changes easily. 
-In a real project, your older versions could be viewed via commits.
-
-Description-v1: e.g. The web site will show current deals to Orion's orbits users
+## Description: 
+v1: 
+The website/app will display previous orders that the user has placed and will allow them to select add to cart then will allow the user to place the order as easily as possible...
 
 ## Tasks, see chapter 4.
 
-1. Task 1, Estimation XX days
-2. ...
+1. Create order database: 4 days
+2. add new orders to database: 1 day
+3. display database on the program: 5 days
 
 
 # UI Design:
-* (New, not in the textbook) 
 * Many user stories are connected to a User interface.
 * Insert a mockup design screenshot using any prototyping tools, e.g. [https://ninjamock.com/](https://ninjamock.com/)
 
 # Completed:
-* (New, not in the textbook) 
 * Insert screenshots of completed. 
 * If you have multiple versions (changes between iteractions), show them all.
 

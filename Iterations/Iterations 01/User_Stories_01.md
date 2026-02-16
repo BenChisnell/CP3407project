@@ -155,6 +155,6 @@ priority high, estimate 1 day
 As a customer, I want to view the full menu with images and prices so that I can decide what to order.
 
 
-User 35 Sarah (M, 29)
+User 36 Sarah (M, 29)
 priority high, estimate 4 days
 As a Dev of the app, I want the backend of the app to be easy to access and update. So that I can fix any issues that may pop up.

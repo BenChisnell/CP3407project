@@ -21,6 +21,7 @@ It is recommended to complete this assignment in a group of 2-4 students.
 2. Jack Lean
 3. Terry Warland
 4. Lachlan Webb
+5. Piper Needham
 
 
 # Project planning BEFORE iteration-1, (see chapters 1-3)

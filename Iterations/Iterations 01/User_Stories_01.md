@@ -1,23 +1,4 @@
-**Able to select gluten-free food only** | Priority: High | Estimate: 10 days
-  - *Description*: As a [users], I want [be able to search for gluten-free only food] so that [I don't get sick from eating Gluten].  
-
-**Able to track delivery in real-time** | Priority: High | Estimate: 10 days
-- *Description*: As a customer, I want to see the delivery driver’s location on a map so that I know when my food will arrive.
-
-
-User 1 Jimmy (m, 30) priority high, estimate 3 days
-As a User of the app, I want the food to be as cheap as possible so that I can order more.
-
-User 3 James (M, 50) priority high, estimate 4 days
-As a user of the app, I want the app to work with a accessibility mode with a visually impaired individual setting. So that I can use the app without glasses.
-
-- [ ] ** Menu Browsing ** | Priority: High | Estimate: 1 day
-  - *Description*: As a customer, I want to view the full menu with images and prices so that I can decide what to order.
-
-
-Dev - priority very high , estimate 4 days
-As a Dev of the app, I want the backend of the app to be easy to access and update. So that I can fix any issues that may pop up (edited)
-
+# TODO
 
 User 1 Alex (M, 28)
 Priority High, estimate 2 days
@@ -144,7 +125,36 @@ Priority High, estimate 2 days
 As a User of the app, I want to see total cost before payment. So that I avoid surprises.
 
 
-
-User 30 Ethan (M, 50)
+User 30 Jeff (M, 50)
 Priority High, estimate 2 days
 As a User of the app, I want secure password recovery. So that I can regain access.
+
+
+User 31 Leo (M, 40)
+Priority High, estimate 10 days
+As a User of the app, I want to be able to search for gluten-free only food so that I don't get sick from eating Gluten.  
+
+
+User 32 Ruby (M, 28)
+Priority High, estimate 10 days
+As a customer, I want to see the delivery driver’s location on a map so that I know when my food will arrive.
+
+
+User 33 Jimmy (m, 30)
+priority high, estimate 3 days
+As a User of the app, I want the food to be as cheap as possible so that I can order more.
+
+
+User 34 James (M, 50)
+priority high, estimate 4 days
+As a user of the app, I want the app to work with a accessibility mode with a visually impaired individual setting. So that I can use the app without glasses.
+
+
+User 35 Hugo (M, 44)
+priority high, estimate 1 day
+As a customer, I want to view the full menu with images and prices so that I can decide what to order.
+
+
+User 35 Sarah (M, 29)
+priority high, estimate 4 days
+As a Dev of the app, I want the backend of the app to be easy to access and update. So that I can fix any issues that may pop up.

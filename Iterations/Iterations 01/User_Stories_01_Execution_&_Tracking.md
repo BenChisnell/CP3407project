@@ -208,11 +208,13 @@ As a User of the app, I want to search for restaurants so that I can quickly fin
 
 Total - 2 days
 
+---
+
 ## User Story 13 – View Order History
 
 **Title:** View Order History  
 **Priority:** High  
-**Total Estimate:** 2.25 Days  
+**Total Estimate:** 2 days  
 
 ### Task 1 – Create Order History Class
 Manage past orders and details.  
@@ -224,11 +226,11 @@ Display order history and reorder options.
 
 ### Task 3 – Implement Backend Logic
 Fetch order history from database.  
-**Estimated Time:** 0.25 days  
+**Estimated Time:** 2 hours  
 
 ### Task 4 – Test Functionality
 Ensure orders display correctly and reorder works.  
-**Estimated Time:** 0.375 days  
+**Estimated Time:** 3 hours  
 
 ---
 
@@ -236,7 +238,7 @@ Ensure orders display correctly and reorder works.
 
 **Title:** Select Pickup or Delivery  
 **Priority:** High  
-**Total Estimate:** 2.375 Days  
+**Total Estimate:** 2 days  
 
 ### Task 1 – Add Option in Order Class
 Store pickup or delivery preference.  
@@ -244,7 +246,7 @@ Store pickup or delivery preference.
 
 ### Task 2 – Create UI Component
 Allow user to choose pickup or delivery.  
-**Estimated Time:** 0.25 days  
+**Estimated Time:** 2 hours  
 
 ### Task 3 – Update Backend Logic
 Handle order routing based on choice.  
@@ -260,7 +262,7 @@ Ensure selection is saved and reflected in orders.
 
 **Title:** Order Confirmation Notifications  
 **Priority:** High  
-**Total Estimate:** 2.375 Days  
+**Total Estimate:** 2 days  
 
 ### Task 1 – Create Notification Class
 Handle sending notifications.  
@@ -272,8 +274,8 @@ Trigger notification on successful order.
 
 ### Task 3 – Design Notification Templates
 Email, SMS, or app push.  
-**Estimated Time:** 0.125 days  
+**Estimated Time:** 1 hour  
 
 ### Task 4 – Test Notifications
 Ensure users receive correct confirmations.  
-**Estimated Time:** 0.25 days  
+**Estimated Time:** 2 hours  

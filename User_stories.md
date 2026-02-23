@@ -78,11 +78,6 @@ Priority High, estimate 2 days
 As a User of the app, I want to browse nearby restaurants. So that I can see available options.
 
 
-User 4 Kim (F, 45)
-Priority Low, estimate 1 day
-As a User of the app, I want to choose which restaurant I order from. So that I can support restaurants that may be struggling.
-
-
 User 5 Olivia (F, 30)
 Priority High, estimate 2 days
 As a User of the app, I want to view restaurant menus. So that I can decide what to order.
@@ -211,8 +206,6 @@ As a User of the app, I want to see total cost before payment. So that I avoid s
 User 30 Ethan (M, 50)
 Priority High, estimate 2 days
 As a User of the app, I want secure password recovery. So that I can regain access.
-
-
 
 
 User 31 Zoe (F, 25)
@@ -490,3 +483,7 @@ As a User of the app, I want to create a custom meal collection list. So that I 
 User 85 Jackson (M, 36)
 Priority Low, estimate 2 days
 As a User of the app, I want to receive community event meal suggestions. So that I can order food suited for local events.
+
+User 4 Kim (F, 45)
+Priority Low, estimate 1 day
+As a User of the app, I want to choose which restaurant I order from. So that I can support restaurants that may be struggling

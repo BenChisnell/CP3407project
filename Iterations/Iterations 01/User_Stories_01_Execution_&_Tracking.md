@@ -152,3 +152,58 @@ Create login form with email/username and password fields.
 **Estimated Time:** 0.5 days  
 
 **Total: 1 Day**
+
+## 9. Olivia (F, 30)
+**Priority:** High  
+**Estimate:** 2 days  
+
+**User Story:**  
+As a User of the app, I want to view restaurant menus so that I can decide what to order.
+
+### Tasks
+- **Task 1:** Identify restaurant data structure (restaurant names, menus, items, categories) – 1 day  
+- **Task 2:** User interface designs (search and filter) – 1 day  
+
+Total - 2 days
+---
+
+## 10. Ethan (M, 32)
+**Priority:** High  
+**Estimate:** 3 days  
+
+**User Story:**  
+As a User of the app, I want to pay with debit or credit card so that I can complete my purchase.
+
+### Tasks
+- **Task 1:** Implement payment system backend – 1 day  
+- **Task 2:** Payment user interface (front end) – 1 day  
+
+Total - 2 days
+---
+
+## 11. Ava (F, 29)
+**Priority:** High  
+**Estimate:** 2 days  
+
+**User Story:**  
+As a User of the app, I want to enter my delivery address so that my food arrives correctly.
+
+### Tasks
+- **Task 1:** Configure database backend to store user data values – 1/2 day  
+- **Task 2:** User interface design (form for user to enter address details when ordering) – 1/2 day  
+
+Total - 1 day
+---
+
+## 12. Isabella (F, 24)
+**Priority:** High  
+**Estimate:** 2 days  
+
+**User Story:**  
+As a User of the app, I want to search for restaurants so that I can quickly find them.
+
+### Tasks
+- **Task 1:** Identify restaurant data structure (restaurant names) – 1 day  
+- **Task 2:** User interface designs (search and filter) – 1 day  
+
+Total - 2 days

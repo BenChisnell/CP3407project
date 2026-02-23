@@ -158,3 +158,23 @@ As a customer, I want to view the full menu with images and prices so that I can
 User 36 Sarah (M, 29)
 priority high, estimate 4 days
 As a Dev of the app, I want the backend of the app to be easy to access and update. So that I can fix any issues that may pop up.
+
+
+| No. | User Stories | Number of Votes |
+|---|---|---|
+| 1 | Alex (M, 28). Priority High, estimate 2 days. As a User of the app, I want to create an account. So that I can place food orders. | 5 |
+| 2 | Liam (M, 22). Priority High, estimate 2 days. As a User of the app, I want to browse nearby restaurants. So that I can see available options. | 5 |
+| 3 | William (M, 47). Priority High, estimate 2 days. As a User of the app, I want to filter restaurants by rating. So that I can choose trusted places. | 5 |
+| 4 | Mia (F, 26). Priority High, estimate 1 day. As a User of the app, I want to edit or remove items in my cart. So that I can correct mistakes. | 4 |
+| 5 | Amelia (F, 28). Priority High, estimate 2 days. As a User of the app, I want to filter restaurants by cuisine. So that I can find preferred food types. | 4 |
+| 6 | Michael (M, 42). Priority High, estimate 2 days. As a User of the app, I want to apply promo codes. So that I can save money. | 4 |
+| 7 | Leo (M, 40). Priority High, estimate 10 days. As a User of the app, I want to be able to search for gluten-free only food so that I don't get sick from eating Gluten. | 4 |
+| 8 |  Sophie (F, 34). Priority High, estimate 1 day. As a User of the app, I want to log in securely. So that my account is protected. | 3 |
+| 9 | Olivia (F, 30). Priority High, estimate 2 days. As a User of the app, I want to view restaurant menus. So that I can decide what to order. | 3 |
+| 10 | Ethan (M, 32). Priority High, estimate 3 daysAs a User of the . app, I want to pay with debit or credit card. So that I can complete my purchase. | 3 |
+| 11 | Ava (F, 29). Priority High, estimate 2 day. sAs a User of the app, I want to . enter my delivery address. So that my food arrives correctly. | 3 |
+| 12 |  Isabella (F, 24). Priority High, estimate 2 days. As a User of the app, I want to search for restaurants. So that I can quickly find them. | 3 |
+| 13 | Benjamin (M, 37). riority High, estimate 2 days. As a User of the app, I want to view order history. So that I can reorder quickly. | 3 |
+| 14 | James (M, 38). Priority High, estimate 2 days. As a User of the app, I want to select pickup or delivery. So that I can choose convenience. | 3 |
+| 15 | Grace (F, 31). Priority High, estimate 2 days. As a User of the app, I want to receive order confirmation notifications. So that I know my order was successful. | 2 |
+

@@ -207,3 +207,73 @@ As a User of the app, I want to search for restaurants so that I can quickly fin
 - **Task 2:** User interface designs (search and filter) – 1 day  
 
 Total - 2 days
+
+## User Story 13 – View Order History
+
+**Title:** View Order History  
+**Priority:** High  
+**Total Estimate:** 2.25 Days  
+
+### Task 1 – Create Order History Class
+Manage past orders and details.  
+**Estimated Time:** 1 day  
+
+### Task 2 – Create User Interface
+Display order history and reorder options.  
+**Estimated Time:** 1 day  
+
+### Task 3 – Implement Backend Logic
+Fetch order history from database.  
+**Estimated Time:** 0.25 days  
+
+### Task 4 – Test Functionality
+Ensure orders display correctly and reorder works.  
+**Estimated Time:** 0.375 days  
+
+---
+
+## User Story 14 – Select Pickup or Delivery
+
+**Title:** Select Pickup or Delivery  
+**Priority:** High  
+**Total Estimate:** 2.375 Days  
+
+### Task 1 – Add Option in Order Class
+Store pickup or delivery preference.  
+**Estimated Time:** 1 day  
+
+### Task 2 – Create UI Component
+Allow user to choose pickup or delivery.  
+**Estimated Time:** 0.25 days  
+
+### Task 3 – Update Backend Logic
+Handle order routing based on choice.  
+**Estimated Time:** 1 day  
+
+### Task 4 – Test Selection Functionality
+Ensure selection is saved and reflected in orders.  
+**Estimated Time:** 1 day  
+
+---
+
+## User Story 15 – Order Confirmation Notifications
+
+**Title:** Order Confirmation Notifications  
+**Priority:** High  
+**Total Estimate:** 2.375 Days  
+
+### Task 1 – Create Notification Class
+Handle sending notifications.  
+**Estimated Time:** 1 day  
+
+### Task 2 – Integrate with Order System
+Trigger notification on successful order.  
+**Estimated Time:** 1 day  
+
+### Task 3 – Design Notification Templates
+Email, SMS, or app push.  
+**Estimated Time:** 0.125 days  
+
+### Task 4 – Test Notifications
+Ensure users receive correct confirmations.  
+**Estimated Time:** 0.25 days  

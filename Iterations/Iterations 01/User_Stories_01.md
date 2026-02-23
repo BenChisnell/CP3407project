@@ -174,7 +174,7 @@ As a Dev of the app, I want the backend of the app to be easy to access and upda
 | 10 | Ethan (M, 32). Priority High, estimate 3 daysAs a User of the . app, I want to pay with debit or credit card. So that I can complete my purchase. | 3 |
 | 11 | Ava (F, 29). Priority High, estimate 2 day. sAs a User of the app, I want to . enter my delivery address. So that my food arrives correctly. | 3 |
 | 12 |  Isabella (F, 24). Priority High, estimate 2 days. As a User of the app, I want to search for restaurants. So that I can quickly find them. | 3 |
-| 13 | Benjamin (M, 37). riority High, estimate 2 days. As a User of the app, I want to view order history. So that I can reorder quickly. | 3 |
+| 13 | Benjamin (M, 37). Priority High, estimate 2 days. As a User of the app, I want to view order history. So that I can reorder quickly. | 3 |
 | 14 | James (M, 38). Priority High, estimate 2 days. As a User of the app, I want to select pickup or delivery. So that I can choose convenience. | 3 |
 | 15 | Grace (F, 31). Priority High, estimate 2 days. As a User of the app, I want to receive order confirmation notifications. So that I know my order was successful. | 2 |
 

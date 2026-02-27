@@ -1,3 +1,5 @@
+# User Story Task Breakdown
+
 # TODO - Piper
 
 ### User 1 Alex (M, 28) Priority High, initial estimate 2 days As a User of the app, I want to create an account. So that I can place food orders.
@@ -40,8 +42,6 @@ Connect the database to the site for each restaurant - 1 day
 
 Total estimate - 2 days
 
-
-# User Story Task Breakdown
 
 ---
 

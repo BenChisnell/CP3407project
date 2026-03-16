@@ -251,11 +251,11 @@ Display order history and reorder options.
 
 ### Task 3 – Implement Backend Logic
 Fetch order history from database.  
-**Estimated Time:** 2 hours  
+**Estimated Time:** .5 days 
 
 ### Task 4 – Test Functionality
 Ensure orders display correctly and reorder works.  
-**Estimated Time:** 3 hours  
+**Estimated Time:** .5 days 
 
 ---
 

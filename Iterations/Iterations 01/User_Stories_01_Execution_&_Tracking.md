@@ -2,6 +2,7 @@
 
 # TODO - Piper
 
+## TODO
 ### User 1 Alex (M, 28) Priority High, initial estimate 2 days As a User of the app, I want to create an account. So that I can place food orders.
 
 Task 1:
@@ -11,6 +12,8 @@ Task 2:
 set up back end infrastructure to store account information - 1 day
 
 Total estimate - 2 days
+
+## TODO
 ### User 2 Sophie (F, 34) Priority High, estimate 1 day As a User of the app, I want to log in securely. So that my account is protected.
 
 Task 1:
@@ -20,6 +23,8 @@ Task 2:
 Create functionality to accept passwords using encrypted keys - 1 day
 
 Total estimate - 2 days
+
+## TODO
 ### User 3 Liam (M, 22) Priority High, initial estimate 2 days As a User of the app, I want to browse nearby restaurants. So that I can see available options.
 
 Task 1:
@@ -32,6 +37,8 @@ Task 3:
 Connect the database to the site and display the list to the user - 1 day
 
 Total estimate - 2.5 days
+
+## TODO
 ### User 4 Olivia (F, 30) Priority High, initial estimate 2 days As a User of the app, I want to view restaurant menus. So that I can decide what to order.
 
 Task 1:
@@ -47,6 +54,7 @@ Total estimate - 2 days
 
 # TODO - Terry
 
+## TODO
 ## User Story 5 – Filter Restaurants by Cuisine
 
 **Title:** Filter Restaurants by Cuisine  
@@ -73,7 +81,7 @@ Connect filter UI to API and test filtering functionality.
 **Total: 2 Days**
 
 ---
-
+## TODO
 ## User Story 6 – Apply Promo Codes
 
 **Title:** Apply Promo Codes  
@@ -101,6 +109,7 @@ Modify order total calculation to apply validated discount and update UI in real
 
 ---
 
+## TODO
 ## User Story 7 – Search for Gluten-Free Only Food
 
 **Title:** Search for Gluten-Free Only Food  
@@ -140,6 +149,7 @@ Test strict filtering to ensure non-gluten items never appear in results.
 
 ---
 
+## TODO
 ## User Story 8 – Secure Login Implementation
 
 **Title:** Secure Login Implementation  
@@ -161,6 +171,7 @@ Create login form with email/username and password fields.
 
 # TODO - Ben
 
+## TODO
 ## 9. Olivia (F, 30)
 **Priority:** High  
 **Estimate:** 2 days  
@@ -175,6 +186,7 @@ As a User of the app, I want to view restaurant menus so that I can decide what 
 Total - 2 days
 ---
 
+## TODO
 ## 10. Ethan (M, 32)
 **Priority:** High  
 **Estimate:** 3 days  
@@ -189,6 +201,7 @@ As a User of the app, I want to pay with debit or credit card so that I can comp
 Total - 2 days
 ---
 
+## TODO
 ## 11. Ava (F, 29)
 **Priority:** High  
 **Estimate:** 2 days  
@@ -203,6 +216,7 @@ As a User of the app, I want to enter my delivery address so that my food arrive
 Total - 1 day
 ---
 
+## TODO
 ## 12. Isabella (F, 24)
 **Priority:** High  
 **Estimate:** 2 days  
@@ -220,6 +234,7 @@ Total - 2 days
 
 # TODO - Lachlan
 
+## TODO
 ## User Story 13 – View Order History
 
 **Title:** View Order History  
@@ -236,14 +251,15 @@ Display order history and reorder options.
 
 ### Task 3 – Implement Backend Logic
 Fetch order history from database.  
-**Estimated Time:** 2 hours  
+**Estimated Time:** .5 day 
 
 ### Task 4 – Test Functionality
 Ensure orders display correctly and reorder works.  
-**Estimated Time:** 3 hours  
+**Estimated Time:** .5 day
 
 ---
 
+## TODO
 ## User Story 14 – Select Pickup or Delivery
 
 **Title:** Select Pickup or Delivery  
@@ -256,7 +272,7 @@ Store pickup or delivery preference.
 
 ### Task 2 – Create UI Component
 Allow user to choose pickup or delivery.  
-**Estimated Time:** 2 hours  
+**Estimated Time:** .5 day  
 
 ### Task 3 – Update Backend Logic
 Handle order routing based on choice.  
@@ -268,6 +284,7 @@ Ensure selection is saved and reflected in orders.
 
 ---
 
+## TODO
 ## User Story 15 – Order Confirmation Notifications
 
 **Title:** Order Confirmation Notifications  
@@ -284,8 +301,8 @@ Trigger notification on successful order.
 
 ### Task 3 – Design Notification Templates
 Email, SMS, or app push.  
-**Estimated Time:** 1 hour  
+**Estimated Time:** .5 day  
 
 ### Task 4 – Test Notifications
 Ensure users receive correct confirmations.  
-**Estimated Time:** 2 hours  
+**Estimated Time:** .5 day  

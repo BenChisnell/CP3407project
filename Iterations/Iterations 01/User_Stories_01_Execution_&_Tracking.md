@@ -32,7 +32,7 @@ Task 3:
 Connect the database to the site and display the list to the user - 1 day
 
 Total estimate - 2.5 days
-### User 5 Olivia (F, 30) Priority High, initial estimate 2 days As a User of the app, I want to view restaurant menus. So that I can decide what to order.
+### User 4 Olivia (F, 30) Priority High, initial estimate 2 days As a User of the app, I want to view restaurant menus. So that I can decide what to order.
 
 Task 1:
 Create a database of the available items for each restaurant - 1 day

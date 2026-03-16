@@ -251,11 +251,11 @@ Display order history and reorder options.
 
 ### Task 3 – Implement Backend Logic
 Fetch order history from database.  
-**Estimated Time:** .5 days 
+**Estimated Time:** .5 day 
 
 ### Task 4 – Test Functionality
 Ensure orders display correctly and reorder works.  
-**Estimated Time:** .5 days 
+**Estimated Time:** .5 day
 
 ---
 
@@ -272,7 +272,7 @@ Store pickup or delivery preference.
 
 ### Task 2 – Create UI Component
 Allow user to choose pickup or delivery.  
-**Estimated Time:** 2 hours  
+**Estimated Time:** .5 day  
 
 ### Task 3 – Update Backend Logic
 Handle order routing based on choice.  
@@ -301,8 +301,8 @@ Trigger notification on successful order.
 
 ### Task 3 – Design Notification Templates
 Email, SMS, or app push.  
-**Estimated Time:** 1 hour  
+**Estimated Time:** .5 day  
 
 ### Task 4 – Test Notifications
 Ensure users receive correct confirmations.  
-**Estimated Time:** 2 hours  
+**Estimated Time:** .5 day  

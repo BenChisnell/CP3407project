@@ -1,0 +1,1 @@
+Mia (F, 26). Priority High, estimate 1 day. As a User of the app, I want to edit or remove items in my cart. So that I can correct mistakes.

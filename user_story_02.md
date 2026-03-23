@@ -10,7 +10,7 @@ v1:
 * Jack: 3 day 
 * Ben: 
 * Terry:
-* Lachlan: 
+* Lachlan:
 
 ## Assumptions:
 v1:

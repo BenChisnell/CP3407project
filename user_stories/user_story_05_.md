@@ -1,0 +1,1 @@
+Amelia (F, 28). Priority High, estimate 2 days. As a User of the app, I want to filter restaurants by cuisine. So that I can find preferred food types. 

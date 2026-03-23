@@ -1,0 +1,1 @@
+William (M, 47). Priority High, estimate 2 days. As a User of the app, I want to filter restaurants by rating. So that I can choose trusted places.

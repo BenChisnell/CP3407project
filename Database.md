@@ -1,18 +1,18 @@
 # Database Documentation
-- [Database Documentation](#database-documentation)
-  - [1. Setup MYSQL Workbench](#1-setup-mysql-workbench)
-  - [2. Database Connection](#2-database-connection)
-  - [3. Tables and Attributes](#3-tables-and-attributes)
-    - [User](#user)
-    - [User Address](#user-address)
-    - [Address](#address)
-    - [Restaurants](#restaurants)
-    - [Menu](#menu)
-    - [Cart](#cart)
-    - [Cart Items](#cart-items)
-    - [Orders](#orders)
-    - [Order Items](#order-items)
-    - [Promo Code](#promo-code)
+- [1. Setup MYSQL Workbench](#1-setup-mysql-workbench)
+- [2. Database Connection](#2-database-connection)
+- [3. Tables and Attributes](#3-tables-and-attributes)
+  - [User](#user)
+  - [User Address](#user-address) 
+  - [Address](#address)
+  - [Restaurants](#restaurants)
+  - [Menu](#menu)
+  - [Cart](#cart)
+  - [Cart Items](#cart-items)
+  - [Orders](#orders)
+  - [Order Items](#order-items)
+  - [Promo Code](#promo-code)
+- [4. Add or Delete Data from Tables](#4-add-or-delete-data-from-tables)
 
 
 ## 1. Setup MYSQL Workbench
@@ -118,3 +118,9 @@ Create a MySQL Connection with the following details:
 | code                | VARCHAR   | NN  | Promo Code          |
 | discount_percentage | INT       | NN  | Discount percentage |
 | expiration_date     | DATE      |     | Expiration Date     |
+
+## 4. Add or Delete Data from Tables
+1. Click on the arrow next to `mydb` on the left hand side of the screen under the SCHEMAS heading
+2. Click on the arrow next to `Tables` 
+3. Select the desired table by clicking on the table/calander icon that appears when you hover over the table name.
+4. Either edit the table directly at the bottom of the screen or run SQL scripts to modify the data.  

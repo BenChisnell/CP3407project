@@ -2,6 +2,17 @@
 - [Database Documentation](#database-documentation)
   - [1. Setup MYSQL Workbench](#1-setup-mysql-workbench)
   - [2. Database Connection](#2-database-connection)
+  - [3. Tables and Attributes](#3-tables-and-attributes)
+    - [User](#user)
+    - [User Address](#user-address)
+    - [Address](#address)
+    - [Restaurants](#restaurants)
+    - [Menu](#menu)
+    - [Cart](#cart)
+    - [Cart Items](#cart-items)
+    - [Orders](#orders)
+    - [Order Items](#order-items)
+    - [Promo Code](#promo-code)
 
 
 ## 1. Setup MYSQL Workbench
@@ -18,3 +29,92 @@ Create a MySQL Connection with the following details:
 - Username: `dbmasteruser`
 - Password: `N2HaS6DBuEcU88YLK0uj`
 
+## 3. Tables and Attributes
+
+### User
+| Field Name   | Data Type | Key | Description     |
+| ------------ | --------- | --- | --------------- |
+| user_id      | INT       | PK  | Unique user ID  |
+| first_name   | VARCHAR   |     | User first name |
+| last_name    | VARCHAR   |     | User last name  |
+| email        | VARCHAR   |     | Login email     |
+| password     | VARCHAR   |     | Login password  |
+| phone_number | VARCHAR   |     | Contact number  |
+
+### User Address
+| Field Name   | Data Type | Key    | Description     |
+| ------------ | --------- | ------ | --------------- |
+| user_id      | INT       | PK, FK | Unique user ID  |
+| address_id   | VARCHAR   | PK, FK | User first name |
+
+### Address
+| Field Name      | Data Type | Key | Description     |
+| --------------- | --------- | --- | --------------- |
+| address_id      | INT       | PK  | Address ID      |
+| building_number | VARCHAR   |     | Building Number |
+| street_name     | VARCHAR   |     | Street Name     |
+| suburb_city     | VARCHAR   |     | Suburb / City   |
+| postcode        | INT       |     | Postcode        |
+
+### Restaurants
+| Field Name    | Data Type | Key | Description          |
+| ------------- | --------- | --- | -------------------- |
+| restaurant_id | INT       | PK  | Unique restaurant ID |
+| address_id    | INT       | FK  | Unique address ID    |
+| name          | VARCHAR   |     | Restaurant name      |
+| cuisine_type  | VARCHAR   |     | Cuisine category     |
+| rating        | DECIMAL   |     | Average rating       |
+| phone_number  | VARCHAR   |     | Contact number       |
+
+### Menu
+| Field Name    | Data Type | Key | Description          |
+| ------------- | --------- | --- | -------------------- |
+| menu_id       | INT       | PK  | Unique menu ID       |
+| restaurant_id | INT       | FK  | Unique restaurant ID |
+| item_name     | VARCHAR   |     | Name of food         |
+| description   | VARCHAR   |     | Item description     |
+| price         | DECIMAL   | NN  | Item price           |
+| gluten_free   | BOOLEAN   |     | Is it gluten free    |
+
+### Cart
+| Field Name | Data Type | Key | Description       |
+| ---------- | --------- | --- | ----------------- |
+| cart_id    | INT       | PK  | Cart item ID      |
+| user_id    | INT       | FK  | Cart reference ID |
+
+### Cart Items
+| Field Name   | Data Type | Key | Description       |
+| ------------ | --------- | --- | ----------------- |
+| cart_item_id | INT       | PK  | Cart item ID      |
+| menu_item_id | INT       | FK  | Selected food     |
+| card_id      | INT       | FK  | Cart reference ID |
+| quantity     | INT       | NN  | Quantity ordered  |
+
+### Orders
+| Field Name      | Data Type | Key | Description       |
+| --------------- | --------- | --- | ----------------- |
+| order_id        | INT       | PK  | Order ID          |
+| restaurant_id   | INT       | FK  | Restaurant        |
+| user_id         | INT       | FK  | Customer          |
+| address_id      | INT       | FK  | Delivery Location |
+| promo_id        | INT       | FK  | Unique Promo Code |
+| order_type      | VARCHAR   |     | Drop off type     |
+| total_price     | DECIMAL   | NN  | Total Cost        |
+| order_status    | VARCHAR   |     | Order Status      |
+| payment_method  | VARCHAR   | NN  | Payment Method    |
+
+### Order Items
+| Field Name    | Data Type | Key     | Description       |
+| ------------- | --------- | ------- | ----------------- |
+| order_id      | INT       | PK, FK  | Order item ID     |
+| menu_item_id  | INT       | PK, FK  | Food item         |
+| quantity      | INT       |         | Quantity ordered  |
+| price         | DECIMAL   |         | Price at purchase |
+
+### Promo Code
+| Field Name          | Data Type | Key | Description         |
+| ------------------- | --------- | --- | ------------------- |
+| promo_id            | INT       | PK  | Promo Code ID       |
+| code                | VARCHAR   | NN  | Promo Code          |
+| discount_percentage | INT       | NN  | Discount percentage |
+| expiration_date     | DATE      |     | Expiration Date     |

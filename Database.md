@@ -49,16 +49,9 @@ Within this connection, the main database used is:
 All data for the website is stored within this database.
 
 ### 3.3 Tables
-The `mydb` database contains all standard relational tables.
-
-These tables store and organise the system’s data and typically include:
-
-- `User`
-- `Address`
-- `Additional tables` as defined in [4.0 Tables and Attributes](##-4.0-Tables-and-Attributes)
+The `mydb` database contains all standard relational tables. These tables store and organise the system’s data.
 
 ### 3.4 Structure Overview
-
 ```text
 dbfeedme (Connection)
 └── mydb (Database)

@@ -15,12 +15,12 @@
 - [4. Add or Delete Data from Tables](#4-add-or-delete-data-from-tables)
 
 
-## 1. Setup MYSQL Workbench
+## 1.0 Setup MYSQL Workbench
 Download the [MYSQL Windows Installer](https://dev.mysql.com/downloads/windows/installer/8.0.html) and follow the prompts provided.
 
 Once installed, use the installer to install MYSQL Workbench.
 
-## 2. Database Connection
+## 2.0 Database Connection
 Create a MySQL Connection with the following details:
 - Connection Name: `dbfeedme`
 - Connection Method: `Standard TCP/IP`
@@ -29,7 +29,45 @@ Create a MySQL Connection with the following details:
 - Username: `dbmasteruser`
 - Password: `N2HaS6DBuEcU88YLK0uj`
 
-## 3. Tables and Attributes
+## 3.0 Database Hierarchy
+The database system is structured in a simple hierarchical format, consisting of a connection, a primary database, and its tables.
+
+### 3.1 Database Environment
+
+The MySQL connection is configured under the name:
+
+- Connection Name: `dbfeedme`
+
+This represents the database server environment that wordpress connects to.
+
+### 3.2 Primary Database
+
+Within this connection, the main database used is:
+
+- Database Name: `mydb`
+
+All data for the website is stored within this database.
+
+### 3.3 Tables
+The `mydb` database contains all standard relational tables.
+
+These tables store and organise the system’s data and typically include:
+
+- `User`
+- `Address`
+- `Additional tables` as defined in [4.0 Tables and Attributes](##-4.0-Tables-and-Attributes)
+
+### 3.4 Structure Overview
+
+```text
+dbfeedme (Connection)
+└── mydb (Database)
+    ├── Users
+    ├── Address
+    ├── Other Tables...
+```
+
+## 4.0 Tables and Attributes
 
 ### User
 | Field Name   | Data Type | Key | Description     |
@@ -119,7 +157,7 @@ Create a MySQL Connection with the following details:
 | discount_percentage | INT       | NN  | Discount percentage |
 | expiration_date     | DATE      |     | Expiration Date     |
 
-## 4. Add or Delete Data from Tables
+## 5.0 Add or Delete Data from Tables
 1. Click on the arrow next to `mydb` on the left hand side of the screen under the SCHEMAS heading
 2. Click on the arrow next to `Tables` 
 3. Select the desired table by clicking on the table/calander icon that appears when you hover over the table name.

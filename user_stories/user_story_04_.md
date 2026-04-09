@@ -1,1 +1,28 @@
-Mia (F, 26). Priority High, estimate 1 day. As a User of the app, I want to edit or remove items in my cart. So that I can correct mistakes.
+# User story title: Edit or remove items in the cart
+
+## Priority: 30
+Priority is a 30 because it enhances user decision-making and trust when selecting restaurants, but it is not essential to the core functionality of browsing and ordering food.
+
+## Estimation: 1 days
+* Piper: 1 day
+* Terry: 2 days
+* Ben: 1 days
+* Lachlan: 1 day
+* Jack: 2 days
+
+## Assumptions:
+* Users are likely to accidentally add incorrect items, quantities, or options to their cart during browsing.
+* Users expect real-time updates to their cart (price, totals, item list) when edits or removals are made.
+
+## Description: 
+As a user of the app, she wants the ability to edit or remove items in her cart, so that she can fix any mistakes made during selection and ensure her order is accurate before checkout.
+
+## Tasks:
+1. Task 1, Estimation 0.5 day
+2. Task 2, Estimation 0.5 day
+
+# UI Design:
+* Insert a mockup design screenshot using any prototyping tools, e.g. [https://ninjamock.com/](https://ninjamock.com/)
+
+# Completed:
+* Insert screenshots of completed. 

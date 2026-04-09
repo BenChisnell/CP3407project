@@ -13,3 +13,10 @@ The documentation covers the following areas:
 •	Amazon RDS database configuration
 •	Database design and management via MySQL Workbench
 •	Security, backup and maintenance
+
+
+1.3 Intended Audience
+•	System Administrators
+•	Database Administrators
+•	Developers
+•	Maintenance Teams

@@ -87,3 +87,13 @@ Network Security
 Public mode enabled - anyone with your database username and password can connect to it (Enabled to allow MySQL Workbench access via a local machine)
 
 Public mode disabled - only  LightSail resources in the same Region as your database can connect to it. (Stops access via MySQL Workbench access via a local machine). 
+
+
+
+2.3 Network and Security
+
+Port	    Protocol	        Service	                    Access level	            Description
+22	        SSH	            Secure Shell	                Restricted 	            Remote server administration
+80	        HTTP	        Web Traffic	                    Public	            Non-secure connection
+443	        HTTPS	        Secure Web Traffic	            Public	            Encrypted communication via SSL / TLS
+3306	    MySQL	        Database service	            Restricted           Secure database connectivity

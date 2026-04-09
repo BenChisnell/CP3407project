@@ -1,5 +1,3 @@
-Olivia (F, 30). Priority High, estimate 2 days. As a User of the app, I want to view restaurant menus. So that I can decide what to order.
-
 # User story title: View restaurant menus
 
 ## Priority: 10

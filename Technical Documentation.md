@@ -61,3 +61,6 @@ Lightsail server admin username	            SEE SYSTEM ADMINISTRATOR (NOT DISPLA
 Lightsail server admin password	            Download SSH key from AWS portal
 Default WordPress admin username	        SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
 Default WordPress admin password	        SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
+
+
+Note: For the purpose of this assignment, SSL is not configured or used on Lightsail due to no webhosting domain used. 

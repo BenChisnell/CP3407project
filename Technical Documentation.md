@@ -110,3 +110,21 @@ Plug-ins Used
 All-in-One WP                   Migration	Used to create complete back-ups of the site (Content and WordPress DB)
 Code Snippets	                Run code snippets on the site for PHP. No need to edit theme's functions.php file
 WP Mail SMTP	                Send WordPress emails reliably via SMTP
+
+
+
+2.5 Setup Database connection to Lightsail database on local machine using MySQL Workbench
+Add a new database connection, and enter the details below:
+
+Connection name: SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
+Connection method: Standard (TCP/IP)
+Parameters
+Hostname: SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
+Port: SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
+Username: SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
+Password: SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
+Default Schema: Leave blanks
+
+To set the password, click on “Store in Vault…” option under Password. A new window will appear, enter the password and then save. Test the connection to make sure it works.
+
+Open the database and modify database tables and contents as required. 

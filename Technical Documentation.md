@@ -20,3 +20,15 @@ The documentation covers the following areas:
 •	Database Administrators
 •	Developers
 •	Maintenance Teams
+
+
+1.4 Technology Systems Used
+
+Component	                    Technology
+Cloud Hosting	                AWS Lightsail
+Operating System	            Lunix (Bitnami Stack)
+Web Server	                    Apache
+Database	                    Amazon RDS (MySQL)
+Database Management Tool	    MySQL Workbench
+Content Management System(CMS)	WordPress
+Programming Language	        PHP, HTML, CSS

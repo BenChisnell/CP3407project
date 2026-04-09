@@ -32,3 +32,10 @@ Database	                    Amazon RDS (MySQL)
 Database Management Tool	    MySQL Workbench
 Content Management System(CMS)	WordPress
 Programming Language	        PHP, HTML, CSS
+
+
+1.5 Justification for Systems Used:
+•	AWS Lightsail was chosen for its cost-effectiveness and simple implementation. There was no need to configure any additional software after installation, as the WordPress image used has preinstalled webserver software. It also has database configuration options to connect to the Lightsail server instance. 
+•	Amazon RDS Allows SQL queries to probe the database for customized user information (previous orders, etc). Also provides scalability, security and automated backup solutions.
+•	WordPress easy to configure and operate Content Management System (CMS).
+•	MySQL Workbench for database design, creation and administration.

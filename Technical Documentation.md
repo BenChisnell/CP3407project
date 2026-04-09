@@ -39,3 +39,25 @@ Programming Language	        PHP, HTML, CSS
 •	Amazon RDS Allows SQL queries to probe the database for customized user information (previous orders, etc). Also provides scalability, security and automated backup solutions.
 •	WordPress easy to configure and operate Content Management System (CMS).
 •	MySQL Workbench for database design, creation and administration.
+
+
+
+2 Infrastructure Details
+
+2.1 AWS Lightsail Configuration
+
+Configuration item	                            Details
+AWS Region	                                Sydney, Zone A
+                                            (ap-southeast-2a)
+Instance Type	                            General
+Webserver CPU Allocation	                2 X vCPU’s
+Webserver Memory Allocation	                2GB
+Webserver Storage Allocation	            60GB SSD
+Networking Type	                            Dual Stack
+Static Public IPv4 Address	                SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
+Private IPv4 Address	                    SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
+Public IPv6 Address	                        SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
+Lightsail server admin username	            SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
+Lightsail server admin password	            Download SSH key from AWS portal
+Default WordPress admin username	        SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
+Default WordPress admin password	        SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)

@@ -30,3 +30,13 @@ For End Users:
 •	Provide secure payment options.
 •	Enable easy communication with restaurants and delivery personnel.
 •	Offer features such as order history, ratings, reviews and food type searches (ie. Gluten-free)
+
+
+
+Unique Selling Position:
+
+To differentiate FeedMe from other food delivery services, the platform will incorporate innovative and value-driven features, including:
+•	Local Business Support: Prioritizing local business support closest to users’ location where possible.
+•	Transparent Pricing: Clear breakdown of delivery fees with no hidden charges (delivery fees, GST, fuel levies, etc)
+•	Real-time Order Tracking: Real-time notifications via sms
+•	Integrated Reviews and Ratings: Ensuring quality assurance and trust among users.

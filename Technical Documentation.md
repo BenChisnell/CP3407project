@@ -79,8 +79,8 @@ Webserver Memory Allocation	                1GB
 Webserver Storage Allocation	            40GB SSD
 MySQL Database	                            8.4.8
 Database Endpoint	                        SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
-Database Username	                        SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC
-Database Password	                        SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC
+Database Username	                        SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
+Database Password	                        SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
 Port	                                    3306
 Network Security	                        
 
@@ -97,3 +97,16 @@ Port	    Protocol	        Service	                    Access level	            D
 80	        HTTP	        Web Traffic	                    Public	            Non-secure connection
 443	        HTTPS	        Secure Web Traffic	            Public	            Encrypted communication via SSL / TLS
 3306	    MySQL	        Database service	            Restricted           Secure database connectivity
+
+
+
+2.4 WordPress Lightsail Configuration
+
+Configuration item	                                Details
+WordPress Version	                                6.9.4
+Admin Portal Access                 	            SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
+	
+Plug-ins Used	
+All-in-One WP                   Migration	Used to create complete back-ups of the site (Content and WordPress DB)
+Code Snippets	                Run code snippets on the site for PHP. No need to edit theme's functions.php file
+WP Mail SMTP	                Send WordPress emails reliably via SMTP

@@ -64,3 +64,26 @@ Default WordPress admin password	        SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED
 
 
 Note: For the purpose of this assignment, SSL is not configured or used on Lightsail due to no webhosting domain used. 
+
+
+
+2.2 Amazon RDS Configuration
+
+Configuration item	                            Details
+AWS Region	                                Sydney, Zone A
+                                            (ap-southeast-2a)
+
+Instance Type	                            General
+Webserver CPU Allocation	                2 X vCPU’s
+Webserver Memory Allocation	                1GB
+Webserver Storage Allocation	            40GB SSD
+MySQL Database	                            8.4.8
+Database Endpoint	                        SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
+Database Username	                        SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC
+Database Password	                        SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC
+Port	                                    3306
+Network Security	                        
+
+Public mode enabled - anyone with your database username and password can connect to it (Enabled to allow MySQL Workbench access via a local machine)
+
+Public mode disabled - only  LightSail resources in the same Region as your database can connect to it. (Stops access via MySQL Workbench access via a local machine). 

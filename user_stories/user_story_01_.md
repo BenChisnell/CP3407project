@@ -1,6 +1,3 @@
- Priority High, estimate 2 days. 
-
-
 # User story title: Create an account
 
 ## Priority: 10

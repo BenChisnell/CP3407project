@@ -128,3 +128,19 @@ Default Schema: Leave blanks
 To set the password, click on “Store in Vault…” option under Password. A new window will appear, enter the password and then save. Test the connection to make sure it works.
 
 Open the database and modify database tables and contents as required. 
+
+
+
+2.6 Incorporate accessibility features to make the app usable for all individuals, including those
+with disabilities.
+
+Accessibility Widget by OneTap was used for the WordPress website to assist with accessibility features. Its a one-click setup, so the only configuration changes made were:
+
+Under Widget Design: Icon size set to large, Add border - use image with a border.
+
+Widget Color: Black
+
+Widget Position: Bottom-right
+
+Vertical (Default 15px) - Set size to 20PX
+Horizontal (Default 15px) - Set size to 20PX

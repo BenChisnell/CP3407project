@@ -22,12 +22,12 @@ Once installed, use the installer to install MYSQL Workbench.
 
 ## 2.0 Database Connection
 Create a MySQL Connection with the following details:
-- Connection Name: `dbfeedme`
+- Connection Name: `SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)`
 - Connection Method: `Standard TCP/IP`
-- Hostname: `ls-fc8a40f81a05efd4711f0d93fb3157bde5480966.cjeoyckasfnr.ap-southeast-2.rds.amazonaws.com`
+- Hostname: `SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)m`
 - Port `3306`
-- Username: `dbmasteruser`
-- Password: `N2HaS6DBuEcU88YLK0uj`
+- Username: `SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)`
+- Password: `SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)`
 
 ## 3.0 Database Hierarchy
 The database system is structured in a simple hierarchical format, consisting of a connection, a primary database, and its tables.

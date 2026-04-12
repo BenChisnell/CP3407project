@@ -1,23 +1,24 @@
-# Actual iteration-2 board, (see chapters 3 and 4), add your start and end dates 
+# Iteration-2 board 
 
-Checklist: 
-1. github entry timestamps
-2. User stories are correct: see p39
+### Start and end date:
+* Date started: xxx
+* Date finished: xxx
 
-* Assumed Velocity FROM iteration-1: ?? 
-* Number of developers: 5
-* Total estimated amount of work: YY days
+### Velocity:
+* Assumed Velocity: xxx
+* Number of developers: xxx
+* Total estimated amount of work: xxx days
 
-User stories or tasks (see chapter 4):
-1. [user story or task title](./user_stories/user_story_01_title.md), priority XX, YY days 
+User stories or tasks:
+1. [user story or task title](./user_stories/user_story_01_title.md)
 2. ...
 
 In progress:
-* Task-2 (developer name or initials), date started
+* User Story-X (developer name or initials), date started
 * ...
 
 Completed:
-* Task-3 (developer name or initials), date completed
+* User Story-X (developer name or initials), date started
 * ...
 
 ### Burn Down for iteration-2 (see chapter 4):

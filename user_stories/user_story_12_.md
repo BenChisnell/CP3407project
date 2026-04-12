@@ -1,4 +1,3 @@
-Isabella (F, 24). Priority High, estimate 2 days. As a User of the app, I want to search for restaurants. So that I can quickly find them.
 
 # User story title: Search for restaurants
 

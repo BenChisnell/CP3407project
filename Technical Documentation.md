@@ -1,146 +1,138 @@
-Project Title: “FeedMe” Website Platform
-
-1 Introduction
-
-1.1 Purpose
-This document provides technical information about the system architecture and codebase used to configure  and run the “FeedMe” Website Platform. It serves as a reference for administrators, developers and future maintainers.
+# Project Title: “FeedMe” Website Platform  
 
 
-1.2 Scope
-The documentation covers the following areas:
-•	Cloud infrastructure hosted on Amazon Web Services (AWS)
-•	WordPress deployment on AWS Lightsail
-•	Amazon RDS database configuration
-•	Database design and management via MySQL Workbench
-•	Security, backup and maintenance
+## 1. Introduction  
 
+### 1.1 Purpose  
+This document provides technical information about the system architecture and codebase used to configure and run the “FeedMe” Website Platform. It serves as a reference for administrators, developers, and future maintainers.  
 
-1.3 Intended Audience
-•	System Administrators
-•	Database Administrators
-•	Developers
-•	Maintenance Teams
+### 1.2 Scope  
+The documentation covers the following areas:  
+- Cloud infrastructure hosted on Amazon Web Services (AWS)  
+- WordPress deployment on AWS Lightsail  
+- Amazon RDS database configuration  
+- Database design and management via MySQL Workbench  
+- Security, backup, and maintenance  
 
+### 1.3 Intended Audience  
+- System Administrators  
+- Database Administrators  
+- Developers  
+- Maintenance Teams  
 
-1.4 Technology Systems Used
+---
 
-Component	                    Technology
-Cloud Hosting	                AWS Lightsail
-Operating System	            Lunix (Bitnami Stack)
-Web Server	                    Apache
-Database	                    Amazon RDS (MySQL)
-Database Management Tool	    MySQL Workbench
-Content Management System(CMS)	WordPress
-Programming Language	        PHP, HTML, CSS
+### 1.4 Technology Systems Used  
 
+| Component | Technology |
+|----------|----------|
+| Cloud Hosting | AWS Lightsail |
+| Operating System | Linux (Bitnami Stack) |
+| Web Server | Apache |
+| Database | Amazon RDS (MySQL) |
+| Database Management Tool | MySQL Workbench |
+| CMS | WordPress |
+| Programming Languages | PHP, HTML, CSS |
 
-1.5 Justification for Systems Used:
-•	AWS Lightsail was chosen for its cost-effectiveness and simple implementation. There was no need to configure any additional software after installation, as the WordPress image used has preinstalled webserver software. It also has database configuration options to connect to the Lightsail server instance. 
-•	Amazon RDS Allows SQL queries to probe the database for customized user information (previous orders, etc). Also provides scalability, security and automated backup solutions.
-•	WordPress easy to configure and operate Content Management System (CMS).
-•	MySQL Workbench for database design, creation and administration.
+---
 
+### 1.5 Justification for Systems Used  
+- AWS Lightsail was chosen for cost-effectiveness and simple deployment with preinstalled WordPress stack.  
+- Amazon RDS enables scalable, secure database access and supports querying user data.  
+- WordPress provides an easy-to-use CMS.  
+- MySQL Workbench supports database design and administration.  
 
+---
 
-2 Infrastructure Details
+## 2. Infrastructure Details  
 
-2.1 AWS Lightsail Configuration
+### 2.1 AWS Lightsail Configuration  
 
-Configuration item	                            Details
-AWS Region	                                Sydney, Zone A
-                                            (ap-southeast-2a)
-Instance Type	                            General
-Webserver CPU Allocation	                2 X vCPU’s
-Webserver Memory Allocation	                2GB
-Webserver Storage Allocation	            60GB SSD
-Networking Type	                            Dual Stack
-Static Public IPv4 Address	                SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
-Private IPv4 Address	                    SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
-Public IPv6 Address	                        SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
-Lightsail server admin username	            SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
-Lightsail server admin password	            Download SSH key from AWS portal
-Default WordPress admin username	        SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
-Default WordPress admin password	        SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
+| Configuration Item | Details |
+|------------------|--------|
+| AWS Region | Sydney, Zone A (ap-southeast-2a) |
+| Instance Type | General |
+| CPU | 2 vCPUs |
+| Memory | 2GB |
+| Storage | 60GB SSD |
+| Networking | Dual Stack |
+| Public/Private IPs | See System Administrator |
+| Admin Credentials | See System Administrator |
 
+> **Note:** SSL is not configured due to no domain being used.
 
-Note: For the purpose of this assignment, SSL is not configured or used on Lightsail due to no webhosting domain used. 
+---
 
+### 2.2 Amazon RDS Configuration  
 
+| Configuration Item | Details |
+|------------------|--------|
+| AWS Region | Sydney, Zone A (ap-southeast-2a) |
+| Instance Type | General |
+| CPU | 2 vCPUs |
+| Memory | 1GB |
+| Storage | 40GB SSD |
+| Database Version | MySQL 8.4.8 |
+| Port | 3306 |
+| Credentials | See System Administrator |
 
-2.2 Amazon RDS Configuration
+**Network Security Modes:**
+- Public mode enabled → Allows external connections (e.g., MySQL Workbench)  
+- Public mode disabled → Restricts access to Lightsail resources only  
 
-Configuration item	                            Details
-AWS Region	                                Sydney, Zone A
-                                            (ap-southeast-2a)
+---
 
-Instance Type	                            General
-Webserver CPU Allocation	                2 X vCPU’s
-Webserver Memory Allocation	                1GB
-Webserver Storage Allocation	            40GB SSD
-MySQL Database	                            8.4.8
-Database Endpoint	                        SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
-Database Username	                        SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
-Database Password	                        SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
-Port	                                    3306
-Network Security	                        
+### 2.3 Network and Security  
 
-Public mode enabled - anyone with your database username and password can connect to it (Enabled to allow MySQL Workbench access via a local machine)
+| Port | Protocol | Service | Access Level | Description |
+|------|---------|--------|-------------|------------|
+| 22 | SSH | Secure Shell | Restricted | Remote administration |
+| 80 | HTTP | Web Traffic | Public | Non-secure access |
+| 443 | HTTPS | Secure Web | Public | Encrypted SSL/TLS |
+| 3306 | MySQL | Database | Restricted | Secure DB access |
 
-Public mode disabled - only  LightSail resources in the same Region as your database can connect to it. (Stops access via MySQL Workbench access via a local machine). 
+---
 
+### 2.4 WordPress Lightsail Configuration  
 
+| Configuration Item | Details |
+|------------------|--------|
+| WordPress Version | 6.9.4 |
+| Admin Access | See System Administrator |
 
-2.3 Network and Security
+**Plugins Used:**
+- **All-in-One WP Migration** – Full backups  
+- **Code Snippets** – Run PHP without editing theme files  
+- **WP Mail SMTP** – Reliable email delivery  
 
-Port	    Protocol	        Service	                    Access level	            Description
-22	        SSH	            Secure Shell	                Restricted 	            Remote server administration
-80	        HTTP	        Web Traffic	                    Public	            Non-secure connection
-443	        HTTPS	        Secure Web Traffic	            Public	            Encrypted communication via SSL / TLS
-3306	    MySQL	        Database service	            Restricted           Secure database connectivity
+---
 
+### 2.5 Database Connection Setup (MySQL Workbench)  
 
+**Connection Settings:**
+- Connection Method: Standard (TCP/IP)  
+- Hostname: See System Administrator  
+- Port: See System Administrator  
+- Username: See System Administrator  
+- Password: Stored securely in Vault  
+- Default Schema: Leave blank  
 
-2.4 WordPress Lightsail Configuration
+**Steps:**
+1. Create new connection  
+2. Enter credentials  
+3. Store password in Vault  
+4. Test connection  
+5. Modify database as required  
 
-Configuration item	                                Details
-WordPress Version	                                6.9.4
-Admin Portal Access                 	            SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
-	
-Plug-ins Used	
-All-in-One WP                   Migration	Used to create complete back-ups of the site (Content and WordPress DB)
-Code Snippets	                Run code snippets on the site for PHP. No need to edit theme's functions.php file
-WP Mail SMTP	                Send WordPress emails reliably via SMTP
+---
 
+### 2.6 Accessibility Features  
 
+Accessibility Widget by OneTap was implemented with the following configuration:  
 
-2.5 Setup Database connection to Lightsail database on local machine using MySQL Workbench
-Add a new database connection, and enter the details below:
-
-Connection name: SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
-Connection method: Standard (TCP/IP)
-Parameters
-Hostname: SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
-Port: SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
-Username: SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
-Password: SEE SYSTEM ADMINISTRATOR (NOT DISPLAYED AS REPO IS PUBLIC)
-Default Schema: Leave blanks
-
-To set the password, click on “Store in Vault…” option under Password. A new window will appear, enter the password and then save. Test the connection to make sure it works.
-
-Open the database and modify database tables and contents as required. 
-
-
-
-2.6 Incorporate accessibility features to make the app usable for all individuals, including those
-with disabilities.
-
-Accessibility Widget by OneTap was used for the WordPress website to assist with accessibility features. Its a one-click setup, so the only configuration changes made were:
-
-Under Widget Design: Icon size set to large, Add border - use image with a border.
-
-Widget Color: Black
-
-Widget Position: Bottom-right
-
-Vertical (Default 15px) - Set size to 20PX
-Horizontal (Default 15px) - Set size to 20PX
+- Icon Size: Large  
+- Border: Enabled  
+- Color: Black  
+- Position: Bottom-right  
+- Vertical Offset: 20px  
+- Horizontal Offset: 20px  

@@ -42,6 +42,6 @@ velocity = 46/50 * 0.7 = 0.644
 
 We need close to 70 estimated days
 
-5*20 = 100 dev days
-100*0.7 = 70 working days
-actual estimated days = 69
+5*20 = 100 dev days  
+100 * 0.7 = 70 working days  
+actual estimated days = 69  

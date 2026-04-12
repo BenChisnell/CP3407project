@@ -1,8 +1,9 @@
 # Iteration-2 board 
 
 ### Start and end date:
-* Date started: xxx
-* Date finished: xxx
+* Date started: 09/03/2026
+* Date finished: 12/04/2026
+* Days of work: 25
 
 ### Velocity:
 * Assumed Velocity: xxx

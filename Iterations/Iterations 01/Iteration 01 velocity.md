@@ -14,7 +14,6 @@ A1 = E1 / v1 = E2 / v2, then v2 = E2/E1 * v1,
 
 for example, E2 = 60, then v2 = (60/70) * 0.7 = 0.6
 
-25/06=17
 
 Actual data
 
@@ -34,10 +33,6 @@ TODO for Jack user 4 - 4 days user 8 - 6 day user 12 - 4 days
 Total = 14 Days
 
 Total 69 days 
-
-velocity = 46/50 * 0.7 = 0.644
-
-
 
 
 We need close to 70 estimated days

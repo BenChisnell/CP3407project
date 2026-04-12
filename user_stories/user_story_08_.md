@@ -4,12 +4,12 @@
 ## Priority: 10
 Priority is a 10 because secure login is fundamental to protecting user data, preventing unauthorized access, and maintaining trust in the app. Without strong authentication and security measures, user accounts and sensitive information would be at risk, making this a critical core feature.
 
-## Estimation: 1 days
-* Piper: 2 day
-* Terry: 3 days
-* Ben: 1 days
-* Lachlan: 1 day
-* Jack: 1 days
+## Estimation: 6 days
+* Piper: 6 day
+* Terry: 5 days
+* Ben: 6 days
+* Lachlan: 6 day
+* Jack: 7 days
 
 ## Assumptions:
 * The app can handle login errors securely (e.g., incorrect credentials) without exposing sensitive information.
@@ -20,8 +20,8 @@ Priority is a 10 because secure login is fundamental to protecting user data, pr
 As a user of the app, Sophie a female aged 34 wants to log in securely so that my personal information, order history, and payment details are protected from unauthorized access.
 
 ## Tasks:
-1. Task 1, Estimation 0.5 day
-2. Task 2, Estimation 0.5 day
+1. Task 1, Estimation 3 day
+2. Task 2, Estimation 3 day
 
 # UI Design:
 * Insert a mockup design screenshot using any prototyping tools, e.g. [https://ninjamock.com/](https://ninjamock.com/)

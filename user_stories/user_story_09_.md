@@ -3,12 +3,12 @@
 ## Priority: 10
 Priority is a 10 because viewing restaurant menus is a core function of the app, enabling users to see available items, prices, and options before making a purchase decision. Without this feature, users cannot effectively browse or place orders, making it essential to the app’s functionality.
 
-## Estimation: 2 days
-* Piper: 1 day
-* Terry: 2 days
-* Ben: 1 days
-* Lachlan: 2 day
-* Jack: 1 days
+## Estimation: 5 days
+* Piper: 6 day
+* Terry: 5 days
+* Ben: 5 days
+* Lachlan: 4 day
+* Jack: 5 days
 
 ## Assumptions:
 * Restaurants provide accurate, up-to-date menus including item names, descriptions, prices, and availability.
@@ -17,8 +17,8 @@ Priority is a 10 because viewing restaurant menus is a core function of the app,
 As a user of the app, Olivia a female aged 30 wants to view restaurant menus so that she can compare items, prices, and options, and make an informed decision about what to order.
 
 ## Tasks:
-1. Task 1, Estimation 1 day
-2. Task 2, Estimation 1 day
+1. Task 1, Estimation 3 day
+2. Task 2, Estimation 2 day
 
 # UI Design:
 * Insert a mockup design screenshot using any prototyping tools, e.g. [https://ninjamock.com/](https://ninjamock.com/)

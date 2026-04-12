@@ -3,12 +3,12 @@
 ## Priority: 30
 Priority is a 30 due to the feature improving decision quality and user confidence, but not being critical to core functionality like account creation or ordering.
 
-## Estimation: 2 days
-* Piper: 1 day
-* Terry: 2 days
-* Ben: 3 days
-* Lachlan: 2 day
-* Jack: 1 days
+## Estimation: 3 days
+* Piper: 3 day
+* Terry: 3 days
+* Ben: 2 days
+* Lachlan: 3 day
+* Jack: 2 days
 
 ## Assumptions:
 * Users rely on ratings as a primary indicator of restaurant quality and trustworthiness when making decisions.
@@ -18,7 +18,7 @@ Priority is a 30 due to the feature improving decision quality and user confiden
 As a 47-year-old user, William wants to filter restaurants by rating so he can select reliable and trusted options.
 
 ## Tasks:
-1. Task 1, Estimation 0.5 day
+1. Task 1, Estimation 1 day
 2. Task 2, Estimation 1 day
 3. Task 3, Estimation 1 day
 

@@ -2,7 +2,7 @@
 /*
 Plugin Name: FeedMe Portal
 Description: FeedMe login, account, orders, address handling, and restaurant order integration.
-Version: 1.0
+Version: 2.0
 */
 
 if (!defined('ABSPATH')) exit;

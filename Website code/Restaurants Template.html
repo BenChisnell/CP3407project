@@ -1,4 +1,5 @@
-<!--Restaurant page template for Pizza store version 1.0-->
+<!--Restaurant page template for Pizza store version 2.0-->
+
 
 <section class="restaurant-page">
   <style>
@@ -9,334 +10,826 @@
       padding: 40px 20px;
     }
 
-    .wrapper {
+    .restaurant-wrapper {
       max-width: 1200px;
       margin: 0 auto;
     }
 
-    .hero {
+    .restaurant-hero {
       display: grid;
       grid-template-columns: 1.3fr 1fr;
       gap: 30px;
+      align-items: center;
       margin-bottom: 40px;
+      background: #fff;
     }
 
-    .hero img {
+    .restaurant-hero-image img {
       width: 100%;
       height: 360px;
       object-fit: cover;
-      border-radius: 16px;
+      border-radius: 18px;
+      display: block;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.12);
     }
 
-    .hero h1 {
-      margin: 0 0 10px;
-      font-size: 2.3rem;
+    .restaurant-hero-content h1 {
+      font-size: 2.4rem;
+      margin: 0 0 12px;
+      color: #012458;
     }
 
-    .meta { color: #555; margin-bottom: 10px; }
-    .desc { margin-bottom: 15px; line-height: 1.6; }
+    .restaurant-meta {
+      font-size: 1rem;
+      color: #4d5f85;
+      margin-bottom: 15px;
+      line-height: 1.7;
+    }
 
-    .tags span {
+    .restaurant-description {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #333;
+      margin-bottom: 18px;
+    }
+
+    .restaurant-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .restaurant-tags span {
+      display: inline-block;
       background: #012458;
       color: #fff;
-      padding: 6px 10px;
-      border-radius: 20px;
-      margin: 4px;
-      display: inline-block;
-      font-size: 0.8rem;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: bold;
     }
 
-    .layout {
+    .page-layout {
       display: grid;
       grid-template-columns: 2fr 1fr;
       gap: 30px;
+      align-items: start;
     }
 
-    h2 {
-      margin-top: 40px;
-      margin-bottom: 15px;
+    .menu-section h2,
+    .cart-section h2,
+    .checkout-section h2 {
+      margin-top: 0;
+      font-size: 1.6rem;
+      color: #012458;
+      margin-bottom: 20px;
     }
 
-    /* MAIN ITEMS */
+    .menu-subsection {
+      margin-bottom: 35px;
+    }
+
+    .menu-subsection h3 {
+      font-size: 1.25rem;
+      color: #012458;
+      margin: 0 0 16px;
+    }
+
     .menu-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 20px;
     }
 
     .menu-card {
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      overflow: hidden;
       background: #fff;
+      border: 1px solid #dfe7f5;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.06);
     }
 
     .menu-card img {
       width: 100%;
-      height: 160px;
+      height: 170px;
       object-fit: cover;
+      display: block;
     }
 
     .menu-card-content {
-      padding: 15px;
+      padding: 18px;
     }
 
-    .menu-card-content h3 {
-      margin: 0 0 8px;
+    .menu-card-content h3,
+    .menu-card-content h4 {
+      margin: 0 0 10px;
+      font-size: 1.1rem;
+      color: #012458;
     }
 
     .menu-card-content p {
-      font-size: 0.9rem;
+      margin: 0 0 12px;
       color: #444;
+      line-height: 1.5;
+      font-size: 0.95rem;
     }
 
-    .price {
+    .menu-price {
+      font-size: 1rem;
       font-weight: bold;
-      margin: 10px 0;
+      color: #012458;
+      margin-bottom: 12px;
     }
 
     .menu-actions {
       display: flex;
       gap: 10px;
+      align-items: center;
     }
 
-    /* SMALL ITEMS (sides/drinks/desserts) */
-    .small-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 15px;
-    }
-
-    .small-card {
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 12px;
-      background: #fff;
-    }
-
-    .small-card h4 {
-      margin: 0 0 5px;
-      font-size: 0.95rem;
-    }
-
-    .small-card p {
-      font-size: 0.8rem;
-      color: #555;
-      margin-bottom: 6px;
-    }
-
-    .small-card .price {
-      font-size: 0.9rem;
-    }
-
-    input, select, textarea {
+    .menu-actions input[type="number"] {
+      width: 70px;
       padding: 10px;
+      border: 1px solid #ccd8ef;
       border-radius: 8px;
-      border: 1px solid #ccc;
-      width: 100%;
+      font-size: 1rem;
     }
 
-    button {
+    .menu-actions button,
+    .checkout-btn,
+    .clear-cart-btn,
+    .apply-promo-btn {
       background: #05f040;
+      color: #012458;
       border: none;
-      padding: 10px;
-      border-radius: 8px;
+      padding: 11px 16px;
+      border-radius: 10px;
       font-weight: bold;
       cursor: pointer;
+      transition: 0.2s ease;
     }
 
-    .cart, .checkout {
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
+    .menu-actions button:hover,
+    .checkout-btn:hover,
+    .clear-cart-btn:hover,
+    .apply-promo-btn:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+
+    .cart-panel,
+    .checkout-panel {
+      background: #fff;
+      border: 1px solid #dfe7f5;
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+      margin-bottom: 25px;
+      position: sticky;
+      top: 20px;
+    }
+
+    .cart-empty {
+      color: #666;
+      font-size: 0.95rem;
+      margin-bottom: 15px;
+    }
+
+    .cart-items {
+      margin-bottom: 16px;
     }
 
     .cart-item {
-      border-bottom: 1px solid #eee;
-      padding: 8px 0;
+      border-bottom: 1px solid #ebf0fa;
+      padding: 10px 0;
     }
 
-    .total {
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+
+    .cart-item strong {
+      display: block;
+      color: #012458;
+      margin-bottom: 4px;
+    }
+
+    .cart-item span {
+      display: block;
+      color: #555;
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    .cart-subtotal,
+    .cart-discount,
+    .cart-total {
+      font-size: 1.05rem;
       font-weight: bold;
-      margin-top: 10px;
+      color: #012458;
+      margin: 10px 0;
+    }
+
+    .cart-discount {
+      color: #0a8f2c;
+    }
+
+    .promo-row {
+      display: flex;
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    .promo-row input {
+      flex: 1;
+      padding: 11px 12px;
+      border: 1px solid #ccd8ef;
+      border-radius: 10px;
+      font-size: 0.95rem;
+    }
+
+    .promo-message {
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      color: #0a8f2c;
+      font-weight: bold;
+      min-height: 20px;
+    }
+
+    .checkout-panel label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #012458;
+    }
+
+    .checkout-panel input,
+    .checkout-panel select,
+    .checkout-panel textarea {
+      width: 100%;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      border: 1px solid #ccd8ef;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      box-sizing: border-box;
+    }
+
+    .checkout-panel textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .order-type-options,
+    .notification-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .order-option,
+    .notification-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: normal;
+      color: #333;
+    }
+
+    .order-option input[type="radio"],
+    .notification-option input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+    }
+
+    .final-order-total {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #012458;
+      background: #f7fbff;
+      border: 1px solid #d9e7fb;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin: 4px 0 16px;
+    }
+
+    .order-message {
+      display: none;
+      margin-top: 15px;
+      padding: 14px;
+      border-radius: 12px;
+      background: #e8fff0;
+      color: #11612e;
+      border: 1px solid #bdeccc;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 960px) {
+      .restaurant-hero,
+      .page-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .cart-panel,
+      .checkout-panel {
+        position: static;
+      }
     }
   </style>
 
-  <div class="wrapper">
-    <!-- HERO -->
-    <div class="hero">
-      <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591">
-      <div>
+  <div class="restaurant-wrapper">
+    <div class="restaurant-hero">
+      <div class="restaurant-hero-image">
+        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1200&q=80" alt="Urban Pizza Co food">
+      </div>
+
+      <div class="restaurant-hero-content">
         <h1>Urban Pizza Co.</h1>
-        <div class="meta">Italian • 25 min • 4.7★</div>
-        <div class="desc">Fresh woodfired pizzas, pasta, and sides made daily.</div>
-        <div class="tags">
-          <span>Pizza</span><span>Italian</span><span>Mid-Range</span>
+        <div class="restaurant-meta">
+          Italian • 25 min delivery • 4.7★<br>
+          Mid-Range • Within 1 km • Vegetarian Options Available
+        </div>
+        <div class="restaurant-description">
+          Fresh woodfired pizzas and classic pasta dishes.
+          Urban Pizza Co. focuses on warm pizzas, rich pasta favourites, tasty sides, cold drinks, and simple desserts.
+        </div>
+        <div class="restaurant-tags">
+          <span>Pizza</span>
+          <span>Italian</span>
+          <span>Mid-Range</span>
+          <span>Within 1 km</span>
+          <span>Vegetarian</span>
         </div>
       </div>
     </div>
 
-    <div class="layout">
-      <div>
+    <div class="page-layout">
+      <div class="menu-section">
+        <h2>Menu</h2>
 
-        <!-- MAIN -->
-        <h2>Main Meals</h2>
-        <div class="menu-grid">
+        <div class="menu-subsection">
+          <h3>Main Meals</h3>
+          <div class="menu-grid">
+            <div class="menu-card">
+              <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1200&q=80" alt="Margherita Pizza">
+              <div class="menu-card-content">
+                <h3>Margherita Pizza</h3>
+                <p>Classic woodfired pizza with tomato, mozzarella, and fresh basil.</p>
+                <div class="menu-price">$18.00</div>
+                <div class="menu-actions">
+                  <input type="number" min="1" value="1" id="qty-margherita">
+                  <button onclick="addToCart('Margherita Pizza', 18, 'qty-margherita')">Add to Cart</button>
+                </div>
+              </div>
+            </div>
 
-          <div class="menu-card">
-            <img src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e">
-            <div class="menu-card-content">
-              <h3>Margherita Pizza</h3>
-              <p>Tomato, mozzarella, basil on a woodfired base.</p>
-              <div class="price">$18</div>
-              <div class="menu-actions">
-                <input type="number" id="m1" value="1">
-                <button onclick="addItem('Margherita Pizza',18,'m1')">Add</button>
+            <div class="menu-card">
+              <img src="https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=1200&q=80" alt="Pepperoni Pizza">
+              <div class="menu-card-content">
+                <h3>Pepperoni Pizza</h3>
+                <p>Woodfired pizza topped with pepperoni, mozzarella, and tomato base.</p>
+                <div class="menu-price">$20.00</div>
+                <div class="menu-actions">
+                  <input type="number" min="1" value="1" id="qty-pepperoni">
+                  <button onclick="addToCart('Pepperoni Pizza', 20, 'qty-pepperoni')">Add to Cart</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="menu-card">
+              <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=1200&q=80" alt="Creamy Pasta">
+              <div class="menu-card-content">
+                <h3>Creamy Chicken Pasta</h3>
+                <p>Rich creamy pasta with grilled chicken, herbs, and parmesan.</p>
+                <div class="menu-price">$19.00</div>
+                <div class="menu-actions">
+                  <input type="number" min="1" value="1" id="qty-creamy-pasta">
+                  <button onclick="addToCart('Creamy Chicken Pasta', 19, 'qty-creamy-pasta')">Add to Cart</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="menu-card">
+              <img src="https://images.unsplash.com/photo-1604382355076-af4b0eb60143?auto=format&fit=crop&w=1200&q=80" alt="Vegetarian Pizza">
+              <div class="menu-card-content">
+                <h3>Vegetarian Pizza</h3>
+                <p>Roasted vegetables, tomato sauce, mozzarella, and herbs on a woodfired base.</p>
+                <div class="menu-price">$19.50</div>
+                <div class="menu-actions">
+                  <input type="number" min="1" value="1" id="qty-veg-pizza">
+                  <button onclick="addToCart('Vegetarian Pizza', 19.5, 'qty-veg-pizza')">Add to Cart</button>
+                </div>
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="menu-card">
-            <img src="https://images.unsplash.com/photo-1516100882582-96c3a05fe590">
-            <div class="menu-card-content">
-              <h3>Pepperoni Pizza</h3>
-              <p>Pepperoni with rich tomato sauce and mozzarella.</p>
-              <div class="price">$21</div>
-              <div class="menu-actions">
-                <input type="number" id="m2" value="1">
-                <button onclick="addItem('Pepperoni Pizza',21,'m2')">Add</button>
+        <div class="menu-subsection">
+          <h3>Sides</h3>
+          <div class="menu-grid">
+            <div class="menu-card">
+              <img src="https://images.unsplash.com/photo-1548365328-9f547fb0953b?auto=format&fit=crop&w=1200&q=80" alt="Garlic Bread">
+              <div class="menu-card-content">
+                <h4>Garlic Bread</h4>
+                <p>Toasted bread with garlic butter and herbs.</p>
+                <div class="menu-price">$7.00</div>
+                <div class="menu-actions">
+                  <input type="number" min="1" value="1" id="qty-garlic-bread">
+                  <button onclick="addToCart('Garlic Bread', 7, 'qty-garlic-bread')">Add to Cart</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="menu-card">
+              <img src="https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=1200&q=80" alt="Cheesy Bread">
+              <div class="menu-card-content">
+                <h4>Cheesy Bread</h4>
+                <p>Warm bread topped with mozzarella and herbs.</p>
+                <div class="menu-price">$8.00</div>
+                <div class="menu-actions">
+                  <input type="number" min="1" value="1" id="qty-cheesy-bread">
+                  <button onclick="addToCart('Cheesy Bread', 8, 'qty-cheesy-bread')">Add to Cart</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="menu-card">
+              <img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=80" alt="Garden Salad">
+              <div class="menu-card-content">
+                <h4>Garden Salad</h4>
+                <p>A fresh side salad with greens, tomato, cucumber, and light dressing.</p>
+                <div class="menu-price">$6.50</div>
+                <div class="menu-actions">
+                  <input type="number" min="1" value="1" id="qty-salad">
+                  <button onclick="addToCart('Garden Salad', 6.5, 'qty-salad')">Add to Cart</button>
+                </div>
               </div>
             </div>
           </div>
-
         </div>
 
-        <!-- SIDES -->
-        <h2>Sides</h2>
-        <div class="small-grid">
-          <div class="small-card">
-            <h4>Garlic Bread</h4>
-            <p>Toasted with garlic butter</p>
-            <div class="price">$8</div>
-            <input type="number" id="s1" value="1">
-            <button onclick="addItem('Garlic Bread',8,'s1')">Add</button>
-          </div>
+        <div class="menu-subsection">
+          <h3>Drinks</h3>
+          <div class="menu-grid">
+            <div class="menu-card">
+              <img src="https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=1200&q=80" alt="Soft Drink">
+              <div class="menu-card-content">
+                <h4>Soft Drink</h4>
+                <p>Refreshing 330ml can to pair with pizza or pasta.</p>
+                <div class="menu-price">$4.00</div>
+                <div class="menu-actions">
+                  <input type="number" min="1" value="1" id="qty-softdrink">
+                  <button onclick="addToCart('Soft Drink', 4, 'qty-softdrink')">Add to Cart</button>
+                </div>
+              </div>
+            </div>
 
-          <div class="small-card">
-            <h4>Fries</h4>
-            <p>Crispy salted fries</p>
-            <div class="price">$6</div>
-            <input type="number" id="s2" value="1">
-            <button onclick="addItem('Fries',6,'s2')">Add</button>
-          </div>
-        </div>
+            <div class="menu-card">
+              <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=1200&q=80" alt="Iced Tea">
+              <div class="menu-card-content">
+                <h4>Iced Tea</h4>
+                <p>Cold bottled iced tea with a light sweet finish.</p>
+                <div class="menu-price">$4.50</div>
+                <div class="menu-actions">
+                  <input type="number" min="1" value="1" id="qty-icedtea">
+                  <button onclick="addToCart('Iced Tea', 4.5, 'qty-icedtea')">Add to Cart</button>
+                </div>
+              </div>
+            </div>
 
-        <!-- DRINKS -->
-        <h2>Drinks</h2>
-        <div class="small-grid">
-          <div class="small-card">
-            <h4>Soft Drink</h4>
-            <p>330ml can</p>
-            <div class="price">$4</div>
-            <input type="number" id="d1" value="1">
-            <button onclick="addItem('Soft Drink',4,'d1')">Add</button>
-          </div>
-
-          <div class="small-card">
-            <h4>Water</h4>
-            <p>600ml bottle</p>
-            <div class="price">$3</div>
-            <input type="number" id="d2" value="1">
-            <button onclick="addItem('Water',3,'d2')">Add</button>
-          </div>
-        </div>
-
-        <!-- DESSERT -->
-        <h2>Desserts</h2>
-        <div class="small-grid">
-          <div class="small-card">
-            <h4>Chocolate Cake</h4>
-            <p>Rich chocolate slice</p>
-            <div class="price">$9</div>
-            <input type="number" id="ds1" value="1">
-            <button onclick="addItem('Chocolate Cake',9,'ds1')">Add</button>
-          </div>
-
-          <div class="small-card">
-            <h4>Ice Cream</h4>
-            <p>Vanilla scoop</p>
-            <div class="price">$5</div>
-            <input type="number" id="ds2" value="1">
-            <button onclick="addItem('Ice Cream',5,'ds2')">Add</button>
+            <div class="menu-card">
+              <img src="https://images.unsplash.com/photo-1561047029-3000c68339ca?auto=format&fit=crop&w=1200&q=80" alt="Sparkling Water">
+              <div class="menu-card-content">
+                <h4>Sparkling Water</h4>
+                <p>Cold sparkling water in a chilled bottle.</p>
+                <div class="menu-price">$3.50</div>
+                <div class="menu-actions">
+                  <input type="number" min="1" value="1" id="qty-sparkling-water">
+                  <button onclick="addToCart('Sparkling Water', 3.5, 'qty-sparkling-water')">Add to Cart</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
+        <div class="menu-subsection">
+          <h3>Desserts</h3>
+          <div class="menu-grid">
+            <div class="menu-card">
+              <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=1200&q=80" alt="Tiramisu">
+              <div class="menu-card-content">
+                <h4>Tiramisu</h4>
+                <p>Classic Italian dessert with coffee, cream, and cocoa.</p>
+                <div class="menu-price">$8.50</div>
+                <div class="menu-actions">
+                  <input type="number" min="1" value="1" id="qty-tiramisu">
+                  <button onclick="addToCart('Tiramisu', 8.5, 'qty-tiramisu')">Add to Cart</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="menu-card">
+              <img src="https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=1200&q=80" alt="Vanilla Ice Cream">
+              <div class="menu-card-content">
+                <h4>Vanilla Ice Cream</h4>
+                <p>Classic vanilla ice cream served cold.</p>
+                <div class="menu-price">$5.00</div>
+                <div class="menu-actions">
+                  <input type="number" min="1" value="1" id="qty-icecream">
+                  <button onclick="addToCart('Vanilla Ice Cream', 5, 'qty-icecream')">Add to Cart</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="menu-card">
+              <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=1200&q=80" alt="Chocolate Biscuit">
+              <div class="menu-card-content">
+                <h4>Chocolate Biscuit</h4>
+                <p>A crunchy sweet biscuit for a lighter dessert option.</p>
+                <div class="menu-price">$4.50</div>
+                <div class="menu-actions">
+                  <input type="number" min="1" value="1" id="qty-biscuit">
+                  <button onclick="addToCart('Chocolate Biscuit', 4.5, 'qty-biscuit')">Add to Cart</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- CART -->
       <div>
-        <div class="cart">
-          <h3>Cart</h3>
-          <div id="cart"></div>
-          <div class="total" id="total">$0</div>
-          <button onclick="clearCart()">Clear</button>
+        <div class="cart-panel cart-section">
+          <h2>Your Cart</h2>
+          <div id="cartItems" class="cart-items">
+            <div class="cart-empty">Your cart is currently empty.</div>
+          </div>
+
+          <div class="promo-row">
+            <input type="text" id="promoCode" value="openingspecial" placeholder="Enter promo code">
+            <button class="apply-promo-btn" type="button" onclick="applyPromo()">Apply</button>
+          </div>
+
+          <div class="promo-message" id="promoMessage"></div>
+
+          <div class="cart-subtotal" id="cartSubtotal">Subtotal: $0.00</div>
+          <div class="cart-discount" id="cartDiscount">Discount: $0.00</div>
+          <div class="cart-total" id="cartTotal">Total: $0.00</div>
+
+          <button class="clear-cart-btn" onclick="clearCart()">Clear Cart</button>
         </div>
 
-        <!-- CHECKOUT -->
-        <div class="checkout">
-          <h3>Checkout</h3>
-          <input id="name" placeholder="Name">
-          <input id="phone" placeholder="Phone">
-          <input id="address" placeholder="Address">
+        <div class="checkout-panel checkout-section">
+          <h2>Checkout</h2>
 
-          <textarea id="notes" placeholder="Remove onion, extra cheese..."></textarea>
+          <label for="customerName">Full Name</label>
+          <input type="text" id="customerName" placeholder="Enter your full name">
 
-          <select id="payment">
-            <option>EFTPOS</option>
-            <option>Cash</option>
-            <option>PayID</option>
+          <label for="customerPhone">Phone Number</label>
+          <input type="text" id="customerPhone" placeholder="Enter your phone number">
+
+          <label for="customerAddress">Delivery Address</label>
+          <input type="text" id="customerAddress" placeholder="Enter your address">
+
+          <label>Order Type</label>
+          <div class="order-type-options">
+            <label class="order-option">
+              <input type="radio" name="orderType" value="pickup" checked onchange="renderCart()">
+              Pickup (Free)
+            </label>
+            <label class="order-option">
+              <input type="radio" name="orderType" value="delivery" onchange="renderCart()">
+              Delivery (+$5.00)
+            </label>
+          </div>
+
+          <label>Notifications</label>
+          <div class="notification-options">
+            <label class="notification-option">
+              <input type="checkbox" id="smsNotifications">
+              Send me text message updates about my order
+            </label>
+          </div>
+
+          <label for="orderNotes">Order Notes</label>
+          <textarea id="orderNotes" placeholder="Example: extra parmesan, no mushrooms, sauce on side if possible"></textarea>
+
+          <label for="paymentMethod">Payment Method</label>
+          <select id="paymentMethod">
+            <option value="">Select payment option</option>
+            <option value="EFTPOS on Delivery">EFTPOS on Delivery</option>
+            <option value="Cash on Delivery">Cash on Delivery</option>
+            <option value="PayID on Delivery">PayID on Delivery</option>
           </select>
 
-          <button onclick="checkout()">Place Order</button>
-          <div id="msg"></div>
+          <div class="final-order-total" id="finalOrderTotal">Your Order Total = $0.00</div>
+
+          <button class="checkout-btn" onclick="placeOrder()">Place Order</button>
+
+          <div class="order-message" id="orderMessage"></div>
         </div>
       </div>
-
     </div>
   </div>
 
   <script>
     let cart = [];
+    let promoApplied = false;
+    let promoDiscountRate = 0;
 
-    function addItem(name, price, id) {
-      let qty = parseInt(document.getElementById(id).value) || 1;
-      cart.push({name, price, qty});
-      render();
+    function formatCurrency(value) {
+      return "$" + value.toFixed(2);
     }
 
-    function render() {
-      let html = "";
-      let total = 0;
+    function getDeliveryFee() {
+      const selectedOrderType = document.querySelector('input[name="orderType"]:checked');
+      return selectedOrderType && selectedOrderType.value === "delivery" ? 5 : 0;
+    }
 
-      cart.forEach(i => {
-        total += i.price * i.qty;
-        html += `<div class="cart-item">${i.name} x${i.qty}</div>`;
+    function getSubtotal() {
+      let subtotal = 0;
+      cart.forEach(item => {
+        subtotal += item.price * item.quantity;
       });
+      return subtotal;
+    }
 
-      document.getElementById("cart").innerHTML = html;
-      document.getElementById("total").innerText = "$" + total;
+    function getDiscountAmount(subtotal) {
+      return promoApplied ? subtotal * promoDiscountRate : 0;
+    }
+
+    function addToCart(itemName, itemPrice, qtyInputId) {
+      const qtyInput = document.getElementById(qtyInputId);
+      let quantity = parseInt(qtyInput.value, 10);
+
+      if (isNaN(quantity) || quantity < 1) {
+        quantity = 1;
+      }
+
+      const existingItem = cart.find(item => item.name === itemName);
+
+      if (existingItem) {
+        existingItem.quantity += quantity;
+      } else {
+        cart.push({
+          name: itemName,
+          price: itemPrice,
+          quantity: quantity
+        });
+      }
+
+      qtyInput.value = 1;
+      renderCart();
+    }
+
+    function applyPromo() {
+      const promoInput = document.getElementById("promoCode");
+      const promoMessage = document.getElementById("promoMessage");
+      const code = (promoInput.value || "").trim().toLowerCase();
+
+      if (code === "openingspecial") {
+        promoApplied = true;
+        promoDiscountRate = 0.10;
+        promoMessage.style.color = "#0a8f2c";
+        promoMessage.textContent = 'Promo code "openingspecial" applied: 10% off your order.';
+      } else {
+        promoApplied = false;
+        promoDiscountRate = 0;
+        promoMessage.style.color = "#b00020";
+        promoMessage.textContent = "Promo code not recognised.";
+      }
+
+      renderCart();
     }
 
     function clearCart() {
       cart = [];
-      render();
+      promoApplied = false;
+      promoDiscountRate = 0;
+      document.getElementById("promoMessage").textContent = "";
+      renderCart();
+      document.getElementById("orderMessage").style.display = "none";
     }
 
-    function checkout() {
-      document.getElementById("msg").innerText = "Order placed!";
-      cart = [];
-      render();
+    function renderCart() {
+      const cartItems = document.getElementById("cartItems");
+      const cartSubtotal = document.getElementById("cartSubtotal");
+      const cartDiscount = document.getElementById("cartDiscount");
+      const cartTotal = document.getElementById("cartTotal");
+      const finalOrderTotal = document.getElementById("finalOrderTotal");
+
+      const subtotal = getSubtotal();
+      const discount = getDiscountAmount(subtotal);
+      const deliveryFee = getDeliveryFee();
+      const total = subtotal - discount + deliveryFee;
+
+      if (cart.length === 0) {
+        cartItems.innerHTML = '<div class="cart-empty">Your cart is currently empty.</div>';
+        cartSubtotal.textContent = "Subtotal: $0.00";
+        cartDiscount.textContent = "Discount: $0.00";
+        cartTotal.textContent = "Total: $0.00";
+        finalOrderTotal.textContent = "Your Order Total = $0.00";
+        return;
+      }
+
+      let html = "";
+
+      cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        html += `
+          <div class="cart-item">
+            <strong>${item.name}</strong>
+            <span>Quantity: ${item.quantity}</span>
+            <span>Price: ${formatCurrency(item.price)} each</span>
+            <span>Subtotal: ${formatCurrency(itemTotal)}</span>
+          </div>
+        `;
+      });
+
+      if (deliveryFee > 0) {
+        html += `
+          <div class="cart-item">
+            <strong>Delivery Fee</strong>
+            <span>${formatCurrency(deliveryFee)}</span>
+          </div>
+        `;
+      }
+
+      cartItems.innerHTML = html;
+      cartSubtotal.textContent = "Subtotal: " + formatCurrency(subtotal);
+      cartDiscount.textContent = "Discount: -" + formatCurrency(discount);
+      cartTotal.textContent = "Total: " + formatCurrency(total);
+      finalOrderTotal.textContent = "Your Order Total = " + formatCurrency(total);
     }
+
+    function placeOrder() {
+      const customerName = document.getElementById("customerName").value.trim();
+      const customerPhone = document.getElementById("customerPhone").value.trim();
+      const customerAddress = document.getElementById("customerAddress").value.trim();
+      const orderNotes = document.getElementById("orderNotes").value.trim();
+      const paymentMethod = document.getElementById("paymentMethod").value;
+      const orderMessage = document.getElementById("orderMessage");
+      const selectedOrderType = document.querySelector('input[name="orderType"]:checked');
+      const smsNotifications = document.getElementById("smsNotifications").checked;
+
+      if (cart.length === 0) {
+        orderMessage.style.display = "block";
+        orderMessage.style.background = "#fff4e8";
+        orderMessage.style.color = "#9a5a00";
+        orderMessage.style.borderColor = "#f0cf9c";
+        orderMessage.textContent = "Please add at least one item to the cart before placing the order.";
+        return;
+      }
+
+      if (!customerName || !customerPhone || !paymentMethod || !selectedOrderType) {
+        orderMessage.style.display = "block";
+        orderMessage.style.background = "#fff4e8";
+        orderMessage.style.color = "#9a5a00";
+        orderMessage.style.borderColor = "#f0cf9c";
+        orderMessage.textContent = "Please complete your name, phone number, payment method, and order type.";
+        return;
+      }
+
+      if (selectedOrderType.value === "delivery" && !customerAddress) {
+        orderMessage.style.display = "block";
+        orderMessage.style.background = "#fff4e8";
+        orderMessage.style.color = "#9a5a00";
+        orderMessage.style.borderColor = "#f0cf9c";
+        orderMessage.textContent = "Please enter your delivery address for delivery orders.";
+        return;
+      }
+
+      const subtotal = getSubtotal();
+      const discount = getDiscountAmount(subtotal);
+      const deliveryFee = getDeliveryFee();
+      const total = subtotal - discount + deliveryFee;
+
+      const safeNotes = orderNotes
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+
+      const orderTypeLabel = selectedOrderType.value === "delivery" ? "Delivery" : "Pickup";
+      const smsLabel = smsNotifications ? "Enabled" : "Not enabled";
+
+      orderMessage.style.display = "block";
+      orderMessage.style.background = "#e8fff0";
+      orderMessage.style.color = "#11612e";
+      orderMessage.style.borderColor = "#bdeccc";
+      orderMessage.innerHTML = `
+        Order placed successfully for <strong>${customerName}</strong>.<br>
+        Order type: <strong>${orderTypeLabel}</strong><br>
+        ${selectedOrderType.value === "delivery" ? "Delivery fee: <strong>" + formatCurrency(deliveryFee) + "</strong><br>" : ""}
+        ${promoApplied ? 'Promo applied: <strong>openingspecial</strong><br>' : ""}
+        ${promoApplied ? "Discount: <strong>-" + formatCurrency(discount) + "</strong><br>" : ""}
+        Total: <strong>${formatCurrency(total)}</strong><br>
+        Payment method: <strong>${paymentMethod}</strong><br>
+        SMS notifications: <strong>${smsLabel}</strong><br>
+        ${safeNotes ? "Order notes: <strong>" + safeNotes + "</strong><br>" : ""}
+      `;
+    }
+
+    renderCart();
   </script>
 </section>

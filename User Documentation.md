@@ -16,5 +16,5 @@ Users can also click on one of the three drop down menus to the right of the sea
 based on preferences such as price, distance and dietary restrictions. Once the search has been inputted
 restaurants will be displayed below based on the parameters given.
 
-
+### Add and Remove to the cart
 

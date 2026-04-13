@@ -21,6 +21,8 @@ The platform will be free for end-users (customers) and monetized through:
 * [User Documentation](xxx.pdf)
 * [Iteration 1](./iteration_1.md)
 * [Iteration 2](./iteration_2.md)
+* [Team Project Management](https://trello.com/b/SmCWvVqr/ase-board)
+* [FeedMe Website](http://43.220.2.209/)
 
 
 ## Project Brief

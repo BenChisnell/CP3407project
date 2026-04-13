@@ -1,0 +1,304 @@
+<!--Search page function version 1.0-->
+
+<section class="refined-search-page">
+  <style>
+    .refined-search-page {
+      font-family: Arial, sans-serif;
+      background: #f8f9fb;
+      padding: 60px 20px;
+      color: #222;
+    }
+
+    .search-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .search-hero {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .search-hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #111;
+    }
+
+    .search-hero p {
+      font-size: 1.1rem;
+      color: #666;
+      max-width: 700px;
+      margin: 0 auto 25px;
+    }
+
+    .search-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 25px;
+    }
+
+    .search-bar input[type="text"] {
+      width: 100%;
+      max-width: 500px;
+      padding: 14px 16px;
+      font-size: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      outline: none;
+    }
+
+    .search-bar button {
+      padding: 14px 24px;
+      font-size: 1rem;
+      background: #ff5a1f;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .search-bar button:hover {
+      background: #e44d14;
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin-bottom: 40px;
+    }
+
+    .filter-box {
+      background: #fff;
+      padding: 18px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+
+    .filter-box label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    .filter-box select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .results-title {
+      margin-bottom: 20px;
+    }
+
+    .results-title h2 {
+      font-size: 1.8rem;
+      color: #111;
+    }
+
+    .restaurant-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+    }
+
+    .restaurant-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .restaurant-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+    }
+
+    .restaurant-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .restaurant-content {
+      padding: 20px;
+    }
+
+    .restaurant-content h3 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+      color: #111;
+    }
+
+    .restaurant-content p {
+      margin: 6px 0;
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    .restaurant-tags {
+      margin-top: 12px;
+    }
+
+    .restaurant-tags span {
+      display: inline-block;
+      background: #fff1eb;
+      color: #ff5a1f;
+      padding: 6px 10px;
+      margin: 4px 4px 0 0;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    .cta-section {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .cta-section a {
+      display: inline-block;
+      padding: 14px 28px;
+      background: #111;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: 0.3s ease;
+    }
+
+    .cta-section a:hover {
+      background: #333;
+    }
+  </style>
+
+  <div class="search-container">
+    <div class="search-hero">
+      <h1>Find Food Faster with Refined Search</h1>
+      <p>
+        Discover restaurants and meals that match exactly what you’re craving.
+        Filter by cuisine, delivery time, dietary needs, price, and ratings to get better results instantly.
+      </p>
+
+      <div class="search-bar">
+        <input type="text" placeholder="Search for burgers, sushi, pizza, vegan meals..." />
+        <button type="button">Search</button>
+      </div>
+    </div>
+
+    <div class="filters">
+      <div class="filter-box">
+        <label for="cuisine">Cuisine</label>
+        <select id="cuisine">
+          <option>All Cuisines</option>
+          <option>Italian</option>
+          <option>Asian</option>
+          <option>Mexican</option>
+          <option>Indian</option>
+          <option>Fast Food</option>
+        </select>
+      </div>
+
+      <div class="filter-box">
+        <label for="price">Price Range</label>
+        <select id="price">
+          <option>All Prices</option>
+          <option>Budget</option>
+          <option>Mid-range</option>
+          <option>Premium</option>
+        </select>
+      </div>
+
+      <div class="filter-box">
+        <label for="dietary">Dietary Preferences</label>
+        <select id="dietary">
+          <option>All Options</option>
+          <option>Vegetarian</option>
+          <option>Vegan</option>
+          <option>Gluten-Free</option>
+          <option>Halal</option>
+        </select>
+      </div>
+
+      <div class="filter-box">
+        <label for="delivery">Delivery Time</label>
+        <select id="delivery">
+          <option>Any Time</option>
+          <option>Under 20 min</option>
+          <option>Under 30 min</option>
+          <option>Under 45 min</option>
+        </select>
+      </div>
+
+      <div class="filter-box">
+        <label for="rating">Minimum Rating</label>
+        <select id="rating">
+          <option>Any Rating</option>
+          <option>4.0+</option>
+          <option>4.5+</option>
+          <option>4.8+</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="results-title">
+      <h2>Popular Matches</h2>
+    </div>
+
+    <div class="restaurant-grid">
+      <div class="restaurant-card">
+        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1200&q=80" alt="Pizza restaurant">
+        <div class="restaurant-content">
+          <h3>Urban Pizza Co.</h3>
+          <p>Italian • 25 min delivery • 4.7★</p>
+          <p>Fresh woodfired pizzas and classic pasta dishes.</p>
+          <div class="restaurant-tags">
+            <span>Pizza</span>
+            <span>Fast Delivery</span>
+            <span>Top Rated</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="restaurant-card">
+        <img src="https://images.unsplash.com/photo-1562967916-eb82221dfb92?auto=format&fit=crop&w=1200&q=80" alt="Sushi restaurant">
+        <div class="restaurant-content">
+          <h3>Sakura Sushi</h3>
+          <p>Japanese • 30 min delivery • 4.8★</p>
+          <p>Fresh sushi rolls, sashimi, and Japanese favourites.</p>
+          <div class="restaurant-tags">
+            <span>Sushi</span>
+            <span>Healthy</span>
+            <span>Premium</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="restaurant-card">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=80" alt="Healthy food restaurant">
+        <div class="restaurant-content">
+          <h3>Green Bowl Kitchen</h3>
+          <p>Healthy • 20 min delivery • 4.6★</p>
+          <p>Nutritious bowls, vegan options, and fresh salads.</p>
+          <div class="restaurant-tags">
+            <span>Vegan</span>
+            <span>Gluten-Free</span>
+            <span>Quick Meals</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-section">
+      <a href="#">Explore All Restaurants</a>
+    </div>
+  </div>
+</section>

@@ -45,10 +45,10 @@ add_action('init', function () {
    DATABASE CONNECTION
 ========================= */
 function feedme_db() {
-    $host = 'ls-fc8a40f81a05efd4711f0d93fb3157bde5480966.cjeoyckasfnr.ap-southeast-2.rds.amazonaws.com';
-    $user = 'dbmasteruser';
-    $pass = 'N2HaS6DBuEcU88YLK0uj';
-    $name = 'mydb';
+    $host = '########################';
+    $user = '########################';
+    $pass = '########################';
+    $name = '########################';
     $port = 3306;
 
     $mysqli = new mysqli($host, $user, $pass, '', $port);

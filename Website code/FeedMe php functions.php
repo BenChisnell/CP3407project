@@ -2,429 +2,227 @@
 /*
 Plugin Name: FeedMe Portal
 Description: FeedMe login, account, orders, address handling, and restaurant order integration.
-Version: 2.0
+Version: 3.0
 */
 
-if (!defined('ABSPATH')) exit;
-
-/* =========================================================
-   FEEDME EXTERNAL DATABASE CONFIG
-========================================================= */
-define('FEEDME_DB_HOST', 'your-rds-endpoint.amazonaws.com');
-define('FEEDME_DB_NAME', 'feedme');
-define('FEEDME_DB_USER', 'your_db_username');
-define('FEEDME_DB_PASS', 'your_db_password');
-define('FEEDME_DB_CHARSET', 'utf8mb4');
-
-/* =========================================================
-   FEEDME TABLE NAMES
-========================================================= */
-define('FEEDME_TABLE_USER', 'User');
-define('FEEDME_TABLE_USER_ADDRESS', 'User Address');
-define('FEEDME_TABLE_ADDRESS', 'Address');
-define('FEEDME_TABLE_RESTAURANTS', 'Restaurants');
-define('FEEDME_TABLE_MENU', 'Menu');
-define('FEEDME_TABLE_CART', 'Cart');
-define('FEEDME_TABLE_CART_ITEMS', 'Cart Items');
-define('FEEDME_TABLE_ORDERS', 'Orders');
-define('FEEDME_TABLE_ORDER_ITEMS', 'Order Items');
-define('FEEDME_TABLE_PROMO_CODE', 'Promo Code');
-
-/* =========================================================
-   SESSION
-========================================================= */
 add_action('init', function () {
     if (!session_id()) {
         session_start();
     }
 }, 1);
 
-/* =========================================================
-   DATABASE CONNECTION
-========================================================= */
-function feedme_db() {
-    static $db = null;
-
-    if ($db !== null) {
-        return $db;
-    }
-
-    require_once ABSPATH . WPINC . '/wp-db.php';
-    $db = new wpdb(FEEDME_DB_USER, FEEDME_DB_PASS, FEEDME_DB_NAME, FEEDME_DB_HOST);
-    $db->query("SET NAMES '" . esc_sql(FEEDME_DB_CHARSET) . "'");
-    $db->show_errors(false);
-
-    return $db;
+/* =========================
+   URL HELPERS
+========================= */
+function feedme_login_url() {
+    return site_url('/?page_id=483');
 }
 
-function feedme_t($name) {
-    return '`' . str_replace('`', '', $name) . '`';
+function feedme_account_url() {
+    return site_url('/?page_id=344');
 }
 
-/* =========================================================
-   SESSION / USER HELPERS
-========================================================= */
-function feedme_is_logged_in() {
-    return !empty($_SESSION['feedme_user_id']);
+function feedme_orders_url() {
+    return site_url('/?page_id=47');
 }
 
-function feedme_current_user_id() {
-    return !empty($_SESSION['feedme_user_id']) ? intval($_SESSION['feedme_user_id']) : 0;
-}
-
-function feedme_login_user($user) {
-    $_SESSION['feedme_user_id'] = intval($user->user_id);
-    $_SESSION['feedme_user_email'] = (string)$user->email;
-    $_SESSION['feedme_user_name'] = trim(($user->first_name ?? '') . ' ' . ($user->last_name ?? ''));
-}
-
-function feedme_logout_user() {
-    unset($_SESSION['feedme_user_id'], $_SESSION['feedme_user_email'], $_SESSION['feedme_user_name']);
-}
-
-function feedme_get_user_by_id($user_id) {
-    $db = feedme_db();
-    $table = feedme_t(FEEDME_TABLE_USER);
-
-    return $db->get_row(
-        $db->prepare("SELECT * FROM {$table} WHERE user_id = %d LIMIT 1", $user_id)
-    );
-}
-
-function feedme_get_user_by_email($email) {
-    $db = feedme_db();
-    $table = feedme_t(FEEDME_TABLE_USER);
-
-    return $db->get_row(
-        $db->prepare("SELECT * FROM {$table} WHERE email = %s LIMIT 1", $email)
-    );
-}
-
-function feedme_get_current_user_profile() {
-    if (!feedme_is_logged_in()) return null;
-    return feedme_get_user_by_id(feedme_current_user_id());
-}
-
-/* =========================================================
-   ADDRESS HELPERS
-========================================================= */
-function feedme_normalize_address_input($data) {
-    return [
-        'building_number' => sanitize_text_field($data['building_number'] ?? ''),
-        'street_name'     => sanitize_text_field($data['street_name'] ?? ''),
-        'suburb_city'     => sanitize_text_field($data['suburb_city'] ?? ''),
-        'postcode'        => intval($data['postcode'] ?? 0),
-    ];
-}
-
-function feedme_find_address($address) {
-    $db = feedme_db();
-    $table = feedme_t(FEEDME_TABLE_ADDRESS);
-
-    return $db->get_row(
-        $db->prepare(
-            "SELECT * FROM {$table}
-             WHERE building_number = %s
-               AND street_name = %s
-               AND suburb_city = %s
-               AND postcode = %d
-             LIMIT 1",
-            $address['building_number'],
-            $address['street_name'],
-            $address['suburb_city'],
-            $address['postcode']
-        )
-    );
-}
-
-function feedme_insert_address($address) {
-    $db = feedme_db();
-    $table = str_replace('`', '', feedme_t(FEEDME_TABLE_ADDRESS));
-
-    $db->insert(
-        $table,
-        [
-            'building_number' => $address['building_number'],
-            'street_name'     => $address['street_name'],
-            'suburb_city'     => $address['suburb_city'],
-            'postcode'        => $address['postcode'],
-        ],
-        ['%s', '%s', '%s', '%d']
-    );
-
-    return intval($db->insert_id);
-}
-
-function feedme_link_user_address($user_id, $address_id) {
-    $db = feedme_db();
-    $table = feedme_t(FEEDME_TABLE_USER_ADDRESS);
-
-    $exists = $db->get_var(
-        $db->prepare(
-            "SELECT COUNT(*) FROM {$table} WHERE user_id = %d AND address_id = %d",
-            $user_id,
-            $address_id
-        )
-    );
-
-    if (!$exists) {
-        $db->insert(
-            str_replace('`', '', $table),
-            [
-                'user_id'    => $user_id,
-                'address_id' => $address_id,
-            ],
-            ['%d', '%d']
-        );
-    }
-}
-
-function feedme_get_user_addresses($user_id) {
-    $db = feedme_db();
-    $ua = feedme_t(FEEDME_TABLE_USER_ADDRESS);
-    $a  = feedme_t(FEEDME_TABLE_ADDRESS);
-
-    return $db->get_results(
-        $db->prepare(
-            "SELECT a.*
-             FROM {$ua} ua
-             INNER JOIN {$a} a ON ua.address_id = a.address_id
-             WHERE ua.user_id = %d
-             ORDER BY a.address_id DESC",
-            $user_id
-        )
-    );
-}
-
-function feedme_get_last_used_address($user_id) {
-    $db = feedme_db();
-    $orders = feedme_t(FEEDME_TABLE_ORDERS);
-    $address = feedme_t(FEEDME_TABLE_ADDRESS);
-
-    $row = $db->get_row(
-        $db->prepare(
-            "SELECT a.*
-             FROM {$orders} o
-             INNER JOIN {$address} a ON o.address_id = a.address_id
-             WHERE o.user_id = %d
-             ORDER BY o.order_id DESC
-             LIMIT 1",
-            $user_id
-        )
-    );
-
-    if ($row) return $row;
-
-    $addresses = feedme_get_user_addresses($user_id);
-    return !empty($addresses) ? $addresses[0] : null;
-}
-
-function feedme_resolve_address_for_user($user_id, $address_input) {
-    $address = feedme_normalize_address_input($address_input);
-
-    if (
-        $address['building_number'] === '' ||
-        $address['street_name'] === '' ||
-        $address['suburb_city'] === '' ||
-        $address['postcode'] === 0
-    ) {
-        return 0;
-    }
-
-    $existing = feedme_find_address($address);
-
-    if ($existing) {
-        $address_id = intval($existing->address_id);
-    } else {
-        $address_id = feedme_insert_address($address);
-    }
-
-    if ($address_id > 0) {
-        feedme_link_user_address($user_id, $address_id);
-    }
-
-    return $address_id;
-}
-
-/* =========================================================
-   PROMO HELPERS
-========================================================= */
-function feedme_get_promo_by_code($code) {
-    if (!$code) return null;
-
-    $db = feedme_db();
-    $promo = feedme_t(FEEDME_TABLE_PROMO_CODE);
-    $today = date('Y-m-d');
-
-    return $db->get_row(
-        $db->prepare(
-            "SELECT *
-             FROM {$promo}
-             WHERE code = %s
-               AND (expiration_date IS NULL OR expiration_date >= %s)
-             LIMIT 1",
-            sanitize_text_field($code),
-            $today
-        )
-    );
-}
-
-/* =========================================================
-   RESTAURANT / MENU HELPERS
-========================================================= */
-function feedme_get_restaurant_by_id($restaurant_id) {
-    $db = feedme_db();
-    $restaurants = feedme_t(FEEDME_TABLE_RESTAURANTS);
-
-    return $db->get_row(
-        $db->prepare(
-            "SELECT * FROM {$restaurants} WHERE restaurant_id = %d LIMIT 1",
-            $restaurant_id
-        )
-    );
-}
-
-function feedme_get_restaurant_by_name($name) {
-    $db = feedme_db();
-    $restaurants = feedme_t(FEEDME_TABLE_RESTAURANTS);
-
-    return $db->get_row(
-        $db->prepare(
-            "SELECT * FROM {$restaurants} WHERE name = %s LIMIT 1",
-            $name
-        )
-    );
-}
-
-function feedme_get_menu_item_by_id($menu_id) {
-    $db = feedme_db();
-    $menu = feedme_t(FEEDME_TABLE_MENU);
-
-    return $db->get_row(
-        $db->prepare(
-            "SELECT * FROM {$menu} WHERE menu_id = %d LIMIT 1",
-            $menu_id
-        )
-    );
-}
-
-function feedme_get_order_items($order_id) {
-    $db = feedme_db();
-    $order_items = feedme_t(FEEDME_TABLE_ORDER_ITEMS);
-    $menu = feedme_t(FEEDME_TABLE_MENU);
-
-    return $db->get_results(
-        $db->prepare(
-            "SELECT oi.*, m.item_name
-             FROM {$order_items} oi
-             LEFT JOIN {$menu} m ON oi.menu_item_id = m.menu_id
-             WHERE oi.order_id = %d",
-            $order_id
-        )
-    );
-}
-
-/* =========================================================
-   AUTH SHORTCODE
-========================================================= */
-function feedme_auth_shortcode() {
-    $message = '';
-
+/* =========================
+   LOGOUT HANDLER
+========================= */
+add_action('init', function () {
     if (isset($_GET['feedme_logout']) && $_GET['feedme_logout'] === '1') {
-        feedme_logout_user();
-        $message = '<div class="feedme-message success">You have been logged out.</div>';
+        if (!session_id()) {
+            session_start();
+        }
+
+        unset($_SESSION['user_id'], $_SESSION['name']);
+        wp_safe_redirect(feedme_login_url());
+        exit;
+    }
+}, 5);
+
+/* =========================
+   DATABASE CONNECTION
+========================= */
+function feedme_db() {
+    $host = 'ls-fc8a40f81a05efd4711f0d93fb3157bde5480966.cjeoyckasfnr.ap-southeast-2.rds.amazonaws.com';
+    $user = 'dbmasteruser';
+    $pass = 'N2HaS6DBuEcU88YLK0uj';
+    $name = 'mydb';
+    $port = 3306;
+
+    $mysqli = new mysqli($host, $user, $pass, '', $port);
+
+    if ($mysqli->connect_error) {
+        return null;
     }
 
-    if (!empty($_POST['feedme_register_submit'])) {
-        $db = feedme_db();
-        $user_table = str_replace('`', '', feedme_t(FEEDME_TABLE_USER));
+    $mysqli->set_charset('utf8mb4');
 
-        $first_name   = sanitize_text_field($_POST['first_name'] ?? '');
-        $last_name    = sanitize_text_field($_POST['last_name'] ?? '');
-        $email        = sanitize_email($_POST['email'] ?? '');
-        $password     = $_POST['password'] ?? '';
-        $confirm      = $_POST['confirm_password'] ?? '';
-        $phone_number = sanitize_text_field($_POST['phone_number'] ?? '');
+    if (!$mysqli->select_db($name)) {
+        return null;
+    }
 
-        if ($first_name === '' || $last_name === '' || $email === '' || $password === '') {
-            $message = '<div class="feedme-message error">Please complete all required fields.</div>';
-        } elseif (!is_email($email)) {
-            $message = '<div class="feedme-message error">Please enter a valid email address.</div>';
-        } elseif ($password !== $confirm) {
-            $message = '<div class="feedme-message error">Passwords do not match.</div>';
-        } elseif (feedme_get_user_by_email($email)) {
-            $message = '<div class="feedme-message error">An account with that email already exists.</div>';
-        } else {
-            $password_to_store = password_hash($password, PASSWORD_DEFAULT);
+    return $mysqli;
+}
 
-            $db->insert(
-                $user_table,
-                [
-                    'first_name'   => $first_name,
-                    'last_name'    => $last_name,
-                    'email'        => $email,
-                    'password'     => $password_to_store,
-                    'phone_number' => $phone_number,
-                ],
-                ['%s', '%s', '%s', '%s', '%s']
-            );
+/* =========================
+   AUTH SHORTCODE
+========================= */
+function feedme_auth_shortcode() {
+    $db = feedme_db();
 
-            $new_user_id = intval($db->insert_id);
-            if ($new_user_id > 0) {
-                $new_user = feedme_get_user_by_id($new_user_id);
-                if ($new_user) {
-                    feedme_login_user($new_user);
-                    wp_safe_redirect(site_url('/my-account/'));
-                    exit;
-                }
-            }
+    $db_connected = false;
+    $db_message = 'Database Status = ✖ Not Connected';
+    $form_message = '';
 
-            $message = '<div class="feedme-message error">Unable to create account.</div>';
+    if ($db) {
+        $db_name_result = $db->query("SELECT DATABASE() AS db_name");
+        $db_name_row = $db_name_result ? $db_name_result->fetch_assoc() : null;
+        $current_db = $db_name_row['db_name'] ?? '';
+
+        if (!empty($current_db)) {
+            $db_connected = true;
+            $db_message = 'Database Status = ✔ Connected to ' . $current_db;
         }
     }
 
-    if (!empty($_POST['feedme_login_submit'])) {
-        $email    = sanitize_email($_POST['login_email'] ?? '');
-        $password = $_POST['login_password'] ?? '';
-        $user = feedme_get_user_by_email($email);
+    if ($db && isset($_POST['register'])) {
+        $first = trim($_POST['first_name'] ?? '');
+        $last  = trim($_POST['last_name'] ?? '');
+        $email = trim($_POST['email'] ?? '');
+        $pass  = $_POST['password'] ?? '';
+        $confirm = $_POST['confirm_password'] ?? '';
+        $phone = trim($_POST['phone'] ?? '');
 
-        if (!$user) {
-            $message = '<div class="feedme-message error">Invalid email or password.</div>';
+        if ($first === '' || $last === '' || $email === '' || $pass === '') {
+            $form_message = '✖ Please complete all required fields.';
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $form_message = '✖ Please enter a valid email address.';
+        } elseif ($pass !== $confirm) {
+            $form_message = '✖ Passwords do not match.';
         } else {
-            $stored = (string) $user->password;
-            $valid = false;
+            $check_stmt = $db->prepare("SELECT user_id FROM `User` WHERE email = ? LIMIT 1");
 
-            if ($stored !== '') {
-                if (password_verify($password, $stored)) {
-                    $valid = true;
-                } elseif ($password === $stored) {
-                    $valid = true;
-                }
-            }
-
-            if ($valid) {
-                feedme_login_user($user);
-                wp_safe_redirect(site_url('/my-account/'));
-                exit;
+            if (!$check_stmt) {
+                $form_message = 'Create Account Failed: ' . $db->error;
             } else {
-                $message = '<div class="feedme-message error">Invalid email or password.</div>';
+                $check_stmt->bind_param("s", $email);
+                $check_stmt->execute();
+                $check_result = $check_stmt->get_result();
+                $existing_user = $check_result ? $check_result->fetch_assoc() : null;
+                $check_stmt->close();
+
+                if ($existing_user) {
+                    $form_message = '✖ An account with that email already exists.';
+                } else {
+                    $hash = password_hash($pass, PASSWORD_DEFAULT);
+
+                    $stmt = $db->prepare("
+                        INSERT INTO `User` (`first_name`, `last_name`, `email`, `password`, `phone_number`)
+                        VALUES (?, ?, ?, ?, ?)
+                    ");
+
+                    if (!$stmt) {
+                        $form_message = 'Create Account Failed: ' . $db->error;
+                    } else {
+                        $stmt->bind_param("sssss", $first, $last, $email, $hash, $phone);
+
+                        if ($stmt->execute()) {
+                            $_SESSION['user_id'] = (int) $stmt->insert_id;
+                            $_SESSION['name'] = $first;
+                            $stmt->close();
+                            wp_safe_redirect(feedme_account_url());
+                            exit;
+                        } else {
+                            $form_message = 'Create Account Failed: ' . $stmt->error;
+                            $stmt->close();
+                        }
+                    }
+                }
             }
         }
     }
 
-    if (feedme_is_logged_in()) {
+    if ($db && isset($_POST['login'])) {
+        $email = trim($_POST['login_email'] ?? '');
+        $pass  = $_POST['login_password'] ?? '';
+
+        $stmt = $db->prepare("SELECT * FROM `User` WHERE `email` = ?");
+        if (!$stmt) {
+            $form_message = 'Login Failed: ' . $db->error;
+        } else {
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $user = $result ? $result->fetch_assoc() : null;
+
+            if ($user) {
+                if (password_verify($pass, $user['password']) || $pass === $user['password']) {
+                    $_SESSION['user_id'] = (int) $user['user_id'];
+                    $_SESSION['name'] = $user['first_name'];
+                    $stmt->close();
+                    wp_safe_redirect(feedme_account_url());
+                    exit;
+                } else {
+                    $form_message = '✖ Wrong password.';
+                }
+            } else {
+                $form_message = '✖ User not found.';
+            }
+
+            $stmt->close();
+        }
+    }
+
+    if (!empty($_SESSION['user_id'])) {
         return '
         <section class="feedme-auth-page">
           <style>
-            .feedme-auth-page{font-family:Arial,sans-serif;background:#fff;color:#012458;padding:60px 20px}
-            .feedme-auth-wrap{max-width:900px;margin:0 auto}
-            .feedme-box{background:#fff;border:1px solid #dfe7f5;border-radius:18px;padding:28px;box-shadow:0 8px 18px rgba(0,0,0,.06)}
-            .feedme-box a{display:inline-block;background:#05f040;color:#012458;text-decoration:none;font-weight:bold;padding:10px 14px;border-radius:10px;margin-right:10px}
+            .feedme-auth-page {
+              font-family: Arial, sans-serif;
+              background: #fff;
+              color: #012458;
+              padding: 60px 20px;
+            }
+            .feedme-auth-wrap {
+              max-width: 1100px;
+              margin: 0 auto;
+            }
+            .feedme-box {
+              background: #fff;
+              border: 1px solid #dfe7f5;
+              border-radius: 18px;
+              padding: 28px;
+              box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+            }
+            .feedme-box a {
+              display: inline-block;
+              background: #05f040;
+              color: #012458;
+              text-decoration: none;
+              font-weight: bold;
+              padding: 10px 14px;
+              border-radius: 10px;
+              margin-right: 10px;
+              margin-bottom: 10px;
+            }
+            .feedme-db-status {
+              display: inline-block;
+              padding: 10px 14px;
+              border-radius: 12px;
+              font-weight: bold;
+              margin-bottom: 18px;
+              background: ' . ($db_connected ? '#e8fff0' : '#fff4e8') . ';
+              color: ' . ($db_connected ? '#11612e' : '#9a5a00') . ';
+              border: 1px solid ' . ($db_connected ? '#bdeccc' : '#f0cf9c') . ';
+            }
           </style>
           <div class="feedme-auth-wrap">
+            <div class="feedme-db-status">' . esc_html($db_message) . '</div>
             <div class="feedme-box">
               <h2>You are already logged in.</h2>
-              <p><a href="' . esc_url(site_url('/my-account/')) . '">Go to My Account</a><a href="' . esc_url(add_query_arg('feedme_logout', '1', site_url('/login/'))) . '">Logout</a></p>
+              <p><a href="' . esc_url(feedme_account_url()) . '">Go to My Account</a><a href="' . esc_url(add_query_arg('feedme_logout', '1', feedme_login_url())) . '">Logout</a></p>
             </div>
           </div>
         </section>';
@@ -443,6 +241,36 @@ function feedme_auth_shortcode() {
         .feedme-auth-wrap {
           max-width: 1100px;
           margin: 0 auto;
+        }
+        .feedme-auth-hero {
+          background: linear-gradient(135deg, #012458 0%, #023a7a 100%);
+          border-radius: 20px;
+          padding: 45px 35px;
+          color: #fff;
+          box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+          margin-bottom: 24px;
+        }
+        .feedme-auth-hero h1 {
+          margin: 0 0 12px;
+          font-size: 2.5rem;
+          color: #fff;
+        }
+        .feedme-auth-hero p {
+          margin: 0;
+          font-size: 1.05rem;
+          line-height: 1.7;
+          max-width: 760px;
+          color: #e9f1ff;
+        }
+        .feedme-db-status {
+          display: inline-block;
+          padding: 10px 14px;
+          border-radius: 12px;
+          font-weight: bold;
+          margin-bottom: 20px;
+          background: <?php echo $db_connected ? '#e8fff0' : '#fff4e8'; ?>;
+          color: <?php echo $db_connected ? '#11612e' : '#9a5a00'; ?>;
+          border: 1px solid <?php echo $db_connected ? '#bdeccc' : '#f0cf9c'; ?>;
         }
         .feedme-auth-grid {
           display: grid;
@@ -483,19 +311,17 @@ function feedme_auth_shortcode() {
           font-weight: bold;
           cursor: pointer;
         }
-        .feedme-message {
+        .feedme-form-message {
           max-width: 1100px;
           margin: 0 auto 20px;
           padding: 14px 16px;
           border-radius: 12px;
           font-weight: bold;
-        }
-        .feedme-message.error {
           background: #fff4e8;
           color: #9a5a00;
           border: 1px solid #f0cf9c;
         }
-        .feedme-message.success {
+        .feedme-form-message.success {
           background: #e8fff0;
           color: #11612e;
           border: 1px solid #bdeccc;
@@ -504,20 +330,36 @@ function feedme_auth_shortcode() {
           .feedme-auth-grid {
             grid-template-columns: 1fr;
           }
+          .feedme-auth-hero h1 {
+            font-size: 2rem;
+          }
         }
       </style>
 
-      <?php echo $message; ?>
-
       <div class="feedme-auth-wrap">
+        <div class="feedme-auth-hero">
+          <h1>Welcome to FeedMe</h1>
+          <p>Log in to manage your account, save your details, place orders faster, and view your current and previous orders all in one place.</p>
+        </div>
+
+        <div class="feedme-db-status">
+          <?php echo esc_html($db_message); ?>
+        </div>
+
+        <?php if ($form_message): ?>
+          <div class="feedme-form-message <?php echo (strpos($form_message, '✔') !== false) ? 'success' : ''; ?>">
+            <?php echo esc_html($form_message); ?>
+          </div>
+        <?php endif; ?>
+
         <div class="feedme-auth-grid">
           <div class="feedme-box">
             <h2>Login</h2>
-            <p>Log in to access your account and orders.</p>
+            <p>Log in to access your account details and orders.</p>
             <form method="post">
               <input type="email" name="login_email" placeholder="Email address" required>
               <input type="password" name="login_password" placeholder="Password" required>
-              <button type="submit" name="feedme_login_submit">Login</button>
+              <button type="submit" name="login">Login</button>
             </form>
           </div>
 
@@ -528,36 +370,345 @@ function feedme_auth_shortcode() {
               <input type="text" name="first_name" placeholder="First name" required>
               <input type="text" name="last_name" placeholder="Last name" required>
               <input type="email" name="email" placeholder="Email address" required>
-              <input type="text" name="phone_number" placeholder="Phone number">
+              <input type="text" name="phone" placeholder="Phone number">
               <input type="password" name="password" placeholder="Password" required>
               <input type="password" name="confirm_password" placeholder="Confirm password" required>
-              <button type="submit" name="feedme_register_submit">Create Account</button>
+              <button type="submit" name="register">Create Account</button>
             </form>
           </div>
         </div>
       </div>
     </section>
     <?php
+
     return ob_get_clean();
 }
 add_shortcode('feedme_auth', 'feedme_auth_shortcode');
-add_shortcode('feedme_login', 'feedme_auth_shortcode');
 
-/* =========================================================
-   ACCOUNT PAGE
-========================================================= */
+/* =========================
+   ACCOUNT HELPERS
+========================= */
+function feedme_get_current_user_profile() {
+    if (empty($_SESSION['user_id'])) {
+        return null;
+    }
+
+    $db = feedme_db();
+    if (!$db) {
+        return null;
+    }
+
+    $user_id = (int) $_SESSION['user_id'];
+
+    $stmt = $db->prepare("SELECT * FROM `User` WHERE `user_id` = ? LIMIT 1");
+    if (!$stmt) {
+        return null;
+    }
+
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result ? $result->fetch_assoc() : null;
+    $stmt->close();
+
+    return $user;
+}
+
+function feedme_get_user_addresses($user_id) {
+    $db = feedme_db();
+    if (!$db) {
+        return [];
+    }
+
+    $sql = "
+        SELECT a.*
+        FROM `User Address` ua
+        INNER JOIN `Address` a ON ua.address_id = a.address_id
+        WHERE ua.user_id = ?
+        ORDER BY a.address_id DESC
+    ";
+
+    $stmt = $db->prepare($sql);
+    if (!$stmt) {
+        return [];
+    }
+
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $addresses = [];
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $addresses[] = $row;
+        }
+    }
+
+    $stmt->close();
+    return $addresses;
+}
+
+function feedme_get_last_used_address($user_id) {
+    $db = feedme_db();
+    if (!$db) {
+        return null;
+    }
+
+    $sql = "
+        SELECT a.*
+        FROM `Orders` o
+        INNER JOIN `Address` a ON o.address_id = a.address_id
+        WHERE o.user_id = ?
+        ORDER BY o.order_id DESC
+        LIMIT 1
+    ";
+
+    $stmt = $db->prepare($sql);
+    if (!$stmt) {
+        return null;
+    }
+
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $address = $result ? $result->fetch_assoc() : null;
+    $stmt->close();
+
+    if ($address) {
+        return $address;
+    }
+
+    $addresses = feedme_get_user_addresses($user_id);
+    return !empty($addresses) ? $addresses[0] : null;
+}
+
+function feedme_find_existing_address($building_number, $street_name, $suburb_city, $postcode) {
+    $db = feedme_db();
+    if (!$db) {
+        return null;
+    }
+
+    $sql = "
+        SELECT *
+        FROM `Address`
+        WHERE building_number = ?
+          AND street_name = ?
+          AND suburb_city = ?
+          AND postcode = ?
+        LIMIT 1
+    ";
+
+    $stmt = $db->prepare($sql);
+    if (!$stmt) {
+        return null;
+    }
+
+    $stmt->bind_param("sssi", $building_number, $street_name, $suburb_city, $postcode);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $address = $result ? $result->fetch_assoc() : null;
+    $stmt->close();
+
+    return $address;
+}
+
+function feedme_insert_address($building_number, $street_name, $suburb_city, $postcode) {
+    $db = feedme_db();
+    if (!$db) {
+        return 0;
+    }
+
+    $stmt = $db->prepare("
+        INSERT INTO `Address` (`building_number`, `street_name`, `suburb_city`, `postcode`)
+        VALUES (?, ?, ?, ?)
+    ");
+
+    if (!$stmt) {
+        return 0;
+    }
+
+    $stmt->bind_param("sssi", $building_number, $street_name, $suburb_city, $postcode);
+
+    if (!$stmt->execute()) {
+        $stmt->close();
+        return 0;
+    }
+
+    $new_id = (int) $stmt->insert_id;
+    $stmt->close();
+
+    return $new_id;
+}
+
+function feedme_link_user_address($user_id, $address_id) {
+    $db = feedme_db();
+    if (!$db) {
+        return;
+    }
+
+    $check = $db->prepare("
+        SELECT *
+        FROM `User Address`
+        WHERE user_id = ? AND address_id = ?
+        LIMIT 1
+    ");
+
+    if (!$check) {
+        return;
+    }
+
+    $check->bind_param("ii", $user_id, $address_id);
+    $check->execute();
+    $result = $check->get_result();
+    $exists = $result ? $result->fetch_assoc() : null;
+    $check->close();
+
+    if ($exists) {
+        return;
+    }
+
+    $insert = $db->prepare("
+        INSERT INTO `User Address` (`user_id`, `address_id`)
+        VALUES (?, ?)
+    ");
+
+    if (!$insert) {
+        return;
+    }
+
+    $insert->bind_param("ii", $user_id, $address_id);
+    $insert->execute();
+    $insert->close();
+}
+
+/* =========================
+   ACCOUNT UPDATE
+========================= */
+add_action('init', function () {
+    if (empty($_SESSION['user_id'])) {
+        return;
+    }
+
+    if (!isset($_POST['feedme_account_update'])) {
+        return;
+    }
+
+    $db = feedme_db();
+    if (!$db) {
+        return;
+    }
+
+    $user_id = (int) $_SESSION['user_id'];
+
+    $first_name = trim($_POST['first_name'] ?? '');
+    $last_name = trim($_POST['last_name'] ?? '');
+    $phone_number = trim($_POST['phone_number'] ?? '');
+
+    $building_number = trim($_POST['building_number'] ?? '');
+    $street_name = trim($_POST['street_name'] ?? '');
+    $suburb_city = trim($_POST['suburb_city'] ?? '');
+    $postcode = (int) ($_POST['postcode'] ?? 0);
+
+    $new_password = $_POST['new_password'] ?? '';
+    $confirm_password = $_POST['confirm_new_password'] ?? '';
+
+    $stmt = $db->prepare("
+        UPDATE `User`
+        SET first_name = ?, last_name = ?, phone_number = ?
+        WHERE user_id = ?
+    ");
+
+    if ($stmt) {
+        $stmt->bind_param("sssi", $first_name, $last_name, $phone_number, $user_id);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    if (
+        $building_number !== '' &&
+        $street_name !== '' &&
+        $suburb_city !== '' &&
+        $postcode > 0
+    ) {
+        $existing_address = feedme_find_existing_address($building_number, $street_name, $suburb_city, $postcode);
+
+        if ($existing_address) {
+            $address_id = (int) $existing_address['address_id'];
+        } else {
+            $address_id = feedme_insert_address($building_number, $street_name, $suburb_city, $postcode);
+        }
+
+        if ($address_id > 0) {
+            feedme_link_user_address($user_id, $address_id);
+        }
+    }
+
+    if ($new_password !== '' && $new_password === $confirm_password) {
+        $hash = password_hash($new_password, PASSWORD_DEFAULT);
+
+        $pw_stmt = $db->prepare("
+            UPDATE `User`
+            SET `password` = ?
+            WHERE user_id = ?
+        ");
+
+        if ($pw_stmt) {
+            $pw_stmt->bind_param("si", $hash, $user_id);
+            $pw_stmt->execute();
+            $pw_stmt->close();
+        }
+    }
+
+    wp_safe_redirect(feedme_account_url());
+    exit;
+});
+
+/* =========================
+   ACCOUNT SHORTCODE
+========================= */
 function feedme_account_shortcode() {
-    if (!feedme_is_logged_in()) {
-        return '<section class="feedme-account-page"><div class="feedme-wrap"><div class="feedme-card"><p>Please <a href="' . esc_url(site_url('/login/')) . '">log in</a> to view your account.</p></div></div></section>';
+    if (empty($_SESSION['user_id'])) {
+        return '
+        <section class="feedme-account-page">
+          <style>
+            .feedme-account-page {
+              font-family: Arial, sans-serif;
+              background: #fff;
+              color: #012458;
+              padding: 60px 20px;
+            }
+            .feedme-wrap {
+              max-width: 1000px;
+              margin: 0 auto;
+            }
+            .feedme-card {
+              background: #fff;
+              border: 1px solid #dfe7f5;
+              border-radius: 18px;
+              padding: 24px;
+              box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+            }
+            .feedme-card a {
+              color: #012458;
+              font-weight: bold;
+            }
+          </style>
+          <div class="feedme-wrap">
+            <div class="feedme-card">
+              <p>Please <a href="' . esc_url(feedme_login_url()) . '">log in</a> to view your account.</p>
+            </div>
+          </div>
+        </section>';
     }
 
+    $user_id = (int) $_SESSION['user_id'];
     $profile = feedme_get_current_user_profile();
-    if (!$profile) {
-        return '<section class="feedme-account-page"><div class="feedme-wrap"><div class="feedme-card"><p>No profile found for this account.</p></div></div></section>';
-    }
+    $addresses = feedme_get_user_addresses($user_id);
+    $last_address = feedme_get_last_used_address($user_id);
 
-    $addresses = feedme_get_user_addresses((int)$profile->user_id);
-    $last_address = feedme_get_last_used_address((int)$profile->user_id);
+    if (!$profile) {
+        return '<p>Unable to load account details.</p>';
+    }
 
     ob_start();
     ?>
@@ -569,19 +720,41 @@ function feedme_account_shortcode() {
           color: #012458;
           padding: 60px 20px;
         }
+
         .feedme-wrap {
           max-width: 1050px;
           margin: 0 auto;
         }
-        .feedme-wrap h1 {
-          margin: 0 0 20px;
-          color: #012458;
+
+        .feedme-account-hero {
+          background: linear-gradient(135deg, #012458 0%, #023a7a 100%);
+          border-radius: 20px;
+          padding: 45px 35px;
+          color: #fff;
+          box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+          margin-bottom: 24px;
         }
+
+        .feedme-account-hero h1 {
+          margin: 0 0 12px;
+          font-size: 2.5rem;
+          color: #fff;
+        }
+
+        .feedme-account-hero p {
+          margin: 0;
+          font-size: 1.05rem;
+          line-height: 1.7;
+          max-width: 760px;
+          color: #e9f1ff;
+        }
+
         .feedme-grid-2 {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 24px;
         }
+
         .feedme-card {
           background: #fff;
           border: 1px solid #dfe7f5;
@@ -589,17 +762,22 @@ function feedme_account_shortcode() {
           padding: 24px;
           box-shadow: 0 8px 18px rgba(0,0,0,0.06);
         }
+
+        .feedme-card h2,
         .feedme-card h3 {
           margin-top: 0;
           color: #012458;
         }
+
         .feedme-card p {
           margin: 10px 0;
           color: #444;
         }
+
         .feedme-links {
           margin-top: 20px;
         }
+
         .feedme-links a {
           display: inline-block;
           background: #05f040;
@@ -611,6 +789,7 @@ function feedme_account_shortcode() {
           margin-right: 10px;
           margin-bottom: 10px;
         }
+
         .feedme-address-box {
           border: 1px solid #e6edf8;
           border-radius: 12px;
@@ -618,6 +797,7 @@ function feedme_account_shortcode() {
           margin-bottom: 12px;
           background: #fbfdff;
         }
+
         .feedme-input {
           width: 100%;
           padding: 12px 14px;
@@ -625,7 +805,9 @@ function feedme_account_shortcode() {
           border: 1px solid #ccd8ef;
           border-radius: 10px;
           box-sizing: border-box;
+          font-size: 0.95rem;
         }
+
         .feedme-btn {
           background: #05f040;
           color: #012458;
@@ -635,46 +817,54 @@ function feedme_account_shortcode() {
           font-weight: bold;
           cursor: pointer;
         }
+
         @media (max-width: 800px) {
           .feedme-grid-2 {
             grid-template-columns: 1fr;
+          }
+
+          .feedme-account-hero h1 {
+            font-size: 2rem;
           }
         }
       </style>
 
       <div class="feedme-wrap">
-        <h1>My Account</h1>
+        <div class="feedme-account-hero">
+          <h1>My Account</h1>
+          <p>View your personal details, saved addresses, and update your information. You can also jump straight to your orders page.</p>
+        </div>
 
         <div class="feedme-grid-2">
           <div class="feedme-card">
-            <h3>Profile Details</h3>
-            <p><strong>First Name:</strong> <?php echo esc_html($profile->first_name); ?></p>
-            <p><strong>Last Name:</strong> <?php echo esc_html($profile->last_name); ?></p>
-            <p><strong>Email:</strong> <?php echo esc_html($profile->email); ?></p>
-            <p><strong>Phone Number:</strong> <?php echo esc_html($profile->phone_number); ?></p>
+            <h2>Profile Details</h2>
+            <p><strong>First Name:</strong> <?php echo esc_html($profile['first_name']); ?></p>
+            <p><strong>Last Name:</strong> <?php echo esc_html($profile['last_name']); ?></p>
+            <p><strong>Email:</strong> <?php echo esc_html($profile['email']); ?></p>
+            <p><strong>Phone Number:</strong> <?php echo esc_html($profile['phone_number']); ?></p>
 
             <div class="feedme-links">
-              <a href="<?php echo esc_url(site_url('/my-orders/')); ?>">My Orders</a>
-              <a href="<?php echo esc_url(add_query_arg('feedme_logout', '1', site_url('/login/'))); ?>">Logout</a>
+              <a href="<?php echo esc_url(feedme_orders_url()); ?>">My Orders</a>
+              <a href="<?php echo esc_url(add_query_arg('feedme_logout', '1', feedme_login_url())); ?>">Logout</a>
             </div>
           </div>
 
           <div class="feedme-card">
-            <h3>Saved Addresses</h3>
+            <h2>Saved Addresses</h2>
 
             <?php if ($last_address): ?>
               <div class="feedme-address-box">
                 <p><strong>Last Used Address</strong></p>
-                <p><?php echo esc_html($last_address->building_number . ' ' . $last_address->street_name); ?></p>
-                <p><?php echo esc_html($last_address->suburb_city . ' ' . $last_address->postcode); ?></p>
+                <p><?php echo esc_html($last_address['building_number'] . ' ' . $last_address['street_name']); ?></p>
+                <p><?php echo esc_html($last_address['suburb_city'] . ' ' . $last_address['postcode']); ?></p>
               </div>
             <?php endif; ?>
 
             <?php if (!empty($addresses)): ?>
               <?php foreach ($addresses as $address): ?>
                 <div class="feedme-address-box">
-                  <p><?php echo esc_html($address->building_number . ' ' . $address->street_name); ?></p>
-                  <p><?php echo esc_html($address->suburb_city . ' ' . $address->postcode); ?></p>
+                  <p><?php echo esc_html($address['building_number'] . ' ' . $address['street_name']); ?></p>
+                  <p><?php echo esc_html($address['suburb_city'] . ' ' . $address['postcode']); ?></p>
                 </div>
               <?php endforeach; ?>
             <?php else: ?>
@@ -684,41 +874,41 @@ function feedme_account_shortcode() {
         </div>
 
         <div class="feedme-card" style="margin-top:24px;">
-          <h3>Update Details</h3>
+          <h2>Update Details</h2>
           <form method="post">
             <div class="feedme-grid-2">
               <div>
                 <label>First Name</label>
-                <input class="feedme-input" type="text" name="first_name" value="<?php echo esc_attr($profile->first_name ?? ''); ?>">
+                <input class="feedme-input" type="text" name="first_name" value="<?php echo esc_attr($profile['first_name']); ?>">
               </div>
               <div>
                 <label>Last Name</label>
-                <input class="feedme-input" type="text" name="last_name" value="<?php echo esc_attr($profile->last_name ?? ''); ?>">
+                <input class="feedme-input" type="text" name="last_name" value="<?php echo esc_attr($profile['last_name']); ?>">
               </div>
             </div>
 
             <label>Phone Number</label>
-            <input class="feedme-input" type="text" name="phone_number" value="<?php echo esc_attr($profile->phone_number ?? ''); ?>">
+            <input class="feedme-input" type="text" name="phone_number" value="<?php echo esc_attr($profile['phone_number']); ?>">
 
             <div class="feedme-grid-2">
               <div>
                 <label>Building Number</label>
-                <input class="feedme-input" type="text" name="building_number" value="<?php echo esc_attr($last_address->building_number ?? ''); ?>">
+                <input class="feedme-input" type="text" name="building_number" value="<?php echo esc_attr($last_address['building_number'] ?? ''); ?>">
               </div>
               <div>
                 <label>Street Name</label>
-                <input class="feedme-input" type="text" name="street_name" value="<?php echo esc_attr($last_address->street_name ?? ''); ?>">
+                <input class="feedme-input" type="text" name="street_name" value="<?php echo esc_attr($last_address['street_name'] ?? ''); ?>">
               </div>
             </div>
 
             <div class="feedme-grid-2">
               <div>
                 <label>Suburb / City</label>
-                <input class="feedme-input" type="text" name="suburb_city" value="<?php echo esc_attr($last_address->suburb_city ?? ''); ?>">
+                <input class="feedme-input" type="text" name="suburb_city" value="<?php echo esc_attr($last_address['suburb_city'] ?? ''); ?>">
               </div>
               <div>
                 <label>Postcode</label>
-                <input class="feedme-input" type="text" name="postcode" value="<?php echo esc_attr($last_address->postcode ?? ''); ?>">
+                <input class="feedme-input" type="text" name="postcode" value="<?php echo esc_attr($last_address['postcode'] ?? ''); ?>">
               </div>
             </div>
 
@@ -733,7 +923,7 @@ function feedme_account_shortcode() {
               </div>
             </div>
 
-            <button class="feedme-btn" type="submit" name="feedme_account_update_submit">Save Changes</button>
+            <button class="feedme-btn" type="submit" name="feedme_account_update">Save Changes</button>
           </form>
         </div>
       </div>
@@ -743,178 +933,251 @@ function feedme_account_shortcode() {
 }
 add_shortcode('feedme_account', 'feedme_account_shortcode');
 
-/* =========================================================
-   ACCOUNT UPDATE HANDLER
-========================================================= */
-add_action('init', function () {
-    if (!feedme_is_logged_in()) return;
-    if (empty($_POST['feedme_account_update_submit'])) return;
-
+/* =========================
+   ORDERS HELPERS
+========================= */
+function feedme_get_order_items($order_id) {
     $db = feedme_db();
-    $user_table = str_replace('`', '', feedme_t(FEEDME_TABLE_USER));
-    $user_id = feedme_current_user_id();
-
-    $first_name   = sanitize_text_field($_POST['first_name'] ?? '');
-    $last_name    = sanitize_text_field($_POST['last_name'] ?? '');
-    $phone_number = sanitize_text_field($_POST['phone_number'] ?? '');
-
-    $db->update(
-        $user_table,
-        [
-            'first_name'   => $first_name,
-            'last_name'    => $last_name,
-            'phone_number' => $phone_number
-        ],
-        ['user_id' => $user_id],
-        ['%s', '%s', '%s'],
-        ['%d']
-    );
-
-    $address_input = [
-        'building_number' => sanitize_text_field($_POST['building_number'] ?? ''),
-        'street_name'     => sanitize_text_field($_POST['street_name'] ?? ''),
-        'suburb_city'     => sanitize_text_field($_POST['suburb_city'] ?? ''),
-        'postcode'        => intval($_POST['postcode'] ?? 0),
-    ];
-
-    feedme_resolve_address_for_user($user_id, $address_input);
-
-    $new_password     = $_POST['new_password'] ?? '';
-    $confirm_password = $_POST['confirm_new_password'] ?? '';
-
-    if ($new_password !== '' && $new_password === $confirm_password) {
-        $db->update(
-            $user_table,
-            ['password' => password_hash($new_password, PASSWORD_DEFAULT)],
-            ['user_id' => $user_id],
-            ['%s'],
-            ['%d']
-        );
+    if (!$db) {
+        return [];
     }
 
-    wp_safe_redirect(site_url('/my-account/'));
-    exit;
-});
+    $sql = "
+        SELECT oi.order_id, oi.menu_item_id, oi.quantity, oi.price, m.item_name
+        FROM `Order Items` oi
+        LEFT JOIN `Menu` m ON oi.menu_item_id = m.menu_id
+        WHERE oi.order_id = ?
+        ORDER BY oi.menu_item_id ASC
+    ";
 
-/* =========================================================
-   REORDER HELPERS
-========================================================= */
+    $stmt = $db->prepare($sql);
+    if (!$stmt) {
+        return [];
+    }
+
+    $stmt->bind_param("i", $order_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $items = [];
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $items[] = $row;
+        }
+    }
+
+    $stmt->close();
+    return $items;
+}
+
 function feedme_reorder_order($old_order_id, $user_id) {
     $db = feedme_db();
-    $orders = feedme_t(FEEDME_TABLE_ORDERS);
-    $order_items = feedme_t(FEEDME_TABLE_ORDER_ITEMS);
+    if (!$db) {
+        return false;
+    }
 
-    $old_order = $db->get_row(
-        $db->prepare(
-            "SELECT * FROM {$orders} WHERE order_id = %d AND user_id = %d LIMIT 1",
-            $old_order_id,
-            $user_id
-        )
-    );
+    $order_stmt = $db->prepare("
+        SELECT *
+        FROM `Orders`
+        WHERE order_id = ? AND user_id = ?
+        LIMIT 1
+    ");
+
+    if (!$order_stmt) {
+        return false;
+    }
+
+    $order_stmt->bind_param("ii", $old_order_id, $user_id);
+    $order_stmt->execute();
+    $order_result = $order_stmt->get_result();
+    $old_order = $order_result ? $order_result->fetch_assoc() : null;
+    $order_stmt->close();
 
     if (!$old_order) {
         return false;
     }
 
-    $db->insert(
-        str_replace('`', '', $orders),
-        [
-            'restaurant_id'  => intval($old_order->restaurant_id),
-            'user_id'        => intval($user_id),
-            'address_id'     => intval($old_order->address_id),
-            'promo_id'       => $old_order->promo_id !== null ? intval($old_order->promo_id) : null,
-            'order_type'     => sanitize_text_field($old_order->order_type),
-            'total_price'    => floatval($old_order->total_price),
-            'order_status'   => 'Pending',
-            'payment_method' => sanitize_text_field($old_order->payment_method),
-        ],
-        ['%d', '%d', '%d', '%d', '%s', '%f', '%s', '%s']
-    );
+    $restaurant_id  = (int) $old_order['restaurant_id'];
+    $address_id     = (int) $old_order['address_id'];
+    $order_type     = $old_order['order_type'];
+    $total_price    = (float) $old_order['total_price'];
+    $order_status   = 'Pending';
+    $payment_method = $old_order['payment_method'];
 
-    $new_order_id = intval($db->insert_id);
+    $promo_id = null;
+    if (array_key_exists('promo_id', $old_order) && $old_order['promo_id'] !== null && $old_order['promo_id'] !== '') {
+        $promo_id = (int) $old_order['promo_id'];
+    }
 
-    if ($new_order_id <= 0) {
+    if ($promo_id !== null) {
+        $insert_order = $db->prepare("
+            INSERT INTO `Orders`
+            (`restaurant_id`, `user_id`, `address_id`, `promo_id`, `order_type`, `total_price`, `order_status`, `payment_method`)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+
+        if (!$insert_order) {
+            return false;
+        }
+
+        $insert_order->bind_param(
+            "iiiisdss",
+            $restaurant_id,
+            $user_id,
+            $address_id,
+            $promo_id,
+            $order_type,
+            $total_price,
+            $order_status,
+            $payment_method
+        );
+    } else {
+        $insert_order = $db->prepare("
+            INSERT INTO `Orders`
+            (`restaurant_id`, `user_id`, `address_id`, `order_type`, `total_price`, `order_status`, `payment_method`)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        ");
+
+        if (!$insert_order) {
+            return false;
+        }
+
+        $insert_order->bind_param(
+            "iiisdss",
+            $restaurant_id,
+            $user_id,
+            $address_id,
+            $order_type,
+            $total_price,
+            $order_status,
+            $payment_method
+        );
+    }
+
+    if (!$insert_order->execute()) {
+        $insert_order->close();
         return false;
     }
 
-    $items = $db->get_results(
-        $db->prepare(
-            "SELECT * FROM {$order_items} WHERE order_id = %d",
-            $old_order_id
-        )
-    );
+    $new_order_id = (int) $insert_order->insert_id;
+    $insert_order->close();
 
-    if ($items) {
-        foreach ($items as $item) {
-            $db->insert(
-                str_replace('`', '', $order_items),
-                [
-                    'order_id'     => $new_order_id,
-                    'menu_item_id' => intval($item->menu_item_id),
-                    'quantity'     => intval($item->quantity),
-                    'price'        => floatval($item->price),
-                ],
-                ['%d', '%d', '%d', '%f']
-            );
+    $items = feedme_get_order_items($old_order_id);
+
+    if (!empty($items)) {
+        $insert_item = $db->prepare("
+            INSERT INTO `Order Items`
+            (`order_id`, `menu_item_id`, `quantity`, `price`)
+            VALUES (?, ?, ?, ?)
+        ");
+
+        if ($insert_item) {
+            foreach ($items as $item) {
+                $menu_item_id = (int) $item['menu_item_id'];
+                $quantity     = (int) $item['quantity'];
+                $price        = (float) $item['price'];
+
+                $insert_item->bind_param("iiid", $new_order_id, $menu_item_id, $quantity, $price);
+                $insert_item->execute();
+            }
+
+            $insert_item->close();
         }
     }
 
     return $new_order_id;
 }
 
-/* =========================================================
-   ORDERS PAGE
-========================================================= */
+/* =========================
+   ORDERS SHORTCODE
+========================= */
 function feedme_orders_shortcode() {
-    if (!feedme_is_logged_in()) {
-        return '<section class="feedme-orders-page"><div class="feedme-wrap"><div class="feedme-card"><p>Please <a href="' . esc_url(site_url('/login/')) . '">log in</a> to view your orders.</p></div></div></section>';
-    }
-
-    $profile = feedme_get_current_user_profile();
-    if (!$profile) {
-        return '<section class="feedme-orders-page"><div class="feedme-wrap"><div class="feedme-card"><p>No profile found for this account.</p></div></div></section>';
-    }
-
-    $message = '';
-
-    if (!empty($_POST['feedme_reorder_submit'])) {
-        $old_order_id = intval($_POST['reorder_order_id'] ?? 0);
-        $new_order_id = feedme_reorder_order($old_order_id, intval($profile->user_id));
-
-        if ($new_order_id) {
-            $message = '<div class="feedme-message success">The previous order has been added again as a new order. New Order ID: ' . esc_html($new_order_id) . '</div>';
-        } else {
-            $message = '<div class="feedme-message error">Unable to reorder that order.</div>';
-        }
+    if (empty($_SESSION['user_id'])) {
+        return '
+        <section class="feedme-orders-page">
+          <style>
+            .feedme-orders-page {
+              font-family: Arial, sans-serif;
+              background: #fff;
+              color: #012458;
+              padding: 60px 20px;
+            }
+            .feedme-wrap {
+              max-width: 1100px;
+              margin: 0 auto;
+            }
+            .feedme-card {
+              background: #fff;
+              border: 1px solid #dfe7f5;
+              border-radius: 18px;
+              padding: 24px;
+              box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+            }
+            .feedme-card a {
+              color: #012458;
+              font-weight: bold;
+            }
+          </style>
+          <div class="feedme-wrap">
+            <div class="feedme-card">
+              <p>Please <a href="' . esc_url(feedme_login_url()) . '">log in</a> to view your orders.</p>
+            </div>
+          </div>
+        </section>';
     }
 
     $db = feedme_db();
-    $orders_table = feedme_t(FEEDME_TABLE_ORDERS);
-    $restaurants_table = feedme_t(FEEDME_TABLE_RESTAURANTS);
+    if (!$db) {
+        return '<p>Unable to connect to the database.</p>';
+    }
 
-    $orders = $db->get_results(
-        $db->prepare(
-            "SELECT o.*, r.name AS restaurant_name
-             FROM {$orders_table} o
-             LEFT JOIN {$restaurants_table} r ON o.restaurant_id = r.restaurant_id
-             WHERE o.user_id = %d
-             ORDER BY o.order_id DESC",
-            $profile->user_id
-        )
-    );
+    $user_id = (int) $_SESSION['user_id'];
+    $message = '';
 
-    $current_orders = [];
+    if (isset($_POST['feedme_reorder_submit'])) {
+        $old_order_id = (int) ($_POST['reorder_order_id'] ?? 0);
+        $new_order_id = feedme_reorder_order($old_order_id, $user_id);
+
+        if ($new_order_id) {
+            $message = '✔ Order reordered successfully. New Order ID: ' . $new_order_id;
+        } else {
+            $message = '✖ Unable to reorder that order.';
+        }
+    }
+
+    $sql = "
+        SELECT o.*, r.name AS restaurant_name
+        FROM `Orders` o
+        LEFT JOIN `Restaurants` r ON o.restaurant_id = r.restaurant_id
+        WHERE o.user_id = ?
+        ORDER BY o.order_id DESC
+    ";
+
+    $stmt = $db->prepare($sql);
+    if (!$stmt) {
+        return '<p>Unable to load orders.</p>';
+    }
+
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $orders = [];
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $orders[] = $row;
+        }
+    }
+
+    $stmt->close();
+
+    $current_order = null;
     $previous_orders = [];
 
-    if ($orders) {
-        $first = true;
-        foreach ($orders as $order) {
-            if ($first) {
-                $current_orders[] = $order;
-                $first = false;
-            } else {
-                $previous_orders[] = $order;
-            }
+    if (!empty($orders)) {
+        $current_order = $orders[0];
+        if (count($orders) > 1) {
+            $previous_orders = array_slice($orders, 1);
         }
     }
 
@@ -928,17 +1191,35 @@ function feedme_orders_shortcode() {
           color: #012458;
           padding: 60px 20px;
         }
+
         .feedme-wrap {
           max-width: 1100px;
           margin: 0 auto;
         }
-        .feedme-wrap h1 {
-          margin: 0 0 20px;
+
+        .feedme-orders-hero {
+          background: linear-gradient(135deg, #012458 0%, #023a7a 100%);
+          border-radius: 20px;
+          padding: 45px 35px;
+          color: #fff;
+          box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+          margin-bottom: 24px;
         }
-        .feedme-wrap h2 {
-          margin: 30px 0 15px;
-          color: #012458;
+
+        .feedme-orders-hero h1 {
+          margin: 0 0 12px;
+          font-size: 2.5rem;
+          color: #fff;
         }
+
+        .feedme-orders-hero p {
+          margin: 0;
+          font-size: 1.05rem;
+          line-height: 1.7;
+          max-width: 760px;
+          color: #e9f1ff;
+        }
+
         .feedme-order-card {
           background: #fff;
           border: 1px solid #dfe7f5;
@@ -947,26 +1228,34 @@ function feedme_orders_shortcode() {
           box-shadow: 0 8px 18px rgba(0,0,0,0.06);
           margin-bottom: 18px;
         }
+
+        .feedme-order-card h2,
         .feedme-order-card h3 {
           margin-top: 0;
+          color: #012458;
         }
+
         .feedme-order-card p {
           margin: 8px 0;
           color: #444;
         }
+
         .feedme-item-list {
           margin-top: 14px;
           border-top: 1px solid #e6edf8;
           padding-top: 12px;
         }
+
         .feedme-item-row {
           padding: 8px 0;
           border-bottom: 1px solid #f1f5fb;
         }
+
         .feedme-item-row:last-child {
           border-bottom: none;
         }
-        .feedme-order-card button {
+
+        .feedme-btn {
           background: #05f040;
           color: #012458;
           border: none;
@@ -974,99 +1263,105 @@ function feedme_orders_shortcode() {
           border-radius: 10px;
           font-weight: bold;
           cursor: pointer;
+          margin-top: 12px;
         }
+
         .feedme-message {
           max-width: 1100px;
           margin: 0 auto 20px;
           padding: 14px 16px;
           border-radius: 12px;
           font-weight: bold;
+          background: #fff4e8;
+          color: #9a5a00;
+          border: 1px solid #f0cf9c;
         }
+
         .feedme-message.success {
           background: #e8fff0;
           color: #11612e;
           border: 1px solid #bdeccc;
         }
-        .feedme-message.error {
-          background: #fff4e8;
-          color: #9a5a00;
-          border: 1px solid #f0cf9c;
-        }
       </style>
 
-      <?php echo $message; ?>
-
       <div class="feedme-wrap">
-        <h1>My Orders</h1>
+        <div class="feedme-orders-hero">
+          <h1>My Orders</h1>
+          <p>Track your latest order, review previous orders, and quickly reorder meals you have enjoyed before.</p>
+        </div>
 
-        <h2>Current Order</h2>
-        <?php if (!$current_orders): ?>
-          <div class="feedme-order-card">
+        <?php if ($message): ?>
+          <div class="feedme-message <?php echo (strpos($message, '✔') !== false) ? 'success' : ''; ?>">
+            <?php echo esc_html($message); ?>
+          </div>
+        <?php endif; ?>
+
+        <div class="feedme-order-card">
+          <h2>Current Order</h2>
+
+          <?php if ($current_order): ?>
+            <h3>Order #<?php echo esc_html($current_order['order_id']); ?></h3>
+            <p><strong>Restaurant:</strong> <?php echo esc_html($current_order['restaurant_name'] ?: 'Unknown Restaurant'); ?></p>
+            <p><strong>Order Type:</strong> <?php echo esc_html($current_order['order_type']); ?></p>
+            <p><strong>Payment Method:</strong> <?php echo esc_html($current_order['payment_method']); ?></p>
+            <p><strong>Status:</strong> <?php echo esc_html($current_order['order_status']); ?></p>
+            <p><strong>Total Price:</strong> $<?php echo esc_html(number_format((float) $current_order['total_price'], 2)); ?></p>
+
+            <?php $items = feedme_get_order_items((int) $current_order['order_id']); ?>
+            <?php if (!empty($items)): ?>
+              <div class="feedme-item-list">
+                <p><strong>Items:</strong></p>
+                <?php foreach ($items as $item): ?>
+                  <div class="feedme-item-row">
+                    <?php echo esc_html($item['item_name'] ?: ('Menu Item #' . $item['menu_item_id'])); ?>
+                    — Qty: <?php echo esc_html($item['quantity']); ?>
+                    — $<?php echo esc_html(number_format((float) $item['price'], 2)); ?>
+                  </div>
+                <?php endforeach; ?>
+              </div>
+            <?php endif; ?>
+          <?php else: ?>
             <p>No current order found.</p>
-          </div>
-        <?php else: ?>
-          <?php foreach ($current_orders as $order): ?>
-            <?php $items = feedme_get_order_items((int)$order->order_id); ?>
-            <div class="feedme-order-card">
-              <h3>Order #<?php echo esc_html($order->order_id); ?></h3>
-              <p><strong>Restaurant:</strong> <?php echo esc_html($order->restaurant_name ?: 'Unknown Restaurant'); ?></p>
-              <p><strong>Order Type:</strong> <?php echo esc_html($order->order_type); ?></p>
-              <p><strong>Payment Method:</strong> <?php echo esc_html($order->payment_method); ?></p>
-              <p><strong>Total Price:</strong> $<?php echo esc_html(number_format((float)$order->total_price, 2)); ?></p>
-              <p><strong>Status:</strong> <?php echo esc_html($order->order_status); ?></p>
+          <?php endif; ?>
+        </div>
 
-              <?php if ($items): ?>
-                <div class="feedme-item-list">
-                  <p><strong>Items:</strong></p>
-                  <?php foreach ($items as $item): ?>
-                    <div class="feedme-item-row">
-                      <?php echo esc_html($item->item_name ?: ('Menu Item #' . $item->menu_item_id)); ?>
-                      — Qty: <?php echo esc_html($item->quantity); ?>
-                      — $<?php echo esc_html(number_format((float)$item->price, 2)); ?>
-                    </div>
-                  <?php endforeach; ?>
-                </div>
-              <?php endif; ?>
-            </div>
-          <?php endforeach; ?>
-        <?php endif; ?>
+        <div class="feedme-order-card">
+          <h2>Previous Orders</h2>
 
-        <h2>Previous Orders</h2>
-        <?php if (!$previous_orders): ?>
-          <div class="feedme-order-card">
+          <?php if (!empty($previous_orders)): ?>
+            <?php foreach ($previous_orders as $order): ?>
+              <div style="border-top:1px solid #e6edf8;padding-top:18px;margin-top:18px;">
+                <h3>Order #<?php echo esc_html($order['order_id']); ?></h3>
+                <p><strong>Restaurant:</strong> <?php echo esc_html($order['restaurant_name'] ?: 'Unknown Restaurant'); ?></p>
+                <p><strong>Order Type:</strong> <?php echo esc_html($order['order_type']); ?></p>
+                <p><strong>Payment Method:</strong> <?php echo esc_html($order['payment_method']); ?></p>
+                <p><strong>Status:</strong> <?php echo esc_html($order['order_status']); ?></p>
+                <p><strong>Total Price:</strong> $<?php echo esc_html(number_format((float) $order['total_price'], 2)); ?></p>
+
+                <?php $items = feedme_get_order_items((int) $order['order_id']); ?>
+                <?php if (!empty($items)): ?>
+                  <div class="feedme-item-list">
+                    <p><strong>Items:</strong></p>
+                    <?php foreach ($items as $item): ?>
+                      <div class="feedme-item-row">
+                        <?php echo esc_html($item['item_name'] ?: ('Menu Item #' . $item['menu_item_id'])); ?>
+                        — Qty: <?php echo esc_html($item['quantity']); ?>
+                        — $<?php echo esc_html(number_format((float) $item['price'], 2)); ?>
+                      </div>
+                    <?php endforeach; ?>
+                  </div>
+                <?php endif; ?>
+
+                <form method="post">
+                  <input type="hidden" name="reorder_order_id" value="<?php echo esc_attr($order['order_id']); ?>">
+                  <button class="feedme-btn" type="submit" name="feedme_reorder_submit">Reorder Previous Order</button>
+                </form>
+              </div>
+            <?php endforeach; ?>
+          <?php else: ?>
             <p>No previous orders found.</p>
-          </div>
-        <?php else: ?>
-          <?php foreach ($previous_orders as $order): ?>
-            <?php $items = feedme_get_order_items((int)$order->order_id); ?>
-            <div class="feedme-order-card">
-              <h3>Order #<?php echo esc_html($order->order_id); ?></h3>
-              <p><strong>Restaurant:</strong> <?php echo esc_html($order->restaurant_name ?: 'Unknown Restaurant'); ?></p>
-              <p><strong>Order Type:</strong> <?php echo esc_html($order->order_type); ?></p>
-              <p><strong>Payment Method:</strong> <?php echo esc_html($order->payment_method); ?></p>
-              <p><strong>Total Price:</strong> $<?php echo esc_html(number_format((float)$order->total_price, 2)); ?></p>
-              <p><strong>Status:</strong> <?php echo esc_html($order->order_status); ?></p>
-
-              <?php if ($items): ?>
-                <div class="feedme-item-list">
-                  <p><strong>Items:</strong></p>
-                  <?php foreach ($items as $item): ?>
-                    <div class="feedme-item-row">
-                      <?php echo esc_html($item->item_name ?: ('Menu Item #' . $item->menu_item_id)); ?>
-                      — Qty: <?php echo esc_html($item->quantity); ?>
-                      — $<?php echo esc_html(number_format((float)$item->price, 2)); ?>
-                    </div>
-                  <?php endforeach; ?>
-                </div>
-              <?php endif; ?>
-
-              <form method="post">
-                <input type="hidden" name="reorder_order_id" value="<?php echo esc_attr($order->order_id); ?>">
-                <button type="submit" name="feedme_reorder_submit">Reorder Previous Order</button>
-              </form>
-            </div>
-          <?php endforeach; ?>
-        <?php endif; ?>
+          <?php endif; ?>
+        </div>
       </div>
     </section>
     <?php
@@ -1074,160 +1369,432 @@ function feedme_orders_shortcode() {
 }
 add_shortcode('feedme_orders', 'feedme_orders_shortcode');
 
-/* =========================================================
+/* =========================
+   CHECKOUT / ADDRESS HELPERS
+========================= */
+function feedme_find_or_create_address($building_number, $street_name, $suburb_city, $postcode, $user_id = 0) {
+    $db = feedme_db();
+    if (!$db) {
+        return 0;
+    }
+
+    $building_number = trim($building_number);
+    $street_name = trim($street_name);
+    $suburb_city = trim($suburb_city);
+    $postcode = (int) $postcode;
+
+    if ($building_number === '' || $street_name === '' || $suburb_city === '' || $postcode <= 0) {
+        return 0;
+    }
+
+    $find = $db->prepare("
+        SELECT address_id
+        FROM `Address`
+        WHERE building_number = ?
+          AND street_name = ?
+          AND suburb_city = ?
+          AND postcode = ?
+        LIMIT 1
+    ");
+
+    if (!$find) {
+        return 0;
+    }
+
+    $find->bind_param("sssi", $building_number, $street_name, $suburb_city, $postcode);
+    $find->execute();
+    $result = $find->get_result();
+    $existing = $result ? $result->fetch_assoc() : null;
+    $find->close();
+
+    if ($existing) {
+        $address_id = (int) $existing['address_id'];
+    } else {
+        $insert = $db->prepare("
+            INSERT INTO `Address` (`building_number`, `street_name`, `suburb_city`, `postcode`)
+            VALUES (?, ?, ?, ?)
+        ");
+
+        if (!$insert) {
+            return 0;
+        }
+
+        $insert->bind_param("sssi", $building_number, $street_name, $suburb_city, $postcode);
+
+        if (!$insert->execute()) {
+            $insert->close();
+            return 0;
+        }
+
+        $address_id = (int) $insert->insert_id;
+        $insert->close();
+    }
+
+    if ($user_id > 0) {
+        $check_link = $db->prepare("
+            SELECT 1
+            FROM `User Address`
+            WHERE user_id = ? AND address_id = ?
+            LIMIT 1
+        ");
+
+        if ($check_link) {
+            $check_link->bind_param("ii", $user_id, $address_id);
+            $check_link->execute();
+            $link_result = $check_link->get_result();
+            $has_link = $link_result ? $link_result->fetch_assoc() : null;
+            $check_link->close();
+
+            if (!$has_link) {
+                $insert_link = $db->prepare("
+                    INSERT INTO `User Address` (`user_id`, `address_id`)
+                    VALUES (?, ?)
+                ");
+
+                if ($insert_link) {
+                    $insert_link->bind_param("ii", $user_id, $address_id);
+                    $insert_link->execute();
+                    $insert_link->close();
+                }
+            }
+        }
+    }
+
+    return $address_id;
+}
+
+/* =========================
+   SUBMIT ORDER
+========================= */
+function feedme_submit_order_to_database($user_id, $restaurant_id, $address_data, $order_type, $payment_method, $total_price, $promo_code, $items) {
+    $db = feedme_db();
+    if (!$db) {
+        return ['success' => false, 'message' => 'Database connection failed.'];
+    }
+
+    $user_id        = (int) $user_id;
+    $restaurant_id  = (int) $restaurant_id;
+    $order_type     = trim((string) $order_type);
+    $payment_method = trim((string) $payment_method);
+    $total_price    = (float) $total_price;
+    $promo_code     = trim((string) $promo_code);
+
+    if ($user_id <= 0) {
+        return ['success' => false, 'message' => 'User is not logged in.'];
+    }
+
+    if ($restaurant_id <= 0) {
+        return ['success' => false, 'message' => 'Restaurant ID is missing.'];
+    }
+
+    if (empty($items) || !is_array($items)) {
+        return ['success' => false, 'message' => 'Your cart is empty.'];
+    }
+
+    if ($payment_method === '') {
+        return ['success' => false, 'message' => 'Payment method is required.'];
+    }
+
+    if ($order_type === '') {
+        return ['success' => false, 'message' => 'Order type is required.'];
+    }
+
+    $building_number = trim((string) ($address_data['building_number'] ?? ''));
+    $street_name     = trim((string) ($address_data['street_name'] ?? ''));
+    $suburb_city     = trim((string) ($address_data['suburb_city'] ?? ''));
+    $postcode        = (int) ($address_data['postcode'] ?? 0);
+
+    if ($building_number !== '' && $street_name !== '' && $suburb_city !== '' && $postcode > 0) {
+        $address_id = feedme_find_or_create_address(
+            $building_number,
+            $street_name,
+            $suburb_city,
+            $postcode,
+            $user_id
+        );
+    } else {
+        $last_address = feedme_get_last_used_address($user_id);
+        $address_id = $last_address ? (int) $last_address['address_id'] : 0;
+    }
+
+    if ($address_id <= 0) {
+        return ['success' => false, 'message' => 'Address could not be saved or found.'];
+    }
+
+    $promo_id = null;
+
+    if ($promo_code !== '') {
+        $promo_stmt = $db->prepare("
+            SELECT promo_id
+            FROM `Promo Code`
+            WHERE code = ?
+            LIMIT 1
+        ");
+
+        if ($promo_stmt) {
+            $promo_stmt->bind_param("s", $promo_code);
+            $promo_stmt->execute();
+            $promo_result = $promo_stmt->get_result();
+            $promo_row = $promo_result ? $promo_result->fetch_assoc() : null;
+            $promo_stmt->close();
+
+            if ($promo_row && !empty($promo_row['promo_id'])) {
+                $promo_id = (int) $promo_row['promo_id'];
+            }
+        }
+    }
+
+    $order_status = 'Pending';
+
+    $db->begin_transaction();
+
+    try {
+        if ($promo_id !== null) {
+            $insert_order = $db->prepare("
+                INSERT INTO `Orders`
+                (`restaurant_id`, `user_id`, `address_id`, `promo_id`, `order_type`, `total_price`, `order_status`, `payment_method`)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            ");
+
+            if (!$insert_order) {
+                throw new Exception('Unable to prepare order insert.');
+            }
+
+            $insert_order->bind_param(
+                "iiiisdss",
+                $restaurant_id,
+                $user_id,
+                $address_id,
+                $promo_id,
+                $order_type,
+                $total_price,
+                $order_status,
+                $payment_method
+            );
+        } else {
+            $insert_order = $db->prepare("
+                INSERT INTO `Orders`
+                (`restaurant_id`, `user_id`, `address_id`, `order_type`, `total_price`, `order_status`, `payment_method`)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            ");
+
+            if (!$insert_order) {
+                throw new Exception('Unable to prepare order insert.');
+            }
+
+            $insert_order->bind_param(
+                "iiisdss",
+                $restaurant_id,
+                $user_id,
+                $address_id,
+                $order_type,
+                $total_price,
+                $order_status,
+                $payment_method
+            );
+        }
+
+        if (!$insert_order->execute()) {
+            throw new Exception('Order insert failed: ' . $insert_order->error);
+        }
+
+        $order_id = (int) $insert_order->insert_id;
+        $insert_order->close();
+
+        $insert_item = $db->prepare("
+            INSERT INTO `Order Items`
+            (`order_id`, `menu_id`, `quantity`, `price`)
+            VALUES (?, ?, ?, ?)
+        ");
+
+        if (!$insert_item) {
+            throw new Exception('Unable to prepare order items insert: ' . $db->error);
+        }
+
+        $inserted_any_items = false;
+
+        foreach ($items as $item) {
+            $menu_id  = (int) ($item['menu_item_id'] ?? 0);
+            $quantity = (int) ($item['quantity'] ?? 0);
+            $price    = (float) ($item['price'] ?? 0);
+
+            if ($menu_id <= 0 || $quantity <= 0) {
+                continue;
+            }
+
+            $insert_item->bind_param("iiid", $order_id, $menu_id, $quantity, $price);
+
+            if (!$insert_item->execute()) {
+                throw new Exception('Order item insert failed: ' . $insert_item->error);
+            }
+
+            $inserted_any_items = true;
+        }
+
+        $insert_item->close();
+
+        if (!$inserted_any_items) {
+            throw new Exception('No valid order items were inserted.');
+        }
+
+        $db->commit();
+
+        return [
+            'success' => true,
+            'message' => 'Order placed successfully.',
+            'order_id' => $order_id
+        ];
+
+    } catch (Exception $e) {
+        $db->rollback();
+        return [
+            'success' => false,
+            'message' => $e->getMessage()
+        ];
+    }
+}
+
+/* =========================
+   AJAX: SUBMIT ORDER
+========================= */
+add_action('wp_ajax_feedme_submit_order', 'feedme_submit_order_ajax');
+
+function feedme_submit_order_ajax() {
+    if (!session_id()) {
+        session_start();
+    }
+
+    if (empty($_SESSION['user_id'])) {
+        wp_send_json([
+            'success' => false,
+            'message' => 'Please log in before placing an order.'
+        ]);
+        exit;
+    }
+
+    $raw = file_get_contents('php://input');
+    $payload = json_decode($raw, true);
+
+    if (!is_array($payload)) {
+        wp_send_json([
+            'success' => false,
+            'message' => 'Invalid request payload.'
+        ]);
+        exit;
+    }
+
+    $user_id = (int) $_SESSION['user_id'];
+    $restaurant_id = (int) ($payload['restaurant_id'] ?? 0);
+    $address = $payload['address'] ?? [];
+    $order_type = trim((string) ($payload['order_type'] ?? 'Delivery'));
+    $payment_method = trim((string) ($payload['payment_method'] ?? ''));
+    $total_price = (float) ($payload['total_price'] ?? 0);
+    $promo_code = trim((string) ($payload['promo_code'] ?? ''));
+    $items = $payload['items'] ?? [];
+
+    $result = feedme_submit_order_to_database(
+        $user_id,
+        $restaurant_id,
+        $address,
+        $order_type,
+        $payment_method,
+        $total_price,
+        $promo_code,
+        $items
+    );
+
+    wp_send_json($result);
+    exit;
+}
+
+/* =========================
    AJAX: LAST USED ADDRESS
-========================================================= */
+========================= */
 add_action('wp_ajax_feedme_get_last_address', 'feedme_get_last_address_ajax');
 add_action('wp_ajax_nopriv_feedme_get_last_address', 'feedme_get_last_address_ajax');
 
 function feedme_get_last_address_ajax() {
-    if (!feedme_is_logged_in()) {
-        wp_send_json_error(['message' => 'Not logged in']);
+    if (!session_id()) {
+        session_start();
     }
 
-    $user_id = feedme_current_user_id();
-    $address = feedme_get_last_used_address($user_id);
-
-    if (!$address) {
-        wp_send_json_error(['message' => 'No saved address found']);
+    if (empty($_SESSION['user_id'])) {
+        wp_send_json([
+            'success' => false,
+            'message' => 'User is not logged in.',
+            'debug' => 'SESSION user_id missing in get_last_address'
+        ]);
+        exit;
     }
 
-    wp_send_json_success([
-        'building_number' => $address->building_number,
-        'street_name'     => $address->street_name,
-        'suburb_city'     => $address->suburb_city,
-        'postcode'        => $address->postcode,
+    $user_id = (int) $_SESSION['user_id'];
+    $last_address = feedme_get_last_used_address($user_id);
+
+    if (!$last_address) {
+        wp_send_json([
+            'success' => false,
+            'message' => 'No saved address found.',
+            'debug' => 'No address returned from feedme_get_last_used_address()'
+        ]);
+        exit;
+    }
+
+    wp_send_json([
+        'success' => true,
+        'data' => [
+            'address_id'       => $last_address['address_id'] ?? '',
+            'building_number'  => $last_address['building_number'] ?? '',
+            'street_name'      => $last_address['street_name'] ?? '',
+            'suburb_city'      => $last_address['suburb_city'] ?? '',
+            'postcode'         => $last_address['postcode'] ?? ''
+        ]
     ]);
+    exit;
 }
 
-/* =========================================================
-   AJAX: SUBMIT ORDER
-========================================================= */
-add_action('wp_ajax_feedme_submit_order', 'feedme_submit_order_ajax');
-add_action('wp_ajax_nopriv_feedme_submit_order', 'feedme_submit_order_ajax');
+/* =========================
+   AJAX: CHECKOUT CONTEXT
+========================= */
+add_action('wp_ajax_feedme_get_checkout_context', 'feedme_get_checkout_context_ajax');
+add_action('wp_ajax_nopriv_feedme_get_checkout_context', 'feedme_get_checkout_context_ajax');
 
-function feedme_submit_order_ajax() {
-    if (!feedme_is_logged_in()) {
-        wp_send_json_error(['message' => 'You must be logged in to place an order.']);
+function feedme_get_checkout_context_ajax() {
+    if (!session_id()) {
+        session_start();
     }
 
-    $db = feedme_db();
-    $orders_table = str_replace('`', '', feedme_t(FEEDME_TABLE_ORDERS));
-    $order_items_table = str_replace('`', '', feedme_t(FEEDME_TABLE_ORDER_ITEMS));
-
-    $user_id = feedme_current_user_id();
-    $payload = json_decode(file_get_contents('php://input'), true);
-
-    if (!$payload || empty($payload['restaurant_id']) || empty($payload['items']) || empty($payload['payment_method'])) {
-        wp_send_json_error(['message' => 'Invalid order data.']);
+    if (empty($_SESSION['user_id'])) {
+        wp_send_json([
+            'success' => true,
+            'logged_in' => false,
+            'user' => null,
+            'address' => null,
+            'debug' => 'SESSION user_id missing in checkout context'
+        ]);
+        exit;
     }
 
-    $restaurant_id  = intval($payload['restaurant_id']);
-    $order_type     = sanitize_text_field($payload['order_type'] ?? 'Delivery');
-    $payment_method = sanitize_text_field($payload['payment_method'] ?? '');
-    $promo_code     = sanitize_text_field($payload['promo_code'] ?? '');
-    $items          = is_array($payload['items']) ? $payload['items'] : [];
-    $address_input  = is_array($payload['address']) ? $payload['address'] : [];
-    $client_total   = floatval($payload['total_price'] ?? 0);
+    $user_id = (int) $_SESSION['user_id'];
+    $profile = feedme_get_current_user_profile();
+    $last_address = feedme_get_last_used_address($user_id);
 
-    $address_id = feedme_resolve_address_for_user($user_id, $address_input);
-    if ($address_id <= 0) {
-        wp_send_json_error(['message' => 'Please enter a valid address.']);
-    }
-
-    $promo = $promo_code ? feedme_get_promo_by_code($promo_code) : null;
-    $promo_id = $promo ? intval($promo->promo_id) : null;
-    $discount_percentage = $promo ? intval($promo->discount_percentage) : 0;
-
-    $calculated_subtotal = 0;
-    foreach ($items as $item) {
-        $menu_item_id = intval($item['menu_item_id'] ?? 0);
-        $quantity     = intval($item['quantity'] ?? 0);
-        $price        = floatval($item['price'] ?? 0);
-
-        if ($menu_item_id > 0 && $quantity > 0) {
-            $calculated_subtotal += ($price * $quantity);
-        }
-    }
-
-    $discount_amount = 0;
-    if ($discount_percentage > 0) {
-        $discount_amount = ($calculated_subtotal * $discount_percentage) / 100;
-    }
-
-    $final_total = $client_total > 0 ? $client_total : ($calculated_subtotal - $discount_amount);
-
-    $db->insert(
-        $orders_table,
-        [
-            'restaurant_id'  => $restaurant_id,
-            'user_id'        => $user_id,
-            'address_id'     => $address_id,
-            'promo_id'       => $promo_id,
-            'order_type'     => $order_type,
-            'total_price'    => $final_total,
-            'order_status'   => 'Pending',
-            'payment_method' => $payment_method,
+    wp_send_json([
+        'success' => true,
+        'logged_in' => true,
+        'user' => [
+            'user_id'      => $profile['user_id'] ?? '',
+            'first_name'   => $profile['first_name'] ?? '',
+            'last_name'    => $profile['last_name'] ?? '',
+            'email'        => $profile['email'] ?? '',
+            'phone_number' => $profile['phone_number'] ?? ''
         ],
-        ['%d', '%d', '%d', '%d', '%s', '%f', '%s', '%s']
-    );
-
-    $order_id = intval($db->insert_id);
-    if ($order_id <= 0) {
-        wp_send_json_error(['message' => 'Unable to save order.']);
-    }
-
-    foreach ($items as $item) {
-        $menu_item_id = intval($item['menu_item_id'] ?? 0);
-        $quantity     = intval($item['quantity'] ?? 0);
-        $price        = floatval($item['price'] ?? 0);
-
-        if ($menu_item_id <= 0 || $quantity <= 0) continue;
-
-        $db->insert(
-            $order_items_table,
-            [
-                'order_id'     => $order_id,
-                'menu_item_id' => $menu_item_id,
-                'quantity'     => $quantity,
-                'price'        => $price,
-            ],
-            ['%d', '%d', '%d', '%f']
-        );
-    }
-
-    wp_send_json_success([
-        'message'     => 'Order placed successfully.',
-        'order_id'    => $order_id,
-        'address_id'  => $address_id,
-        'total_price' => $final_total
+        'address' => $last_address ? [
+            'address_id'      => $last_address['address_id'] ?? '',
+            'building_number' => $last_address['building_number'] ?? '',
+            'street_name'     => $last_address['street_name'] ?? '',
+            'suburb_city'     => $last_address['suburb_city'] ?? '',
+            'postcode'        => $last_address['postcode'] ?? ''
+        ] : null
     ]);
+    exit;
 }
-
-/* =========================================================
-   HEADER CART SHORTCODE
-========================================================= */
-function feedme_header_cart_shortcode() {
-    ob_start();
-    ?>
-    <div class="feedme-header-cart" style="display:flex;align-items:center;gap:8px;">
-      <span style="font-size:1.2rem;">🛒</span>
-      <span id="feedme-cart-count">0</span>
-    </div>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        try {
-          const savedCart = JSON.parse(localStorage.getItem("feedme_cart") || "[]");
-          let count = 0;
-          savedCart.forEach(item => {
-            count += Number(item.quantity || 0);
-          });
-          const cartCount = document.getElementById("feedme-cart-count");
-          if (cartCount) cartCount.textContent = count;
-        } catch (e) {}
-      });
-    </script>
-    <?php
-    return ob_get_clean();
-}
-add_shortcode('feedme_header_cart', 'feedme_header_cart_shortcode');

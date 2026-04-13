@@ -1,21 +1,20 @@
-<!--Restaurant page template for Pizza store version 2.0-->
+<!--Restaurant page template for Pizza store version 3.0-->
 
-
-<section class="restaurant-page">
+<section class="feedme-restaurant-page">
   <style>
-    .restaurant-page {
+    .feedme-restaurant-page {
       font-family: Arial, sans-serif;
       background: #fff;
       color: #012458;
       padding: 40px 20px;
     }
 
-    .restaurant-wrapper {
+    .feedme-restaurant-wrapper {
       max-width: 1200px;
       margin: 0 auto;
     }
 
-    .restaurant-hero {
+    .feedme-restaurant-hero {
       display: grid;
       grid-template-columns: 1.3fr 1fr;
       gap: 30px;
@@ -24,7 +23,7 @@
       background: #fff;
     }
 
-    .restaurant-hero-image img {
+    .feedme-restaurant-hero-image img {
       width: 100%;
       height: 360px;
       object-fit: cover;
@@ -33,33 +32,33 @@
       box-shadow: 0 10px 24px rgba(0,0,0,0.12);
     }
 
-    .restaurant-hero-content h1 {
+    .feedme-restaurant-hero-content h1 {
       font-size: 2.4rem;
       margin: 0 0 12px;
       color: #012458;
     }
 
-    .restaurant-meta {
+    .feedme-restaurant-meta {
       font-size: 1rem;
       color: #4d5f85;
       margin-bottom: 15px;
       line-height: 1.7;
     }
 
-    .restaurant-description {
+    .feedme-restaurant-description {
       font-size: 1rem;
       line-height: 1.7;
       color: #333;
       margin-bottom: 18px;
     }
 
-    .restaurant-tags {
+    .feedme-restaurant-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
     }
 
-    .restaurant-tags span {
+    .feedme-restaurant-tags span {
       display: inline-block;
       background: #012458;
       color: #fff;
@@ -69,39 +68,39 @@
       font-weight: bold;
     }
 
-    .page-layout {
+    .feedme-page-layout {
       display: grid;
       grid-template-columns: 2fr 1fr;
       gap: 30px;
       align-items: start;
     }
 
-    .menu-section h2,
-    .cart-section h2,
-    .checkout-section h2 {
+    .feedme-menu-section h2,
+    .feedme-cart-section h2,
+    .feedme-checkout-section h2 {
       margin-top: 0;
       font-size: 1.6rem;
       color: #012458;
       margin-bottom: 20px;
     }
 
-    .menu-subsection {
+    .feedme-menu-subsection {
       margin-bottom: 35px;
     }
 
-    .menu-subsection h3 {
+    .feedme-menu-subsection h3 {
       font-size: 1.25rem;
       color: #012458;
       margin: 0 0 16px;
     }
 
-    .menu-grid {
+    .feedme-menu-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 20px;
     }
 
-    .menu-card {
+    .feedme-menu-card {
       background: #fff;
       border: 1px solid #dfe7f5;
       border-radius: 16px;
@@ -109,45 +108,45 @@
       box-shadow: 0 8px 18px rgba(0,0,0,0.06);
     }
 
-    .menu-card img {
+    .feedme-menu-card img {
       width: 100%;
       height: 170px;
       object-fit: cover;
       display: block;
     }
 
-    .menu-card-content {
+    .feedme-menu-card-content {
       padding: 18px;
     }
 
-    .menu-card-content h3,
-    .menu-card-content h4 {
+    .feedme-menu-card-content h3,
+    .feedme-menu-card-content h4 {
       margin: 0 0 10px;
       font-size: 1.1rem;
       color: #012458;
     }
 
-    .menu-card-content p {
+    .feedme-menu-card-content p {
       margin: 0 0 12px;
       color: #444;
       line-height: 1.5;
       font-size: 0.95rem;
     }
 
-    .menu-price {
+    .feedme-menu-price {
       font-size: 1rem;
       font-weight: bold;
       color: #012458;
       margin-bottom: 12px;
     }
 
-    .menu-actions {
+    .feedme-menu-actions {
       display: flex;
       gap: 10px;
       align-items: center;
     }
 
-    .menu-actions input[type="number"] {
+    .feedme-menu-actions input[type="number"] {
       width: 70px;
       padding: 10px;
       border: 1px solid #ccd8ef;
@@ -155,10 +154,10 @@
       font-size: 1rem;
     }
 
-    .menu-actions button,
-    .checkout-btn,
-    .clear-cart-btn,
-    .apply-promo-btn {
+    .feedme-menu-actions button,
+    .feedme-checkout-btn,
+    .feedme-clear-cart-btn,
+    .feedme-apply-promo-btn {
       background: #05f040;
       color: #012458;
       border: none;
@@ -169,16 +168,22 @@
       transition: 0.2s ease;
     }
 
-    .menu-actions button:hover,
-    .checkout-btn:hover,
-    .clear-cart-btn:hover,
-    .apply-promo-btn:hover {
+    .feedme-menu-actions button:hover,
+    .feedme-checkout-btn:hover,
+    .feedme-clear-cart-btn:hover,
+    .feedme-apply-promo-btn:hover {
       opacity: 0.92;
       transform: translateY(-1px);
     }
 
-    .cart-panel,
-    .checkout-panel {
+    .feedme-checkout-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .feedme-cart-panel,
+    .feedme-checkout-panel {
       background: #fff;
       border: 1px solid #dfe7f5;
       border-radius: 18px;
@@ -189,58 +194,58 @@
       top: 20px;
     }
 
-    .cart-empty {
+    .feedme-cart-empty {
       color: #666;
       font-size: 0.95rem;
       margin-bottom: 15px;
     }
 
-    .cart-items {
+    .feedme-cart-items {
       margin-bottom: 16px;
     }
 
-    .cart-item {
+    .feedme-cart-item {
       border-bottom: 1px solid #ebf0fa;
       padding: 10px 0;
     }
 
-    .cart-item:last-child {
+    .feedme-cart-item:last-child {
       border-bottom: none;
     }
 
-    .cart-item strong {
+    .feedme-cart-item strong {
       display: block;
       color: #012458;
       margin-bottom: 4px;
     }
 
-    .cart-item span {
+    .feedme-cart-item span {
       display: block;
       color: #555;
       font-size: 0.92rem;
       line-height: 1.5;
     }
 
-    .cart-subtotal,
-    .cart-discount,
-    .cart-total {
+    .feedme-cart-subtotal,
+    .feedme-cart-discount,
+    .feedme-cart-total {
       font-size: 1.05rem;
       font-weight: bold;
       color: #012458;
       margin: 10px 0;
     }
 
-    .cart-discount {
+    .feedme-cart-discount {
       color: #0a8f2c;
     }
 
-    .promo-row {
+    .feedme-promo-row {
       display: flex;
       gap: 10px;
       margin: 14px 0;
     }
 
-    .promo-row input {
+    .feedme-promo-row input {
       flex: 1;
       padding: 11px 12px;
       border: 1px solid #ccd8ef;
@@ -248,7 +253,7 @@
       font-size: 0.95rem;
     }
 
-    .promo-message {
+    .feedme-promo-message {
       font-size: 0.9rem;
       margin-bottom: 10px;
       color: #0a8f2c;
@@ -256,16 +261,16 @@
       min-height: 20px;
     }
 
-    .checkout-panel label {
+    .feedme-checkout-panel label {
       display: block;
       margin-bottom: 8px;
       font-weight: bold;
       color: #012458;
     }
 
-    .checkout-panel input,
-    .checkout-panel select,
-    .checkout-panel textarea {
+    .feedme-checkout-panel input,
+    .feedme-checkout-panel select,
+    .feedme-checkout-panel textarea {
       width: 100%;
       padding: 12px 14px;
       margin-bottom: 16px;
@@ -275,21 +280,21 @@
       box-sizing: border-box;
     }
 
-    .checkout-panel textarea {
+    .feedme-checkout-panel textarea {
       min-height: 110px;
       resize: vertical;
     }
 
-    .order-type-options,
-    .notification-options {
+    .feedme-order-type-options,
+    .feedme-notification-options {
       display: flex;
       flex-direction: column;
       gap: 10px;
       margin-bottom: 16px;
     }
 
-    .order-option,
-    .notification-option {
+    .feedme-order-option,
+    .feedme-notification-option {
       display: flex;
       align-items: center;
       gap: 10px;
@@ -297,13 +302,13 @@
       color: #333;
     }
 
-    .order-option input[type="radio"],
-    .notification-option input[type="checkbox"] {
+    .feedme-order-option input[type="radio"],
+    .feedme-notification-option input[type="checkbox"] {
       width: auto;
       margin: 0;
     }
 
-    .final-order-total {
+    .feedme-final-order-total {
       font-size: 1.1rem;
       font-weight: bold;
       color: #012458;
@@ -314,48 +319,71 @@
       margin: 4px 0 16px;
     }
 
-    .order-message {
-      display: none;
+    .feedme-order-message,
+    .feedme-checkout-status,
+    .feedme-saved-address-box {
       margin-top: 15px;
       padding: 14px;
       border-radius: 12px;
-      background: #e8fff0;
-      color: #11612e;
-      border: 1px solid #bdeccc;
       font-weight: bold;
       line-height: 1.5;
+      border: 1px solid #dfe7f5;
+    }
+
+    .feedme-order-message {
+      display: none;
+      background: #e8fff0;
+      color: #11612e;
+      border-color: #bdeccc;
+    }
+
+    .feedme-checkout-status.ok,
+    .feedme-saved-address-box.ok {
+      background: #e8fff0;
+      color: #11612e;
+      border-color: #bdeccc;
+    }
+
+    .feedme-checkout-status.warn,
+    .feedme-saved-address-box.warn {
+      background: #fff4e8;
+      color: #9a5a00;
+      border-color: #f0cf9c;
+    }
+
+    .feedme-hidden-address {
+      display: none !important;
     }
 
     @media (max-width: 960px) {
-      .restaurant-hero,
-      .page-layout {
+      .feedme-restaurant-hero,
+      .feedme-page-layout {
         grid-template-columns: 1fr;
       }
 
-      .cart-panel,
-      .checkout-panel {
+      .feedme-cart-panel,
+      .feedme-checkout-panel {
         position: static;
       }
     }
   </style>
 
-  <div class="restaurant-wrapper">
-    <div class="restaurant-hero">
-      <div class="restaurant-hero-image">
+  <div class="feedme-restaurant-wrapper">
+    <div class="feedme-restaurant-hero">
+      <div class="feedme-restaurant-hero-image">
         <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1200&q=80" alt="Urban Pizza Co food">
       </div>
 
-      <div class="restaurant-hero-content">
+      <div class="feedme-restaurant-hero-content">
         <h1>Urban Pizza Co.</h1>
-        <div class="restaurant-meta">
+        <div class="feedme-restaurant-meta">
           Italian • 25 min delivery • 4.7★<br>
           Mid-Range • Within 1 km • Vegetarian Options Available
         </div>
-        <div class="restaurant-description">
-          Fresh woodfired pizzas and classic pasta dishes.
-          Urban Pizza Co. focuses on warm pizzas, rich pasta favourites, tasty sides, cold drinks, and simple desserts.
+        <div class="feedme-restaurant-description">
+          Fresh woodfired pizzas and classic pasta dishes. Urban Pizza Co. serves pizzas, pasta, sides, drinks, and desserts for easy lunch or dinner ordering.
         </div>
-        <div class="restaurant-tags">
+        <div class="feedme-restaurant-tags">
           <span>Pizza</span>
           <span>Italian</span>
           <span>Mid-Range</span>
@@ -365,471 +393,699 @@
       </div>
     </div>
 
-    <div class="page-layout">
-      <div class="menu-section">
+    <div class="feedme-page-layout">
+      <div class="feedme-menu-section">
         <h2>Menu</h2>
 
-        <div class="menu-subsection">
+        <div class="feedme-menu-subsection">
           <h3>Main Meals</h3>
-          <div class="menu-grid">
-            <div class="menu-card">
+          <div class="feedme-menu-grid">
+
+            <div class="feedme-menu-card">
               <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1200&q=80" alt="Margherita Pizza">
-              <div class="menu-card-content">
+              <div class="feedme-menu-card-content">
                 <h3>Margherita Pizza</h3>
                 <p>Classic woodfired pizza with tomato, mozzarella, and fresh basil.</p>
-                <div class="menu-price">$18.00</div>
-                <div class="menu-actions">
-                  <input type="number" min="1" value="1" id="qty-margherita">
-                  <button onclick="addToCart('Margherita Pizza', 18, 'qty-margherita')">Add to Cart</button>
+                <div class="feedme-menu-price">$18.00</div>
+                <div class="feedme-menu-actions">
+                  <input type="number" min="1" value="1" id="qty-1001">
+                  <button type="button" onclick="feedmeAddToCart('Margherita Pizza', 18, 'qty-1001', 1001)">Add to Cart</button>
                 </div>
               </div>
             </div>
 
-            <div class="menu-card">
+            <div class="feedme-menu-card">
               <img src="https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=1200&q=80" alt="Pepperoni Pizza">
-              <div class="menu-card-content">
+              <div class="feedme-menu-card-content">
                 <h3>Pepperoni Pizza</h3>
-                <p>Woodfired pizza topped with pepperoni, mozzarella, and tomato base.</p>
-                <div class="menu-price">$20.00</div>
-                <div class="menu-actions">
-                  <input type="number" min="1" value="1" id="qty-pepperoni">
-                  <button onclick="addToCart('Pepperoni Pizza', 20, 'qty-pepperoni')">Add to Cart</button>
+                <p>Woodfired pizza topped with pepperoni, mozzarella, and tomato sauce.</p>
+                <div class="feedme-menu-price">$20.00</div>
+                <div class="feedme-menu-actions">
+                  <input type="number" min="1" value="1" id="qty-1002">
+                  <button type="button" onclick="feedmeAddToCart('Pepperoni Pizza', 20, 'qty-1002', 1002)">Add to Cart</button>
                 </div>
               </div>
             </div>
 
-            <div class="menu-card">
-              <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=1200&q=80" alt="Creamy Pasta">
-              <div class="menu-card-content">
+            <div class="feedme-menu-card">
+              <img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=1200&q=80" alt="Creamy Chicken Pasta">
+              <div class="feedme-menu-card-content">
                 <h3>Creamy Chicken Pasta</h3>
                 <p>Rich creamy pasta with grilled chicken, herbs, and parmesan.</p>
-                <div class="menu-price">$19.00</div>
-                <div class="menu-actions">
-                  <input type="number" min="1" value="1" id="qty-creamy-pasta">
-                  <button onclick="addToCart('Creamy Chicken Pasta', 19, 'qty-creamy-pasta')">Add to Cart</button>
+                <div class="feedme-menu-price">$19.00</div>
+                <div class="feedme-menu-actions">
+                  <input type="number" min="1" value="1" id="qty-1003">
+                  <button type="button" onclick="feedmeAddToCart('Creamy Chicken Pasta', 19, 'qty-1003', 1003)">Add to Cart</button>
                 </div>
               </div>
             </div>
 
-            <div class="menu-card">
+            <div class="feedme-menu-card">
               <img src="https://images.unsplash.com/photo-1604382355076-af4b0eb60143?auto=format&fit=crop&w=1200&q=80" alt="Vegetarian Pizza">
-              <div class="menu-card-content">
+              <div class="feedme-menu-card-content">
                 <h3>Vegetarian Pizza</h3>
                 <p>Roasted vegetables, tomato sauce, mozzarella, and herbs on a woodfired base.</p>
-                <div class="menu-price">$19.50</div>
-                <div class="menu-actions">
-                  <input type="number" min="1" value="1" id="qty-veg-pizza">
-                  <button onclick="addToCart('Vegetarian Pizza', 19.5, 'qty-veg-pizza')">Add to Cart</button>
+                <div class="feedme-menu-price">$19.50</div>
+                <div class="feedme-menu-actions">
+                  <input type="number" min="1" value="1" id="qty-1004">
+                  <button type="button" onclick="feedmeAddToCart('Vegetarian Pizza', 19.5, 'qty-1004', 1004)">Add to Cart</button>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
 
-        <div class="menu-subsection">
+        <div class="feedme-menu-subsection">
           <h3>Sides</h3>
-          <div class="menu-grid">
-            <div class="menu-card">
-              <img src="https://images.unsplash.com/photo-1548365328-9f547fb0953b?auto=format&fit=crop&w=1200&q=80" alt="Garlic Bread">
-              <div class="menu-card-content">
+          <div class="feedme-menu-grid">
+
+            <div class="feedme-menu-card">
+              <img src="http://43.220.2.209/wp-content/uploads/2026/04/garlic-bread-190233-1024x768-1.jpg" alt="Garlic Bread">
+              <div class="feedme-menu-card-content">
                 <h4>Garlic Bread</h4>
-                <p>Toasted bread with garlic butter and herbs.</p>
-                <div class="menu-price">$7.00</div>
-                <div class="menu-actions">
-                  <input type="number" min="1" value="1" id="qty-garlic-bread">
-                  <button onclick="addToCart('Garlic Bread', 7, 'qty-garlic-bread')">Add to Cart</button>
+                <p>Warm toasted bread with garlic butter and herbs.</p>
+                <div class="feedme-menu-price">$7.00</div>
+                <div class="feedme-menu-actions">
+                  <input type="number" min="1" value="1" id="qty-1005">
+                  <button type="button" onclick="feedmeAddToCart('Garlic Bread', 7, 'qty-1005', 1005)">Add to Cart</button>
                 </div>
               </div>
             </div>
 
-            <div class="menu-card">
+            <div class="feedme-menu-card">
               <img src="https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=1200&q=80" alt="Cheesy Bread">
-              <div class="menu-card-content">
+              <div class="feedme-menu-card-content">
                 <h4>Cheesy Bread</h4>
-                <p>Warm bread topped with mozzarella and herbs.</p>
-                <div class="menu-price">$8.00</div>
-                <div class="menu-actions">
-                  <input type="number" min="1" value="1" id="qty-cheesy-bread">
-                  <button onclick="addToCart('Cheesy Bread', 8, 'qty-cheesy-bread')">Add to Cart</button>
+                <p>Fresh bread topped with mozzarella and herbs.</p>
+                <div class="feedme-menu-price">$8.00</div>
+                <div class="feedme-menu-actions">
+                  <input type="number" min="1" value="1" id="qty-1006">
+                  <button type="button" onclick="feedmeAddToCart('Cheesy Bread', 8, 'qty-1006', 1006)">Add to Cart</button>
                 </div>
               </div>
             </div>
 
-            <div class="menu-card">
+            <div class="feedme-menu-card">
               <img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=80" alt="Garden Salad">
-              <div class="menu-card-content">
+              <div class="feedme-menu-card-content">
                 <h4>Garden Salad</h4>
-                <p>A fresh side salad with greens, tomato, cucumber, and light dressing.</p>
-                <div class="menu-price">$6.50</div>
-                <div class="menu-actions">
-                  <input type="number" min="1" value="1" id="qty-salad">
-                  <button onclick="addToCart('Garden Salad', 6.5, 'qty-salad')">Add to Cart</button>
+                <p>Fresh salad with lettuce, tomato, cucumber, and light dressing.</p>
+                <div class="feedme-menu-price">$7.50</div>
+                <div class="feedme-menu-actions">
+                  <input type="number" min="1" value="1" id="qty-1007">
+                  <button type="button" onclick="feedmeAddToCart('Garden Salad', 7.5, 'qty-1007', 1007)">Add to Cart</button>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
 
-        <div class="menu-subsection">
+        <div class="feedme-menu-subsection">
           <h3>Drinks</h3>
-          <div class="menu-grid">
-            <div class="menu-card">
+          <div class="feedme-menu-grid">
+
+            <div class="feedme-menu-card">
               <img src="https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=1200&q=80" alt="Soft Drink">
-              <div class="menu-card-content">
+              <div class="feedme-menu-card-content">
                 <h4>Soft Drink</h4>
                 <p>Refreshing 330ml can to pair with pizza or pasta.</p>
-                <div class="menu-price">$4.00</div>
-                <div class="menu-actions">
-                  <input type="number" min="1" value="1" id="qty-softdrink">
-                  <button onclick="addToCart('Soft Drink', 4, 'qty-softdrink')">Add to Cart</button>
+                <div class="feedme-menu-price">$4.00</div>
+                <div class="feedme-menu-actions">
+                  <input type="number" min="1" value="1" id="qty-1008">
+                  <button type="button" onclick="feedmeAddToCart('Soft Drink', 4, 'qty-1008', 1008)">Add to Cart</button>
                 </div>
               </div>
             </div>
 
-            <div class="menu-card">
+            <div class="feedme-menu-card">
               <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=1200&q=80" alt="Iced Tea">
-              <div class="menu-card-content">
+              <div class="feedme-menu-card-content">
                 <h4>Iced Tea</h4>
                 <p>Cold bottled iced tea with a light sweet finish.</p>
-                <div class="menu-price">$4.50</div>
-                <div class="menu-actions">
-                  <input type="number" min="1" value="1" id="qty-icedtea">
-                  <button onclick="addToCart('Iced Tea', 4.5, 'qty-icedtea')">Add to Cart</button>
+                <div class="feedme-menu-price">$4.50</div>
+                <div class="feedme-menu-actions">
+                  <input type="number" min="1" value="1" id="qty-1009">
+                  <button type="button" onclick="feedmeAddToCart('Iced Tea', 4.5, 'qty-1009', 1009)">Add to Cart</button>
                 </div>
               </div>
             </div>
 
-            <div class="menu-card">
-              <img src="https://images.unsplash.com/photo-1561047029-3000c68339ca?auto=format&fit=crop&w=1200&q=80" alt="Sparkling Water">
-              <div class="menu-card-content">
-                <h4>Sparkling Water</h4>
-                <p>Cold sparkling water in a chilled bottle.</p>
-                <div class="menu-price">$3.50</div>
-                <div class="menu-actions">
-                  <input type="number" min="1" value="1" id="qty-sparkling-water">
-                  <button onclick="addToCart('Sparkling Water', 3.5, 'qty-sparkling-water')">Add to Cart</button>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
-        <div class="menu-subsection">
+        <div class="feedme-menu-subsection">
           <h3>Desserts</h3>
-          <div class="menu-grid">
-            <div class="menu-card">
+          <div class="feedme-menu-grid">
+
+            <div class="feedme-menu-card">
               <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=1200&q=80" alt="Tiramisu">
-              <div class="menu-card-content">
+              <div class="feedme-menu-card-content">
                 <h4>Tiramisu</h4>
                 <p>Classic Italian dessert with coffee, cream, and cocoa.</p>
-                <div class="menu-price">$8.50</div>
-                <div class="menu-actions">
-                  <input type="number" min="1" value="1" id="qty-tiramisu">
-                  <button onclick="addToCart('Tiramisu', 8.5, 'qty-tiramisu')">Add to Cart</button>
+                <div class="feedme-menu-price">$8.50</div>
+                <div class="feedme-menu-actions">
+                  <input type="number" min="1" value="1" id="qty-1010">
+                  <button type="button" onclick="feedmeAddToCart('Tiramisu', 8.5, 'qty-1010', 1010)">Add to Cart</button>
                 </div>
               </div>
             </div>
 
-            <div class="menu-card">
+            <div class="feedme-menu-card">
               <img src="https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=1200&q=80" alt="Vanilla Ice Cream">
-              <div class="menu-card-content">
+              <div class="feedme-menu-card-content">
                 <h4>Vanilla Ice Cream</h4>
-                <p>Classic vanilla ice cream served cold.</p>
-                <div class="menu-price">$5.00</div>
-                <div class="menu-actions">
-                  <input type="number" min="1" value="1" id="qty-icecream">
-                  <button onclick="addToCart('Vanilla Ice Cream', 5, 'qty-icecream')">Add to Cart</button>
+                <p>Classic vanilla ice cream served cold as a simple dessert option.</p>
+                <div class="feedme-menu-price">$5.50</div>
+                <div class="feedme-menu-actions">
+                  <input type="number" min="1" value="1" id="qty-1011">
+                  <button type="button" onclick="feedmeAddToCart('Vanilla Ice Cream', 5.5, 'qty-1011', 1011)">Add to Cart</button>
                 </div>
               </div>
             </div>
 
-            <div class="menu-card">
-              <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=1200&q=80" alt="Chocolate Biscuit">
-              <div class="menu-card-content">
-                <h4>Chocolate Biscuit</h4>
-                <p>A crunchy sweet biscuit for a lighter dessert option.</p>
-                <div class="menu-price">$4.50</div>
-                <div class="menu-actions">
-                  <input type="number" min="1" value="1" id="qty-biscuit">
-                  <button onclick="addToCart('Chocolate Biscuit', 4.5, 'qty-biscuit')">Add to Cart</button>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
 
       <div>
-        <div class="cart-panel cart-section">
+        <div class="feedme-cart-panel feedme-cart-section">
           <h2>Your Cart</h2>
-          <div id="cartItems" class="cart-items">
-            <div class="cart-empty">Your cart is currently empty.</div>
+          <div id="feedmeCartItems" class="feedme-cart-items">
+            <div class="feedme-cart-empty">Your cart is currently empty.</div>
           </div>
 
-          <div class="promo-row">
-            <input type="text" id="promoCode" value="openingspecial" placeholder="Enter promo code">
-            <button class="apply-promo-btn" type="button" onclick="applyPromo()">Apply</button>
+          <div class="feedme-promo-row">
+            <input type="text" id="feedmePromoCode" value="openingspecial" placeholder="Enter promo code">
+            <button class="feedme-apply-promo-btn" type="button" onclick="feedmeApplyPromo()">Apply</button>
           </div>
 
-          <div class="promo-message" id="promoMessage"></div>
+          <div class="feedme-promo-message" id="feedmePromoMessage"></div>
 
-          <div class="cart-subtotal" id="cartSubtotal">Subtotal: $0.00</div>
-          <div class="cart-discount" id="cartDiscount">Discount: $0.00</div>
-          <div class="cart-total" id="cartTotal">Total: $0.00</div>
+          <div class="feedme-cart-subtotal" id="feedmeSubtotal">Subtotal: $0.00</div>
+          <div class="feedme-cart-discount" id="feedmeDiscount">Discount: $0.00</div>
+          <div class="feedme-cart-total" id="feedmeTotal">Total: $0.00</div>
 
-          <button class="clear-cart-btn" onclick="clearCart()">Clear Cart</button>
+          <button class="feedme-clear-cart-btn" type="button" onclick="feedmeClearCart()">Clear Cart</button>
         </div>
 
-        <div class="checkout-panel checkout-section">
+        <div class="feedme-checkout-panel feedme-checkout-section">
           <h2>Checkout</h2>
 
-          <label for="customerName">Full Name</label>
-          <input type="text" id="customerName" placeholder="Enter your full name">
+          <div class="feedme-checkout-status warn" id="feedmeCheckoutStatus">
+            Checking login status...
+          </div>
 
-          <label for="customerPhone">Phone Number</label>
-          <input type="text" id="customerPhone" placeholder="Enter your phone number">
+          <label for="feedmeCustomerName">Full Name</label>
+          <input type="text" id="feedmeCustomerName" placeholder="Loaded from your account when available">
 
-          <label for="customerAddress">Delivery Address</label>
-          <input type="text" id="customerAddress" placeholder="Enter your address">
+          <label for="feedmeCustomerPhone">Phone Number</label>
+          <input type="text" id="feedmeCustomerPhone" placeholder="Loaded from your account when available">
+
+          <label>Saved Delivery Address</label>
+          <div class="feedme-saved-address-box warn" id="feedmeSavedAddressBox">
+            Checking saved address...
+          </div>
+
+          <input type="hidden" id="addressBuildingNumber" class="feedme-hidden-address">
+          <input type="hidden" id="addressStreetName" class="feedme-hidden-address">
+          <input type="hidden" id="addressSuburbCity" class="feedme-hidden-address">
+          <input type="hidden" id="addressPostcode" class="feedme-hidden-address">
 
           <label>Order Type</label>
-          <div class="order-type-options">
-            <label class="order-option">
-              <input type="radio" name="orderType" value="pickup" checked onchange="renderCart()">
+          <div class="feedme-order-type-options">
+            <label class="feedme-order-option">
+              <input type="radio" name="feedmeOrderType" value="Pickup" checked onchange="feedmeRenderCart(); feedmeSetCheckoutButtonState();">
               Pickup (Free)
             </label>
-            <label class="order-option">
-              <input type="radio" name="orderType" value="delivery" onchange="renderCart()">
+            <label class="feedme-order-option">
+              <input type="radio" name="feedmeOrderType" value="Delivery" onchange="feedmeRenderCart(); feedmeSetCheckoutButtonState();">
               Delivery (+$5.00)
             </label>
           </div>
 
           <label>Notifications</label>
-          <div class="notification-options">
-            <label class="notification-option">
-              <input type="checkbox" id="smsNotifications">
+          <div class="feedme-notification-options">
+            <label class="feedme-notification-option">
+              <input type="checkbox" id="feedmeSmsNotifications">
               Send me text message updates about my order
             </label>
           </div>
 
-          <label for="orderNotes">Order Notes</label>
-          <textarea id="orderNotes" placeholder="Example: extra parmesan, no mushrooms, sauce on side if possible"></textarea>
+          <label for="feedmeOrderNotes">Order Notes</label>
+          <textarea id="feedmeOrderNotes" placeholder="Example: extra parmesan, no mushrooms, sauce on side if possible"></textarea>
 
-          <label for="paymentMethod">Payment Method</label>
-          <select id="paymentMethod">
+          <label for="feedmePaymentMethod">Payment Method</label>
+          <select id="feedmePaymentMethod">
             <option value="">Select payment option</option>
             <option value="EFTPOS on Delivery">EFTPOS on Delivery</option>
             <option value="Cash on Delivery">Cash on Delivery</option>
             <option value="PayID on Delivery">PayID on Delivery</option>
           </select>
 
-          <div class="final-order-total" id="finalOrderTotal">Your Order Total = $0.00</div>
+          <div class="feedme-final-order-total" id="feedmeFinalTotal">Your Order Total = $0.00</div>
 
-          <button class="checkout-btn" onclick="placeOrder()">Place Order</button>
+          <button class="feedme-checkout-btn" id="feedmePlaceOrderBtn" type="button" onclick="feedmePlaceOrder(1)">Place Order</button>
 
-          <div class="order-message" id="orderMessage"></div>
+          <div class="feedme-order-message" id="feedmeOrderMessage"></div>
         </div>
       </div>
     </div>
   </div>
 
-  <script>
-    let cart = [];
-    let promoApplied = false;
-    let promoDiscountRate = 0;
+ <script>
+  let feedmeCart = [];
+  let feedmePromoApplied = false;
+  let feedmePromoCodeValue = '';
+  let feedmePromoDiscountRate = 0;
+  let feedmeLoggedIn = false;
+  let feedmeHasSavedAddress = false;
 
-    function formatCurrency(value) {
-      return "$" + value.toFixed(2);
+  function feedmeFormatCurrency(value) {
+    return "$" + Number(value).toFixed(2);
+  }
+
+  function feedmeGetDeliveryFee() {
+    const selected = document.querySelector('input[name="feedmeOrderType"]:checked');
+    return selected && selected.value === "Delivery" ? 5 : 0;
+  }
+
+  function feedmeGetSubtotal() {
+    let subtotal = 0;
+    feedmeCart.forEach(item => {
+      subtotal += item.price * item.quantity;
+    });
+    return subtotal;
+  }
+
+  function feedmeGetDiscountAmount(subtotal) {
+    return feedmePromoApplied ? subtotal * feedmePromoDiscountRate : 0;
+  }
+
+  function feedmeSaveCart() {
+    try {
+      localStorage.setItem("feedme_cart", JSON.stringify(feedmeCart));
+    } catch (e) {}
+  }
+
+  function feedmeLoadCart() {
+    try {
+      const saved = JSON.parse(localStorage.getItem("feedme_cart") || "[]");
+      if (Array.isArray(saved)) {
+        feedmeCart = saved;
+      }
+    } catch (e) {
+      feedmeCart = [];
+    }
+  }
+
+  function feedmeSetCheckoutButtonState() {
+    const btn = document.getElementById("feedmePlaceOrderBtn");
+    if (!btn) return;
+
+    const selected = document.querySelector('input[name="feedmeOrderType"]:checked');
+    const deliverySelected = selected && selected.value === "Delivery";
+
+    const blockedForLogin = !feedmeLoggedIn;
+    const blockedForAddress = deliverySelected && !feedmeHasSavedAddress;
+
+    btn.disabled = blockedForLogin || blockedForAddress;
+  }
+
+  function feedmeAddToCart(itemName, itemPrice, qtyInputId, menuItemId) {
+    const qtyInput = document.getElementById(qtyInputId);
+    let quantity = parseInt(qtyInput.value, 10);
+
+    if (isNaN(quantity) || quantity < 1) {
+      quantity = 1;
     }
 
-    function getDeliveryFee() {
-      const selectedOrderType = document.querySelector('input[name="orderType"]:checked');
-      return selectedOrderType && selectedOrderType.value === "delivery" ? 5 : 0;
-    }
+    const existingItem = feedmeCart.find(
+      item => item.name === itemName && Number(item.menu_item_id) === Number(menuItemId)
+    );
 
-    function getSubtotal() {
-      let subtotal = 0;
-      cart.forEach(item => {
-        subtotal += item.price * item.quantity;
+    if (existingItem) {
+      existingItem.quantity += quantity;
+    } else {
+      feedmeCart.push({
+        name: itemName,
+        price: Number(itemPrice),
+        quantity: quantity,
+        menu_item_id: Number(menuItemId)
       });
-      return subtotal;
     }
 
-    function getDiscountAmount(subtotal) {
-      return promoApplied ? subtotal * promoDiscountRate : 0;
+    qtyInput.value = 1;
+    feedmeSaveCart();
+    feedmeRenderCart();
+  }
+
+  function feedmeApplyPromo() {
+    const promoInput = document.getElementById("feedmePromoCode");
+    const promoMessage = document.getElementById("feedmePromoMessage");
+    const code = (promoInput.value || "").trim().toLowerCase();
+
+    if (code === "openingspecial") {
+      feedmePromoApplied = true;
+      feedmePromoCodeValue = code;
+      feedmePromoDiscountRate = 0.10;
+      promoMessage.style.color = "#0a8f2c";
+      promoMessage.textContent = 'Promo code "openingspecial" applied: 10% off your order.';
+    } else if (code === '') {
+      feedmePromoApplied = false;
+      feedmePromoCodeValue = '';
+      feedmePromoDiscountRate = 0;
+      promoMessage.textContent = "";
+    } else {
+      feedmePromoApplied = false;
+      feedmePromoCodeValue = '';
+      feedmePromoDiscountRate = 0;
+      promoMessage.style.color = "#b00020";
+      promoMessage.textContent = "Promo code not recognised.";
     }
 
-    function addToCart(itemName, itemPrice, qtyInputId) {
-      const qtyInput = document.getElementById(qtyInputId);
-      let quantity = parseInt(qtyInput.value, 10);
+    feedmeRenderCart();
+  }
 
-      if (isNaN(quantity) || quantity < 1) {
-        quantity = 1;
-      }
+  function feedmeClearCart() {
+    feedmeCart = [];
+    feedmePromoApplied = false;
+    feedmePromoCodeValue = '';
+    feedmePromoDiscountRate = 0;
+    document.getElementById("feedmePromoMessage").textContent = "";
+    feedmeSaveCart();
+    feedmeRenderCart();
 
-      const existingItem = cart.find(item => item.name === itemName);
+    const orderMessage = document.getElementById("feedmeOrderMessage");
+    if (orderMessage) {
+      orderMessage.style.display = "none";
+    }
+  }
 
-      if (existingItem) {
-        existingItem.quantity += quantity;
-      } else {
-        cart.push({
-          name: itemName,
-          price: itemPrice,
-          quantity: quantity
-        });
-      }
+  function feedmeRenderCart() {
+    const cartItems = document.getElementById("feedmeCartItems");
+    const subtotalBox = document.getElementById("feedmeSubtotal");
+    const discountBox = document.getElementById("feedmeDiscount");
+    const totalBox = document.getElementById("feedmeTotal");
+    const finalTotalBox = document.getElementById("feedmeFinalTotal");
 
-      qtyInput.value = 1;
-      renderCart();
+    const subtotal = feedmeGetSubtotal();
+    const discount = feedmeGetDiscountAmount(subtotal);
+    const deliveryFee = feedmeGetDeliveryFee();
+    const total = subtotal - discount + deliveryFee;
+
+    if (feedmeCart.length === 0) {
+      cartItems.innerHTML = '<div class="feedme-cart-empty">Your cart is currently empty.</div>';
+      subtotalBox.textContent = "Subtotal: $0.00";
+      discountBox.textContent = "Discount: $0.00";
+      totalBox.textContent = "Total: $0.00";
+      finalTotalBox.textContent = "Your Order Total = $0.00";
+      feedmeSetCheckoutButtonState();
+      return;
     }
 
-    function applyPromo() {
-      const promoInput = document.getElementById("promoCode");
-      const promoMessage = document.getElementById("promoMessage");
-      const code = (promoInput.value || "").trim().toLowerCase();
+    let html = "";
+    feedmeCart.forEach(item => {
+      const itemTotal = item.price * item.quantity;
+      html += `
+        <div class="feedme-cart-item">
+          <strong>${item.name}</strong>
+          <span>Quantity: ${item.quantity}</span>
+          <span>Price: ${feedmeFormatCurrency(item.price)} each</span>
+          <span>Subtotal: ${feedmeFormatCurrency(itemTotal)}</span>
+        </div>
+      `;
+    });
 
-      if (code === "openingspecial") {
-        promoApplied = true;
-        promoDiscountRate = 0.10;
-        promoMessage.style.color = "#0a8f2c";
-        promoMessage.textContent = 'Promo code "openingspecial" applied: 10% off your order.';
-      } else {
-        promoApplied = false;
-        promoDiscountRate = 0;
-        promoMessage.style.color = "#b00020";
-        promoMessage.textContent = "Promo code not recognised.";
-      }
-
-      renderCart();
-    }
-
-    function clearCart() {
-      cart = [];
-      promoApplied = false;
-      promoDiscountRate = 0;
-      document.getElementById("promoMessage").textContent = "";
-      renderCart();
-      document.getElementById("orderMessage").style.display = "none";
-    }
-
-    function renderCart() {
-      const cartItems = document.getElementById("cartItems");
-      const cartSubtotal = document.getElementById("cartSubtotal");
-      const cartDiscount = document.getElementById("cartDiscount");
-      const cartTotal = document.getElementById("cartTotal");
-      const finalOrderTotal = document.getElementById("finalOrderTotal");
-
-      const subtotal = getSubtotal();
-      const discount = getDiscountAmount(subtotal);
-      const deliveryFee = getDeliveryFee();
-      const total = subtotal - discount + deliveryFee;
-
-      if (cart.length === 0) {
-        cartItems.innerHTML = '<div class="cart-empty">Your cart is currently empty.</div>';
-        cartSubtotal.textContent = "Subtotal: $0.00";
-        cartDiscount.textContent = "Discount: $0.00";
-        cartTotal.textContent = "Total: $0.00";
-        finalOrderTotal.textContent = "Your Order Total = $0.00";
-        return;
-      }
-
-      let html = "";
-
-      cart.forEach(item => {
-        const itemTotal = item.price * item.quantity;
-        html += `
-          <div class="cart-item">
-            <strong>${item.name}</strong>
-            <span>Quantity: ${item.quantity}</span>
-            <span>Price: ${formatCurrency(item.price)} each</span>
-            <span>Subtotal: ${formatCurrency(itemTotal)}</span>
-          </div>
-        `;
-      });
-
-      if (deliveryFee > 0) {
-        html += `
-          <div class="cart-item">
-            <strong>Delivery Fee</strong>
-            <span>${formatCurrency(deliveryFee)}</span>
-          </div>
-        `;
-      }
-
-      cartItems.innerHTML = html;
-      cartSubtotal.textContent = "Subtotal: " + formatCurrency(subtotal);
-      cartDiscount.textContent = "Discount: -" + formatCurrency(discount);
-      cartTotal.textContent = "Total: " + formatCurrency(total);
-      finalOrderTotal.textContent = "Your Order Total = " + formatCurrency(total);
-    }
-
-    function placeOrder() {
-      const customerName = document.getElementById("customerName").value.trim();
-      const customerPhone = document.getElementById("customerPhone").value.trim();
-      const customerAddress = document.getElementById("customerAddress").value.trim();
-      const orderNotes = document.getElementById("orderNotes").value.trim();
-      const paymentMethod = document.getElementById("paymentMethod").value;
-      const orderMessage = document.getElementById("orderMessage");
-      const selectedOrderType = document.querySelector('input[name="orderType"]:checked');
-      const smsNotifications = document.getElementById("smsNotifications").checked;
-
-      if (cart.length === 0) {
-        orderMessage.style.display = "block";
-        orderMessage.style.background = "#fff4e8";
-        orderMessage.style.color = "#9a5a00";
-        orderMessage.style.borderColor = "#f0cf9c";
-        orderMessage.textContent = "Please add at least one item to the cart before placing the order.";
-        return;
-      }
-
-      if (!customerName || !customerPhone || !paymentMethod || !selectedOrderType) {
-        orderMessage.style.display = "block";
-        orderMessage.style.background = "#fff4e8";
-        orderMessage.style.color = "#9a5a00";
-        orderMessage.style.borderColor = "#f0cf9c";
-        orderMessage.textContent = "Please complete your name, phone number, payment method, and order type.";
-        return;
-      }
-
-      if (selectedOrderType.value === "delivery" && !customerAddress) {
-        orderMessage.style.display = "block";
-        orderMessage.style.background = "#fff4e8";
-        orderMessage.style.color = "#9a5a00";
-        orderMessage.style.borderColor = "#f0cf9c";
-        orderMessage.textContent = "Please enter your delivery address for delivery orders.";
-        return;
-      }
-
-      const subtotal = getSubtotal();
-      const discount = getDiscountAmount(subtotal);
-      const deliveryFee = getDeliveryFee();
-      const total = subtotal - discount + deliveryFee;
-
-      const safeNotes = orderNotes
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
-
-      const orderTypeLabel = selectedOrderType.value === "delivery" ? "Delivery" : "Pickup";
-      const smsLabel = smsNotifications ? "Enabled" : "Not enabled";
-
-      orderMessage.style.display = "block";
-      orderMessage.style.background = "#e8fff0";
-      orderMessage.style.color = "#11612e";
-      orderMessage.style.borderColor = "#bdeccc";
-      orderMessage.innerHTML = `
-        Order placed successfully for <strong>${customerName}</strong>.<br>
-        Order type: <strong>${orderTypeLabel}</strong><br>
-        ${selectedOrderType.value === "delivery" ? "Delivery fee: <strong>" + formatCurrency(deliveryFee) + "</strong><br>" : ""}
-        ${promoApplied ? 'Promo applied: <strong>openingspecial</strong><br>' : ""}
-        ${promoApplied ? "Discount: <strong>-" + formatCurrency(discount) + "</strong><br>" : ""}
-        Total: <strong>${formatCurrency(total)}</strong><br>
-        Payment method: <strong>${paymentMethod}</strong><br>
-        SMS notifications: <strong>${smsLabel}</strong><br>
-        ${safeNotes ? "Order notes: <strong>" + safeNotes + "</strong><br>" : ""}
+    if (deliveryFee > 0) {
+      html += `
+        <div class="feedme-cart-item">
+          <strong>Delivery Fee</strong>
+          <span>${feedmeFormatCurrency(deliveryFee)}</span>
+        </div>
       `;
     }
 
-    renderCart();
-  </script>
+    cartItems.innerHTML = html;
+    subtotalBox.textContent = "Subtotal: " + feedmeFormatCurrency(subtotal);
+    discountBox.textContent = "Discount: -" + feedmeFormatCurrency(discount);
+    totalBox.textContent = "Total: " + feedmeFormatCurrency(total);
+    finalTotalBox.textContent = "Your Order Total = " + feedmeFormatCurrency(total);
+    feedmeSetCheckoutButtonState();
+  }
+
+  function feedmeLoadCheckoutContext() {
+    const statusBox = document.getElementById('feedmeCheckoutStatus');
+    const addressBox = document.getElementById('feedmeSavedAddressBox');
+    const nameInput = document.getElementById('feedmeCustomerName');
+    const phoneInput = document.getElementById('feedmeCustomerPhone');
+
+    fetch('/wp-admin/admin-ajax.php?action=feedme_get_checkout_context')
+      .then(async response => {
+        const rawText = await response.text();
+        try {
+          return JSON.parse(rawText);
+        } catch (e) {
+          throw new Error('Checkout context raw response: ' + rawText);
+        }
+      })
+      .then(data => {
+        if (!data.success) {
+          throw new Error(data.message || 'Context load failed');
+        }
+
+        if (!data.logged_in) {
+          feedmeLoggedIn = false;
+          feedmeHasSavedAddress = false;
+
+          if (statusBox) {
+            statusBox.className = 'feedme-checkout-status warn';
+            statusBox.innerHTML = '✖ You must be logged in to place an order.';
+          }
+
+          if (addressBox) {
+            addressBox.className = 'feedme-saved-address-box warn';
+            addressBox.innerHTML = 'No saved address available. Please log in first.';
+          }
+
+          if (nameInput) nameInput.value = '';
+          if (phoneInput) phoneInput.value = '';
+
+          feedmeSetCheckoutButtonState();
+          return;
+        }
+
+        feedmeLoggedIn = true;
+
+        if (data.user) {
+          if (nameInput) {
+            nameInput.value = ((data.user.first_name || '') + ' ' + (data.user.last_name || '')).trim();
+          }
+          if (phoneInput) {
+            phoneInput.value = data.user.phone_number || '';
+          }
+        }
+
+        const b = document.getElementById('addressBuildingNumber');
+        const s = document.getElementById('addressStreetName');
+        const c = document.getElementById('addressSuburbCity');
+        const p = document.getElementById('addressPostcode');
+
+        if (data.address) {
+          feedmeHasSavedAddress = true;
+
+          if (b) b.value = data.address.building_number || '';
+          if (s) s.value = data.address.street_name || '';
+          if (c) c.value = data.address.suburb_city || '';
+          if (p) p.value = data.address.postcode || '';
+
+          if (statusBox) {
+            statusBox.className = 'feedme-checkout-status ok';
+            statusBox.innerHTML = '✔ You are logged in and ready to order.';
+          }
+
+          if (addressBox) {
+            addressBox.className = 'feedme-saved-address-box ok';
+            addressBox.innerHTML =
+              '<strong>Latest Saved Address</strong><br>' +
+              (data.address.building_number || '') + ' ' + (data.address.street_name || '') + '<br>' +
+              (data.address.suburb_city || '') + ' ' + (data.address.postcode || '');
+          }
+        } else {
+          feedmeHasSavedAddress = false;
+
+          if (statusBox) {
+            statusBox.className = 'feedme-checkout-status ok';
+            statusBox.innerHTML = '✔ You are logged in. Pickup is available now. Save an address in My Account to use delivery.';
+          }
+
+          if (addressBox) {
+            addressBox.className = 'feedme-saved-address-box warn';
+            addressBox.innerHTML = 'No saved address found. Save one in My Account to use delivery.';
+          }
+
+          if (b) b.value = '';
+          if (s) s.value = '';
+          if (c) c.value = '';
+          if (p) p.value = '';
+        }
+
+        feedmeSetCheckoutButtonState();
+      })
+      .catch((error) => {
+        feedmeLoggedIn = false;
+        feedmeHasSavedAddress = false;
+
+        if (statusBox) {
+          statusBox.className = 'feedme-checkout-status warn';
+          statusBox.innerHTML = '✖ Unable to verify login status right now.<br><small>' + error.message + '</small>';
+        }
+
+        if (addressBox) {
+          addressBox.className = 'feedme-saved-address-box warn';
+          addressBox.innerHTML = 'Unable to load saved address right now.';
+        }
+
+        feedmeSetCheckoutButtonState();
+      });
+  }
+
+  function feedmeSubmitOrder(restaurantId, totalPrice) {
+    const paymentMethod = document.getElementById("feedmePaymentMethod").value;
+    const orderTypeNode = document.querySelector('input[name="feedmeOrderType"]:checked');
+    const orderType = orderTypeNode ? orderTypeNode.value : "Delivery";
+
+    const payload = {
+      restaurant_id: Number(restaurantId),
+      order_type: orderType,
+      payment_method: paymentMethod,
+      total_price: Number(totalPrice),
+      promo_code: feedmePromoCodeValue || '',
+      address: {
+        building_number: document.getElementById('addressBuildingNumber')?.value || '',
+        street_name: document.getElementById('addressStreetName')?.value || '',
+        suburb_city: document.getElementById('addressSuburbCity')?.value || '',
+        postcode: document.getElementById('addressPostcode')?.value || ''
+      },
+      items: feedmeCart.map(item => ({
+        menu_item_id: Number(item.menu_item_id || 0),
+        quantity: Number(item.quantity || 0),
+        price: Number(item.price || 0)
+      }))
+    };
+
+    return fetch('/wp-admin/admin-ajax.php?action=feedme_submit_order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(async response => {
+      const rawText = await response.text();
+
+      try {
+        return JSON.parse(rawText);
+      } catch (e) {
+        throw new Error("Raw server response: " + rawText);
+      }
+    });
+  }
+
+  function feedmePlaceOrder(restaurantId) {
+    const customerName = document.getElementById("feedmeCustomerName").value.trim();
+    const customerPhone = document.getElementById("feedmeCustomerPhone").value.trim();
+    const paymentMethod = document.getElementById("feedmePaymentMethod").value;
+    const orderMessage = document.getElementById("feedmeOrderMessage");
+    const selectedOrderType = document.querySelector('input[name="feedmeOrderType"]:checked');
+    const smsNotifications = document.getElementById("feedmeSmsNotifications").checked;
+
+    const buildingNumber = document.getElementById("addressBuildingNumber").value.trim();
+    const streetName = document.getElementById("addressStreetName").value.trim();
+    const suburbCity = document.getElementById("addressSuburbCity").value.trim();
+    const postcode = document.getElementById("addressPostcode").value.trim();
+    const deliverySelected = selectedOrderType && selectedOrderType.value === "Delivery";
+
+    if (!feedmeLoggedIn) {
+      orderMessage.style.display = "block";
+      orderMessage.style.background = "#fff4e8";
+      orderMessage.style.color = "#9a5a00";
+      orderMessage.style.borderColor = "#f0cf9c";
+      orderMessage.textContent = "You must be logged in to place an order.";
+      return;
+    }
+
+    if (feedmeCart.length === 0) {
+      orderMessage.style.display = "block";
+      orderMessage.style.background = "#fff4e8";
+      orderMessage.style.color = "#9a5a00";
+      orderMessage.style.borderColor = "#f0cf9c";
+      orderMessage.textContent = "Please add at least one item to the cart before placing the order.";
+      return;
+    }
+
+    if (!customerName || !customerPhone || !paymentMethod || !selectedOrderType) {
+      orderMessage.style.display = "block";
+      orderMessage.style.background = "#fff4e8";
+      orderMessage.style.color = "#9a5a00";
+      orderMessage.style.borderColor = "#f0cf9c";
+      orderMessage.textContent = "Please complete your name, phone number, payment method, and order type.";
+      return;
+    }
+
+    if (deliverySelected && (!buildingNumber || !streetName || !suburbCity || !postcode)) {
+      orderMessage.style.display = "block";
+      orderMessage.style.background = "#fff4e8";
+      orderMessage.style.color = "#9a5a00";
+      orderMessage.style.borderColor = "#f0cf9c";
+      orderMessage.textContent = "No saved delivery address found. Please save an address in My Account first.";
+      return;
+    }
+
+    const subtotal = feedmeGetSubtotal();
+    const discount = feedmeGetDiscountAmount(subtotal);
+    const deliveryFee = feedmeGetDeliveryFee();
+    const total = subtotal - discount + deliveryFee;
+
+    feedmeSubmitOrder(restaurantId, total)
+      .then(data => {
+        orderMessage.style.display = "block";
+
+        if (data.success) {
+          orderMessage.style.background = "#e8fff0";
+          orderMessage.style.color = "#11612e";
+          orderMessage.style.borderColor = "#bdeccc";
+          orderMessage.innerHTML =
+  'Order placed successfully.<br>' +
+  'Order ID: <strong>' + data.order_id + '</strong><br>' +
+  'SMS notifications: <strong>' + (smsNotifications ? 'Enabled' : 'Not enabled') + '</strong>';
+
+          feedmeCart = [];
+          localStorage.setItem("feedme_cart", JSON.stringify(feedmeCart));
+          feedmeRenderCart();
+        } else {
+          orderMessage.style.background = "#fff4e8";
+          orderMessage.style.color = "#9a5a00";
+          orderMessage.style.borderColor = "#f0cf9c";
+          orderMessage.textContent = data.message || "There was a problem placing the order.";
+        }
+      })
+      .catch((error) => {
+        orderMessage.style.display = "block";
+        orderMessage.style.background = "#fff4e8";
+        orderMessage.style.color = "#9a5a00";
+        orderMessage.style.borderColor = "#f0cf9c";
+        orderMessage.textContent = error.message || "There was a problem placing the order.";
+      });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    feedmeLoadCart();
+    feedmeRenderCart();
+    feedmeLoadCheckoutContext();
+
+    document.querySelectorAll('input[name="feedmeOrderType"]').forEach(radio => {
+      radio.addEventListener('change', feedmeSetCheckoutButtonState);
+    });
+  });
+</script>
 </section>

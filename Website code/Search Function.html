@@ -1,4 +1,4 @@
-<!--Search page function version 2.0-->
+<!--Search page function version 3.0-->
 
 <section class="refined-search-page">
   <style>
@@ -339,16 +339,16 @@
   </style>
 
   <div class="search-container">
-    <div class="search-hero">
+    <div class="search-hero" id="featured-jump">
       <h1>Find the Right Restaurant Fast</h1>
       <p>
         Search by restaurant name or keywords, then refine results by price,
         distance, and dietary options. Best matches will appear first.
       </p>
     </div>
-
+   </div>
     <div class="search-controls">
-      <input type="text" id="keywordSearch" placeholder="Search pizza, sushi, burgers, cafe, healthy..." />
+      <input type="text" id="keywordSearch" placeholder="Search pizza, sushi, burgers, cafe, healthy...">
 
       <select id="priceFilter">
         <option value="">All Prices</option>
@@ -382,96 +382,96 @@
       <p>Explore a few standout meals from some of the restaurants currently available.</p>
 
       <div class="featured-carousel-wrapper">
-        <button class="featured-nav prev" type="button" onclick="moveFeatured(-1)">&#10094;</button>
+        <button class="featured-nav prev" type="button" onclick="moveFeatured(-1)">❮</button>
 
         <div class="featured-carousel-window">
           <div class="featured-carousel-track" id="featuredTrack">
 
             <div class="featured-card">
-              <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1200&q=80" alt="Margherita Pizza">
+              <a href="http://43.220.2.209/?page_id=26"><img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Margherita Pizza"><a>
               <div class="featured-content">
                 <h3>Margherita Pizza</h3>
                 <p>Fresh woodfired pizza from Urban Pizza Co. with tomato, mozzarella, and basil.</p>
-                <a class="featured-link" href="http://43.220.2.209/?page_id=26">View Restaurant</a>
+                <a class="featured-link" href="http://43.220.2.209/?page_id=26">Show Menu</a>
               </div>
             </div>
 
             <div class="featured-card">
-              <img src="https://images.unsplash.com/photo-1562967916-eb82221dfb92?auto=format&fit=crop&w=1200&q=80" alt="Salmon Sushi Roll">
+              <a href="http://43.220.2.209/?page_id=236"><img src="https://images.unsplash.com/photo-1562967916-eb82221dfb92?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Salmon Sushi Roll"><a>
               <div class="featured-content">
                 <h3>Salmon Sushi Roll</h3>
-                <p>A fresh sushi favourite from Dummy 02 Sushi Spot, perfect for a light lunch.</p>
-                <a class="featured-link" href="http://43.220.2.209/?page_id=236">View Restaurant</a>
+                <p>A fresh sushi favourite from Sushi Spot, perfect for a light lunch.</p>
+                <a class="featured-link" href="http://43.220.2.209/?page_id=236">Show Menu</a>
               </div>
             </div>
 
             <div class="featured-card">
-              <img src="https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?auto=format&fit=crop&w=1200&q=80" alt="Beef Tacos">
+              <a href="http://43.220.2.209/?page_id=277"><img src="https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Beef Tacos"><a>
               <div class="featured-content">
                 <h3>Beef Tacos</h3>
                 <p>Bold, flavour-packed tacos from Taco Town with fresh salsa and seasoned beef.</p>
-                <a class="featured-link" href="/dummy-06-taco-town/">View Restaurant</a>
+                <a class="featured-link" href="http://43.220.2.209/?page_id=277">Show Menu</a>
               </div>
             </div>
 
             <div class="featured-card">
-              <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80" alt="Big Breakfast">
+              <a href="http://43.220.2.209/?page_id=252"><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Big Breakfast"><a>
               <div class="featured-content">
                 <h3>Big Breakfast</h3>
                 <p>A hearty cafe breakfast from Corner Cafe with eggs, toast, and breakfast sides.</p>
-                <a class="featured-link" href="/dummy-03-corner-cafe/">View Restaurant</a>
+                <a class="featured-link" href="http://43.220.2.209/?page_id=252">Show Menu</a>
               </div>
             </div>
 
             <div class="featured-card">
-              <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=1200&q=80" alt="Classic Curry">
+              <a href="http://43.220.2.209/?page_id=353"><img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Classic Curry"><a>
               <div class="featured-content">
                 <h3>Classic Curry</h3>
-                <p>Rich Indian flavours from Dummy 07 Curry House served with rice and warm spices.</p>
-                <a class="featured-link" href="/dummy-07-curry-house/">View Restaurant</a>
+                <p>Rich Indian flavours from Curry House served with rice and warm spices.</p>
+                <a class="featured-link" href="http://43.220.2.209/?page_id=353">Show Menu</a>
               </div>
             </div>
 
             <div class="featured-card">
-              <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=80" alt="Loaded Burger">
+              <a href="http://43.220.2.209/?page_id=275"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Loaded Burger"><a>
               <div class="featured-content">
                 <h3>Loaded Burger</h3>
-                <p>A quick comfort-food favourite from Dummy 04 Burger Barn with fries on the side.</p>
-                <a class="featured-link" href="/dummy-04-burger-barn/">View Restaurant</a>
+                <p>A quick comfort-food favourite from Burger Barn with fries on the side.</p>
+                <a class="featured-link" href="/http://43.220.2.209/?page_id=275/">Show Menu</a>
               </div>
             </div>
 
             <div class="featured-card">
-              <img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=80" alt="Healthy Bowl">
+              <a href="http://43.220.2.209/?page_id=283"><img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Healthy Bowl"><a>
               <div class="featured-content">
                 <h3>Healthy Bowl</h3>
-                <p>A fresh grain bowl from Dummy 05 Green Garden packed with healthy ingredients.</p>
-                <a class="featured-link" href="/dummy-05-green-garden/">View Restaurant</a>
+                <p>A fresh grain bowl from Green Garden packed with healthy ingredients.</p>
+                <a class="featured-link" href="http://43.220.2.209/?page_id=283">Show Menu</a>
               </div>
             </div>
 
             <div class="featured-card">
-              <img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=1200&q=80" alt="Creamy Pasta">
+              <a href="http://43.220.2.209/?page_id=360"><img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Creamy Pasta"><a>
               <div class="featured-content">
                 <h3>Creamy Pasta</h3>
-                <p>A rich and comforting pasta dish from Dummy 10 Pasta Place.</p>
-                <a class="featured-link" href="/dummy-10-pasta-place/">View Restaurant</a>
+                <p>A rich and comforting pasta dish from Pasta Place.</p>
+                <a class="featured-link" href="http://43.220.2.209/?page_id=360">Show Menu</a>
               </div>
             </div>
 
             <div class="featured-card">
-              <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1200&q=80" alt="Vegan Bowl">
+              <a href="http://43.220.2.209/?page_id=367"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Vegan Bowl"><a>
               <div class="featured-content">
                 <h3>Vegan Bowl</h3>
-                <p>A plant-based favourite from Dummy 11 Vegan Bites with fresh seasonal ingredients.</p>
-                <a class="featured-link" href="/dummy-11-vegan-bites/">View Restaurant</a>
+                <p>A plant-based favourite from Vegan Bites with fresh seasonal ingredients.</p>
+                <a class="featured-link" href="http://43.220.2.209/?page_id=367">Show Menu</a>
               </div>
             </div>
 
           </div>
         </div>
 
-        <button class="featured-nav next" type="button" onclick="moveFeatured(1)">&#10095;</button>
+        <button class="featured-nav next" type="button" onclick="moveFeatured(1)">❯</button>
       </div>
     </div>
 
@@ -482,13 +482,8 @@
 
     <div class="restaurant-grid" id="restaurantGrid">
 
-      <div class="restaurant-card"
-        data-name="Urban Pizza Co."
-        data-keywords="pizza italian pasta woodfired takeaway family dinner lunch cheese"
-        data-price="mid-range"
-        data-distance="very-close"
-        data-diet="vegetarian">
-        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1200&q=80" alt="Pizza">
+      <div class="restaurant-card" data-name="Urban Pizza Co." data-keywords="pizza italian pasta woodfired takeaway family dinner lunch cheese" data-price="mid-range" data-distance="very-close" data-diet="vegetarian">
+        <a href="http://43.220.2.209/?page_id=26"><img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Pizza"><a>
         <div class="restaurant-content">
           <h3>Urban Pizza Co.</h3>
           <div class="restaurant-meta">Italian • 25 min delivery • 4.7★</div>
@@ -502,20 +497,15 @@
           </div>
           <div class="card-footer">
             <div class="match-score">Match Score: 0</div>
-            <a class="view-link" href="http://43.220.2.209/?page_id=26">View Page</a>
+            <a class="view-link" href="http://43.220.2.209/?page_id=26">Show Menu</a>
           </div>
         </div>
       </div>
 
-      <div class="restaurant-card"
-        data-name="Dummy 02 Sushi Spot"
-        data-keywords="sushi japanese seafood healthy fresh rice dinner lunch"
-        data-price="premium"
-        data-distance="close"
-        data-diet="gluten-free">
-        <img src="https://images.unsplash.com/photo-1562967916-eb82221dfb92?auto=format&fit=crop&w=1200&q=80" alt="Sushi">
+      <div class="restaurant-card" data-name="Sushi Spot" data-keywords="sushi japanese seafood healthy fresh rice dinner lunch" data-price="premium" data-distance="close" data-diet="gluten-free">
+        <a href="http://43.220.2.209/?page_id=236"><img src="https://images.unsplash.com/photo-1562967916-eb82221dfb92?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Sushi"><a>
         <div class="restaurant-content">
-          <h3>Dummy 02 Sushi Spot</h3>
+          <h3>Sushi Spot</h3>
           <div class="restaurant-meta">Japanese • 30 min delivery • 4.8★</div>
           <p>Fresh sushi rolls, sashimi, and premium Japanese favourites.</p>
           <div class="tag-list">
@@ -526,20 +516,15 @@
           </div>
           <div class="card-footer">
             <div class="match-score">Match Score: 0</div>
-            <a class="view-link" href="http://43.220.2.209/?page_id=236">View Page</a>
+            <a class="view-link" href="http://43.220.2.209/?page_id=236">Show Menu</a>
           </div>
         </div>
       </div>
 
-      <div class="restaurant-card"
-        data-name="Dummy 03 Corner Cafe"
-        data-keywords="cafe coffee breakfast brunch sandwiches desserts light meals"
-        data-price="cheap"
-        data-distance="very-close"
-        data-diet="vegetarian">
-        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80" alt="Cafe food">
+      <div class="restaurant-card" data-name="Corner Cafe" data-keywords="cafe coffee breakfast brunch sandwiches desserts light meals" data-price="cheap" data-distance="very-close" data-diet="vegetarian">
+        <a href="http://43.220.2.209/?page_id=252"><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Cafe food"><a>
         <div class="restaurant-content">
-          <h3>Dummy 03 Corner Cafe</h3>
+          <h3>Corner Cafe</h3>
           <div class="restaurant-meta">Cafe • 20 min delivery • 4.5★</div>
           <p>Coffee, breakfast, and casual cafe meals for a relaxed start to the day.</p>
           <div class="tag-list">
@@ -550,20 +535,15 @@
           </div>
           <div class="card-footer">
             <div class="match-score">Match Score: 0</div>
-            <a class="view-link" href="/dummy-03-corner-cafe/">View Page</a>
+            <a class="view-link" href="http://43.220.2.209/?page_id=252">Show Menu</a>
           </div>
         </div>
       </div>
 
-      <div class="restaurant-card"
-        data-name="Dummy 04 Burger Barn"
-        data-keywords="burgers fries american takeaway fast-food lunch dinner"
-        data-price="cheap"
-        data-distance="close"
-        data-diet="">
-        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=80" alt="Burger">
+      <div class="restaurant-card" data-name="Burger Barn" data-keywords="burgers fries american takeaway fast-food lunch dinner" data-price="cheap" data-distance="close" data-diet="">
+        <a href="http://43.220.2.209/?page_id=275"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Burger"><a>
         <div class="restaurant-content">
-          <h3>Dummy 04 Burger Barn</h3>
+          <h3>Burger Barn</h3>
           <div class="restaurant-meta">American • 18 min delivery • 4.4★</div>
           <p>Loaded burgers, crispy fries, and quick comfort food classics.</p>
           <div class="tag-list">
@@ -573,20 +553,15 @@
           </div>
           <div class="card-footer">
             <div class="match-score">Match Score: 0</div>
-            <a class="view-link" href="/dummy-04-burger-barn/">View Page</a>
+            <a class="view-link" href="http://43.220.2.209/?page_id=275">Show Menu</a>
           </div>
         </div>
       </div>
 
-      <div class="restaurant-card"
-        data-name="Dummy 05 Green Garden"
-        data-keywords="healthy vegan salads bowls organic fresh lunch dinner"
-        data-price="mid-range"
-        data-distance="medium"
-        data-diet="vegan">
-        <img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=80" alt="Healthy bowl">
+      <div class="restaurant-card" data-name="Green Garden" data-keywords="healthy vegan salads bowls organic fresh lunch dinner" data-price="mid-range" data-distance="medium" data-diet="vegan">
+        <a href="http://43.220.2.209/?page_id=283"><img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Healthy bowl"><a>
         <div class="restaurant-content">
-          <h3>Dummy 05 Green Garden</h3>
+          <h3>Green Garden</h3>
           <div class="restaurant-meta">Healthy • 22 min delivery • 4.8★</div>
           <p>Healthy salads, grain bowls, and fresh plant-based meals.</p>
           <div class="tag-list">
@@ -597,20 +572,15 @@
           </div>
           <div class="card-footer">
             <div class="match-score">Match Score: 0</div>
-            <a class="view-link" href="/dummy-05-green-garden/">View Page</a>
+            <a class="view-link" href="http://43.220.2.209/?page_id=283">Show Menu</a>
           </div>
         </div>
       </div>
 
-      <div class="restaurant-card"
-        data-name="Dummy 06 Taco Town"
-        data-keywords="tacos mexican burritos spicy takeaway casual lunch dinner"
-        data-price="cheap"
-        data-distance="far"
-        data-diet="vegetarian">
-        <img src="https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?auto=format&fit=crop&w=1200&q=80" alt="Tacos">
+      <div class="restaurant-card" data-name="Taco Town" data-keywords="tacos mexican burritos spicy takeaway casual lunch dinner" data-price="cheap" data-distance="far" data-diet="vegetarian">
+        <a href="http://43.220.2.209/?page_id=277"><img src="https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Tacos"><a>
         <div class="restaurant-content">
-          <h3>Dummy 06 Taco Town</h3>
+          <h3>Taco Town</h3>
           <div class="restaurant-meta">Mexican • 24 min delivery • 4.6★</div>
           <p>Tacos, burritos, and quick Mexican favourites with bold flavour.</p>
           <div class="tag-list">
@@ -621,20 +591,15 @@
           </div>
           <div class="card-footer">
             <div class="match-score">Match Score: 0</div>
-            <a class="view-link" href="/dummy-06-taco-town/">View Page</a>
+            <a class="view-link" href="http://43.220.2.209/?page_id=277">Show Menu</a>
           </div>
         </div>
       </div>
 
-      <div class="restaurant-card"
-        data-name="Dummy 07 Curry House"
-        data-keywords="indian curry rice naan spicy dinner family"
-        data-price="mid-range"
-        data-distance="close"
-        data-diet="gluten-free">
-        <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=1200&q=80" alt="Curry">
+      <div class="restaurant-card" data-name="Curry House" data-keywords="indian curry rice naan spicy dinner family" data-price="mid-range" data-distance="close" data-diet="gluten-free">
+        <a href="http://43.220.2.209/?page_id=353"><img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Curry"><a>
         <div class="restaurant-content">
-          <h3>Dummy 07 Curry House</h3>
+          <h3>Curry House</h3>
           <div class="restaurant-meta">Indian • 28 min delivery • 4.7★</div>
           <p>Traditional curries, rice dishes, and rich Indian flavours.</p>
           <div class="tag-list">
@@ -645,20 +610,15 @@
           </div>
           <div class="card-footer">
             <div class="match-score">Match Score: 0</div>
-            <a class="view-link" href="/dummy-07-curry-house/">View Page</a>
+            <a class="view-link" href="http://43.220.2.209/?page_id=353">Show Menu</a>
           </div>
         </div>
       </div>
 
-      <div class="restaurant-card"
-        data-name="Dummy 08 Noodle Bar"
-        data-keywords="asian noodles chinese stir fry takeaway lunch dinner"
-        data-price="cheap"
-        data-distance="medium"
-        data-diet="">
-        <img src="https://images.unsplash.com/photo-1617093727343-374698b1b08d?auto=format&fit=crop&w=1200&q=80" alt="Noodles">
+      <div class="restaurant-card" data-name="Noodle Bar" data-keywords="asian noodles chinese stir fry takeaway lunch dinner" data-price="cheap" data-distance="medium" data-diet="">
+        <a href="http://43.220.2.209/?page_id=356"><img src="https://images.unsplash.com/photo-1617093727343-374698b1b08d?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Noodles"><a>
         <div class="restaurant-content">
-          <h3>Dummy 08 Noodle Bar</h3>
+          <h3>Noodle Bar</h3>
           <div class="restaurant-meta">Asian • 19 min delivery • 4.3★</div>
           <p>Fast noodle bowls and stir-fry dishes perfect for quick meals.</p>
           <div class="tag-list">
@@ -668,20 +628,15 @@
           </div>
           <div class="card-footer">
             <div class="match-score">Match Score: 0</div>
-            <a class="view-link" href="/dummy-08-noodle-bar/">View Page</a>
+            <a class="view-link" href="http://43.220.2.209/?page_id=356">Show Menu</a>
           </div>
         </div>
       </div>
 
-      <div class="restaurant-card"
-        data-name="Dummy 09 Ocean Catch"
-        data-keywords="seafood grilled fish premium healthy dinner fresh"
-        data-price="premium"
-        data-distance="far"
-        data-diet="gluten-free">
-        <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=1200&q=80" alt="Seafood">
+      <div class="restaurant-card" data-name="Ocean Catch" data-keywords="seafood grilled fish premium healthy dinner fresh" data-price="premium" data-distance="far" data-diet="gluten-free">
+        <a href="http://43.220.2.209/?page_id=358"><img src="https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Seafood"><a>
         <div class="restaurant-content">
-          <h3>Dummy 09 Ocean Catch</h3>
+          <h3>Ocean Catch</h3>
           <div class="restaurant-meta">Seafood • 32 min delivery • 4.8★</div>
           <p>Fresh seafood meals with premium grilled options and clean flavours.</p>
           <div class="tag-list">
@@ -692,20 +647,15 @@
           </div>
           <div class="card-footer">
             <div class="match-score">Match Score: 0</div>
-            <a class="view-link" href="/dummy-09-ocean-catch/">View Page</a>
+            <a class="view-link" href="http://43.220.2.209/?page_id=358">Show Menu</a>
           </div>
         </div>
       </div>
 
-      <div class="restaurant-card"
-        data-name="Dummy 10 Pasta Place"
-        data-keywords="pasta italian comfort food dinner lunch sauce family"
-        data-price="mid-range"
-        data-distance="close"
-        data-diet="vegetarian">
-        <img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=1200&q=80" alt="Pasta">
+      <div class="restaurant-card" data-name="Pasta Place" data-keywords="pasta italian comfort food dinner lunch sauce family" data-price="mid-range" data-distance="close" data-diet="vegetarian">
+        <a href="http://43.220.2.209/?page_id=360"><img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Pasta"><a>
         <div class="restaurant-content">
-          <h3>Dummy 10 Pasta Place</h3>
+          <h3>Pasta Place</h3>
           <div class="restaurant-meta">Italian • 26 min delivery • 4.6★</div>
           <p>Classic pasta dishes and rich Italian comfort food favourites.</p>
           <div class="tag-list">
@@ -716,20 +666,15 @@
           </div>
           <div class="card-footer">
             <div class="match-score">Match Score: 0</div>
-            <a class="view-link" href="/dummy-10-pasta-place/">View Page</a>
+            <a class="view-link" href="http://43.220.2.209/?page_id=360">Show Menu</a>
           </div>
         </div>
       </div>
 
-      <div class="restaurant-card"
-        data-name="Dummy 11 Vegan Bites"
-        data-keywords="vegan wraps bowls healthy organic plant based fresh lunch"
-        data-price="mid-range"
-        data-distance="very-close"
-        data-diet="vegan">
-        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1200&q=80" alt="Vegan food">
+      <div class="restaurant-card" data-name="Vegan Bites" data-keywords="vegan wraps bowls healthy organic plant based fresh lunch" data-price="mid-range" data-distance="very-close" data-diet="vegan">
+        <a href="http://43.220.2.209/?page_id=367"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Vegan food"><a>
         <div class="restaurant-content">
-          <h3>Dummy 11 Vegan Bites</h3>
+          <h3>Vegan Bites</h3>
           <div class="restaurant-meta">Vegan • 21 min delivery • 4.9★</div>
           <p>Plant-based wraps, bowls, and healthy meals for lighter eating.</p>
           <div class="tag-list">
@@ -739,20 +684,15 @@
           </div>
           <div class="card-footer">
             <div class="match-score">Match Score: 0</div>
-            <a class="view-link" href="/dummy-11-vegan-bites/">View Page</a>
+            <a class="view-link" href="http://43.220.2.209/?page_id=367">Show Menu</a>
           </div>
         </div>
       </div>
 
-      <div class="restaurant-card"
-        data-name="Dummy 12 Kebab Corner"
-        data-keywords="kebab middle eastern grilled wraps meat takeaway halal lunch dinner"
-        data-price="cheap"
-        data-distance="close"
-        data-diet="halal">
-        <img src="https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&w=1200&q=80" alt="Kebab">
+      <div class="restaurant-card" data-name="Kebab Corner" data-keywords="kebab middle eastern grilled wraps meat takeaway halal lunch dinner" data-price="cheap" data-distance="close" data-diet="halal">
+        <a href="http://43.220.2.209/?page_id=369"><img src="https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Kebab"><a>
         <div class="restaurant-content">
-          <h3>Dummy 12 Kebab Corner</h3>
+          <h3>Kebab Corner</h3>
           <div class="restaurant-meta">Middle Eastern • 23 min delivery • 4.5★</div>
           <p>Halal kebabs, grilled wraps, and quick takeaway favourites.</p>
           <div class="tag-list">
@@ -763,7 +703,7 @@
           </div>
           <div class="card-footer">
             <div class="match-score">Match Score: 0</div>
-            <a class="view-link" href="/dummy-12-kebab-corner/">View Page</a>
+            <a class="view-link" href="http://43.220.2.209/?page_id=369">Show Menu</a>
           </div>
         </div>
       </div>
@@ -817,7 +757,6 @@
         if (priceFilter && price === priceFilter) score += 3;
         if (distanceFilter && distance === distanceFilter) score += 2;
         if (dietFilter && diet === dietFilter) score += 4;
-
         card.dataset.score = score;
 
         const scoreBox = card.querySelector(".match-score");

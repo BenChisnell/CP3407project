@@ -8,7 +8,6 @@ User 15 Isabella (F, 24) Priority High, estimate 2 days As a User of the app, I 
 
 User 17 Chloe (F, 33) Priority High, estimate 3 days As a User of the app, I want secure checkout. So that my payment data is safe.
 
-
 User 19 Sophia (F, 40) Priority High, estimate 2 days As a User of the app, I want to cancel an order quickly. So that I can fix mistakes.
 
 User 20 Lucas (M, 35) Priority High, estimate 2 days As a User of the app, I want to receive a digital receipt. So that I can track expenses.
@@ -32,3 +31,5 @@ User 34 James (M, 50) priority high, estimate 4 days As a user of the app, I wan
 User 35 Hugo (M, 44) priority high, estimate 1 day As a customer, I want to view the full menu with images and prices so that I can decide what to order.
 
 User 36 Sarah (M, 29) priority high, estimate 4 days As a Dev of the app, I want the backend of the app to be easy to access and update. So that I can fix any issues that may pop up.
+
+

@@ -124,6 +124,8 @@ The documentation covers the following areas:
 4. Test connection  
 5. Modify database as required  
 
+For more advanced steps refer to [Database.md](./Database.md)
+
 ---
 
 ### 2.6 Accessibility Features  

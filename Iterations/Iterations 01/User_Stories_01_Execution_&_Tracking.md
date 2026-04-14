@@ -293,11 +293,11 @@ Ensure selection is saved and reflected in orders.
 
 ### Task 1 – Create Notification Class
 Handle sending notifications.  
-**Estimated Time:** 1 day  
+**Estimated Time:** 0.5 day   
 
 ### Task 2 – Integrate with Order System
 Trigger notification on successful order.  
-**Estimated Time:** 1 day  
+**Estimated Time:** 0.5 day  
 
 ### Task 3 – Design Notification Templates
 Email, SMS, or app push.  

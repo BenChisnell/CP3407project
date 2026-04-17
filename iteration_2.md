@@ -6,9 +6,9 @@
 * Days of work: 25
 
 ### Velocity:
-* Assumed Velocity: xxx
-* Number of developers: xxx
-* Total estimated amount of work: xxx days
+* Assumed Velocity: 0.7
+* Number of developers: 5
+* Total estimated amount of work: 71 days
 
 User stories or tasks:
 1. [user story or task title](./user_stories/user_story_01_title.md)
